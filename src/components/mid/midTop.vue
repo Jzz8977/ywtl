@@ -1,0 +1,754 @@
+<template>
+  <div class="midTop">
+    <!-- 11 -->
+    <headerTit :title="title" :time="time"></headerTit>
+    <div class="main">
+      <div class="mainTop">
+        <div class="up">
+          <img src="../../assets/img/moneyChart.png" alt />
+          <div class="mr">
+            <div class="mrt">
+              <span class="yellow40 DINAlternate-Bold">3577.118</span>
+              <span>亿元</span>
+            </div>
+            <div class="mrb">经开区工业总产值</div>
+          </div>
+        </div>
+        <div class="up">
+          <img src="../../assets/img/lineChart.png" alt />
+          <div class="mr">
+            <div class="mrt">
+              <span class="white40 DINAlternate-Bold">-358.18</span>
+              <span>亿元</span>
+            </div>
+            <div class="mrb A3D5FF">同比变化值</div>
+          </div>
+        </div>
+        <div class="up">
+          <div>&nbsp;</div>
+          <img src="../../assets/img/pieChart.png" alt />
+          <div class="mr">
+            <div class="mrt">
+              <span class="white40">-24%</span>
+            </div>
+            <div class="mrb A3D5FF">同比增幅</div>
+          </div>
+          <div>&nbsp;</div>
+        </div>
+        <div class="down">
+          <div class="downUp">
+            <img src="../../assets/img/diamond.png" alt />
+            <span>核心区</span>
+            <span class="yellow34 DINAlternate-Bold">3527.71</span>
+            <span>亿元</span>
+          </div>
+          <div class="downBot">
+            <div>
+              <p>同步增长</p>
+              <p>
+                <span class="white24">141.12</span>
+                <span>亿元</span>
+              </p>
+            </div>
+            <div>
+              <p>同比增幅</p>
+              <p>
+                <span class="white24">4.17%</span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="down">
+          <div class="downUp">
+            <img src="../../assets/img/diamond.png" alt />
+            <span>大兴部分</span>
+            <span class="yellow34 DINAlternate-Bold">204.18</span>
+            <span>亿元</span>
+          </div>
+          <div class="downBot">
+            <div>
+              <p>同步增长</p>
+              <p>
+                <span class="white24">-22.73</span>
+                <span>亿元</span>
+              </p>
+            </div>
+            <div>
+              <p>同比增幅</p>
+              <p>
+                <span class="white24">4.17%</span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="down">
+          <div class="downUp">
+            <img src="../../assets/img/diamond.png" alt />
+            <span>台马部分</span>
+            <span class="yellow34 DINAlternate-Bold">119.07</span>
+            <span>亿元</span>
+          </div>
+          <div class="downBot">
+            <div>
+              <p>同步增长</p>
+              <p>
+                <span class="white24">141.12</span>
+                <span>亿元</span>
+              </p>
+            </div>
+            <div>
+              <p>同比增幅</p>
+              <p>
+                <span class="white24">4.17%</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mainBot">
+        <div class="chartWrap">
+          <div class="chartTitleWrap">
+            <div>&nbsp;</div>
+            <div>&nbsp;</div>
+            <div class="line"></div>
+            <div class="chartTitle">总产值增速区域对比</div>
+            <div class="lineReserve"></div>
+            <div>&nbsp;</div>
+            <div>&nbsp;</div>
+          </div>
+          <div id="areaChart" class="midTopChart">
+            <!-- 总产值增速区域对比 -->
+          </div>
+        </div>
+        <div class="chartWrap">
+          <div class="chartTitleWrap">
+            <div>&nbsp;</div>
+            <div class="line"></div>
+            <div class="chartTitle">经开区本年度产值与增速</div>
+            <div class="lineReserve"></div>
+            <div>&nbsp;</div>
+          </div>
+          <div id="yearChart" class="midTopChart">
+            <!-- 经开区本年度产值与增速 -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "midTop",
+  data() {
+    return {
+      title: "国家级经济开发区工业总产值排名",
+      time: "2020年1-8月",
+      yAxisData: ["大兴部分", "大兴区", "核心区", "通州区", "台马部分"],
+      xAxisData: ["-10", "-5", 10, 20, 100],
+
+      //   产值 / 增速
+      xAxisMonth: ["1月", "2月", "3月", "4月"],
+      // 核心区
+      hxBarData: [20, 30, 200, 200],
+      hxLineData: [50, 80, 90, 100],
+      // 大兴区
+      dxBarData: [80, 70, 250, 100],
+      dxLineData: [20, 30, 60, 100],
+      // 台马区
+      tmBarData: [50, 10, 100, 200],
+      tmLineData: [80, 70, 50, 100],
+    };
+  },
+  mounted() {
+    this.initAreaChart();
+    this.initYearChart();
+  },
+  methods: {
+    initAreaChart() {
+      let that = this;
+      // 基于准备好的dom，初始化echarts实例
+      var myChart = this.$echarts.init(document.getElementById("areaChart"));
+
+      // 指定图表的配置项和数据
+      let option = {
+        tooltip: {
+          trigger: "axis",
+          axisPointer: {
+            type: "shadow",
+          },
+          formatter: (params) => {
+            if (!params.length) return "";
+            let s = params[0].axisValueLabel + "<br/>";
+            for (const iterator of params) {
+              let d = iterator.data < 0 ? -iterator.data : iterator.data;
+              s +=
+                iterator.marker +
+                iterator.seriesName +
+                "：" +
+                d +
+                "%" +
+                "<br/>";
+            }
+            return s;
+          },
+        },
+
+        grid: {
+          left: "9%",
+          right: "9%",
+          bottom: "9%",
+          top: "12%",
+          containLabel: true,
+        },
+
+        xAxis: [
+          {
+            type: "value",
+            axisLabel: {
+              formatter: (value) => {
+                if (value < 0) return -value;
+                else return value;
+              },
+            },
+
+            splitLine: {
+              show: false,
+            },
+            axisLine: {
+              show: false,
+              lineStyle: {
+                color: "#3A82CA",
+              }, // 样式
+            },
+          },
+        ],
+        yAxis: [
+          {
+            type: "category",
+            axisTick: {
+              alignWithLabel: true,
+            },
+            data: this.yAxisData,
+            axisLabel: {
+              formatter: "{value}",
+              textStyle: {
+                //改变刻度字体样式
+                color: "#fff",
+              },
+            },
+
+            splitLine: {
+              show: true,
+              lineStyle: {
+                color: "#3A82CA",
+              },
+            },
+            axisLine: {
+              show: true,
+              lineStyle: {
+                color: "#3A82CA",
+              }, // 样式
+            },
+          },
+        ],
+        series: [
+          {
+            name: "流入",
+            type: "bar",
+            barWidth: 10,
+            stack: "总量",
+
+            label: {
+              normal: {
+                show: true,
+                formatter: "{c}%",
+                position: "right",
+                textStyle: {
+                  color: "#fff",
+                  fontSize: 14,
+                },
+              },
+            },
+            itemStyle: {
+              //通常情况下：
+              normal: {
+                // barBorderRadius: 8,
+                //每个柱子的颜色即为colorList数组里的每一项，如果柱子数目多于colorList的长度，则柱子颜色循环使用该数组
+                color: function (params) {
+                  var colorList;
+                  if (params.value < 0) {
+                    colorList = ["#0072FF", "#96D1FF"];
+                  } else {
+                    colorList = ["#FFA000", "#CAFF00"];
+                  }
+                  return new that.$echarts.graphic.LinearGradient(1, 0, 0, 0, [
+                    {
+                      offset: 0,
+                      color: colorList[0],
+                    },
+                    {
+                      offset: 1,
+                      color: colorList[1],
+                    },
+                  ]);
+                },
+              },
+            },
+            // data: this.xAxisData,
+            data: this.xAxisData.map((item) => {
+              return {
+                value: item,
+                label: {
+                  // 设置显示label
+                  show: true,
+                  // 设置label的位置
+                  position: item > 0 ? "right" : "left",
+                  // 设置label的文字颜色
+                  color: "#6783EE",
+                  // 格式化label文字
+                  formatter: item > 0 ? "{c}%" : "{c}%",
+                },
+              };
+            }),
+          },
+        ],
+      };
+
+      // 使用刚指定的配置项和数据显示图表。
+      myChart.setOption(option);
+    },
+    initYearChart() {
+      let that = this;
+      // 基于准备好的dom，初始化echarts实例
+      var myChart = this.$echarts.init(document.getElementById("yearChart"));
+
+      // 指定图表的配置项和数据
+      let option = {
+        color: ["#00FFFD", "#FFE700", "#1890FF"],
+        tooltip: {
+          trigger: "axis",
+          axisPointer: {
+            type: "shadow",
+            
+          },
+        },
+        legend: {
+          x: "center",
+          y: "bottom",
+          itemWidth: 10,
+          itemHeight: 10,
+          data: [
+            {
+              name: "核心区",
+              icon: "rect",
+              textStyle: {
+                color: "#A3D5FF", // 图例文字颜色
+              },
+            },
+            {
+              name: "大兴区",
+              icon: "rect",
+              textStyle: {
+                color: "#A3D5FF", // 图例文字颜色
+              },
+            },
+            {
+              name: "台马区",
+              icon: "rect",
+              textStyle: {
+                color: "#A3D5FF", // 图例文字颜色
+              },
+            },
+          ],
+        },
+        grid: {
+          left: "9%",
+          right: "9%",
+          bottom: "14%",
+          top: "12%",
+          containLabel: true,
+        },
+
+       
+        xAxis: [
+          {
+            type: "category",
+            data: this.xAxisMonth,
+            splitLine: {
+              show: false,
+            },
+            axisTick: {
+              alignWithLabel: true,
+              show: false,
+            },
+            axisLine: {
+              show: true,
+              lineStyle: {
+                color: "#ffffff",
+                fontSize: 22,
+              }, // 样式
+            },
+          },
+        ],
+
+        yAxis: [
+          {
+            type: "value",
+            name: "亿元        ",
+            nameTextStyle: {
+              color: "#06FEF7",
+            },
+            axisTick: {
+              alignWithLabel: true,
+              show: false,
+            },
+            data: this.yAxisData,
+            axisLabel: {
+              formatter: "{value}",
+              textStyle: {
+                //改变刻度字体样式
+                color: "#fff",
+              },
+            },
+
+            splitLine: {
+              show: false,
+              lineStyle: {
+                color: "#3A82CA",
+              },
+            },
+            axisLine: {
+              show: true,
+              lineStyle: {
+                color: "#3A82CA",
+              }, // 样式
+            },
+          },
+          {
+            name: "       增速",
+            nameTextStyle: {
+              color: "#06FEF7",
+            },
+            type: "value",
+            axisTick: {
+              alignWithLabel: true,
+              show: false,
+            },
+            data: this.yAxisData,
+            axisLabel: {
+              formatter: "{value}%",
+              textStyle: {
+                //改变刻度字体样式
+                color: "#fff",
+              },
+            },
+
+            splitLine: {
+              show: false,
+              lineStyle: {
+                color: "#3A82CA",
+              },
+            },
+            axisLine: {
+              show: true,
+              lineStyle: {
+                color: "#3A82CA",
+              }, // 样式
+            },
+          },
+        ],
+        series: [
+          {
+            name: "核心区",
+            type: "bar",
+            data: this.hxBarData,
+            itemStyle: {
+              //通常情况下：
+              normal: {
+                // barBorderRadius: 8,
+                //每个柱子的颜色即为colorList数组里的每一项，如果柱子数目多于colorList的长度，则柱子颜色循环使用该数组
+                color: function (params) {
+                  var colorList;
+                  if (params.value < 0) {
+                    colorList = ["#0072FF", "#96D1FF"];
+                  } else {
+                    colorList = ["#1890FF", "#00FFFD"];
+                  }
+                  return new that.$echarts.graphic.LinearGradient(0, 1, 1, 0, [
+                    {
+                      offset: 0,
+                      color: colorList[0],
+                    },
+                    {
+                      offset: 1,
+                      color: colorList[1],
+                    },
+                  ]);
+                },
+              },
+            },
+          },
+          {
+            name: "大兴区",
+            type: "bar",
+            data: this.dxBarData,
+            itemStyle: {
+              //通常情况下：
+              normal: {
+                // barBorderRadius: 8,
+                //每个柱子的颜色即为colorList数组里的每一项，如果柱子数目多于colorList的长度，则柱子颜色循环使用该数组
+                color: function (params) {
+                  var colorList;
+                  if (params.value < 0) {
+                    colorList = ["#0072FF", "#96D1FF"];
+                  } else {
+                    colorList = ["#FF8E00", "#FFE700"];
+                  }
+                  return new that.$echarts.graphic.LinearGradient(0, 1, 1, 0, [
+                    {
+                      offset: 0,
+                      color: colorList[0],
+                    },
+                    {
+                      offset: 1,
+                      color: colorList[1],
+                    },
+                  ]);
+                },
+              },
+            },
+          },
+          {
+            name: "台马区",
+            type: "bar",
+            data: this.tmBarData,
+            itemStyle: {
+              //通常情况下：
+              normal: {
+                // barBorderRadius: 8,
+                //每个柱子的颜色即为colorList数组里的每一项，如果柱子数目多于colorList的长度，则柱子颜色循环使用该数组
+                color: function (params) {
+                  var colorList;
+                  if (params.value < 0) {
+                    colorList = ["#0072FF", "#96D1FF"];
+                  } else {
+                    colorList = ["#007BFF", "#60A5FF"];
+                  }
+                  return new that.$echarts.graphic.LinearGradient(0, 1, 1, 0, [
+                    {
+                      offset: 0,
+                      color: colorList[0],
+                    },
+                    {
+                      offset: 1,
+                      color: colorList[1],
+                    },
+                  ]);
+                },
+              },
+            },
+          },
+          {
+            name: "核心区",
+            type: "line",
+            data: this.hxLineData,
+            symbolSize: 0,
+            yAxisIndex: 1,
+            itemStyle: {
+              //通常情况下：
+              normal: {
+                width: 3, //折线宽度
+                // barBorderRadius: 8,
+                //每个柱子的颜色即为colorList数组里的每一项，如果柱子数目多于colorList的长度，则柱子颜色循环使用该数组
+                color: "#00FFFD",
+              },
+            },
+          },
+          {
+            name: "大兴区",
+            type: "line",
+            data: this.dxLineData,
+            symbolSize: 0,
+            yAxisIndex: 1,
+            itemStyle: {
+              //通常情况下：
+              normal: {
+                // barBorderRadius: 8,
+                //每个柱子的颜色即为colorList数组里的每一项，如果柱子数目多于colorList的长度，则柱子颜色循环使用该数组
+                color: "#FFE700",
+              },
+            },
+          },
+          {
+            name: "台马区",
+            type: "line",
+            data: this.tmLineData,
+            symbolSize: 0,
+            yAxisIndex: 1,
+            itemStyle: {
+              //通常情况下：
+              normal: {
+                // barBorderRadius: 8,
+                //每个柱子的颜色即为colorList数组里的每一项，如果柱子数目多于colorList的长度，则柱子颜色循环使用该数组
+                color: "#1890FF",
+              },
+            },
+          },
+        ],
+      };
+
+      // 使用刚指定的配置项和数据显示图表。
+      myChart.setOption(option);
+    },
+  },
+};
+</script>
+
+<style scoped>
+span {
+  /* float: left;
+     */
+  margin-left: -5px;
+}
+.midTop {
+  width: 924px;
+  height: 590px;
+  background: url(../../assets/img/midTop.png);
+  overflow: hidden;
+}
+.midTopChart {
+  width: 100%;
+  height: 226px;
+}
+.main {
+  padding: 0 10px 10px;
+  box-sizing: border-box;
+}
+.mainTop {
+  height: 241px;
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  background: url(../../assets/img/midTopBg.png) 11px center no-repeat;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.mainTop > div {
+  width: 292px;
+  height: 110px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+.up {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.up img {
+  width: 50px;
+  height: 50px;
+}
+.mr {
+}
+.mrt {
+  height: 40px;
+  font-size: 20px;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #ffffff;
+  line-height: 40px;
+}
+.mrb {
+  height: 40px;
+  font-size: 20px;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+  color: #ffffff;
+  line-height: 40px;
+}
+.A3D5FF {
+  font-weight: 400;
+  color: #a3d5ff;
+}
+.down {
+  padding-top: 20px !important;
+  box-sizing: border-box;
+}
+
+.downUp {
+  color: #ffffff;
+  font-size: 22px;
+  text-indent: 18px;
+}
+.downUp > img {
+  width: 18px;
+  height: 18px;
+}
+.downBot {
+  display: flex;
+}
+.downBot > div {
+  width: 100%;
+  height: 60px;
+  font-size: 22px;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+  line-height: 30px;
+  background: url(../../assets/img/linePoint.png) left center no-repeat;
+}
+.downBot > div:nth-child(1) {
+  margin-left: 45px;
+}
+.downBot > div > p {
+  font-size: 16px;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #ffffff;
+  line-height: 22px;
+  text-indent: 18px;
+  word-wrap: none;
+  word-break: keep-all;
+}
+.downBot > div > p:nth-child(2) {
+  /* height: ; */
+}
+.mainBot {
+  height: 267px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+.chartWrap {
+  width: 445px;
+  height: 267px;
+  background: url(../../assets/img/chartBg.png);
+  padding-top: 16px;
+}
+.chartTitleWrap {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  height: 25px;
+}
+.chartTitle {
+  height: 25px;
+  font-size: 18px;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+  color: #ffffff;
+  line-height: 25px;
+}
+.line {
+  width: 80px;
+  height: 4px;
+  background: url(../../assets/img/leftLine.png) no-repeat;
+}
+.lineReserve {
+  width: 80px;
+  height: 4px;
+  background: url(../../assets/img/rightLine.png) no-repeat;
+}
+</style>
