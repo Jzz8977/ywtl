@@ -722,7 +722,7 @@ span {
 }
 .chartWrap {
   width: 445px;
-  height: 267px;
+  height: 248px;
   background: url(../../assets/img/chartBg.png);
   padding-top: 16px;
 }
