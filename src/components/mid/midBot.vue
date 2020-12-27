@@ -95,18 +95,22 @@ export default {
           axisPointer: {
             type: "shadow",
           },
-          formatter: function(params) {
-            let str = params[0].name + '<br/>';
-            params.forEach(item => {
-                if (item.seriesName == '产值') {
-                    str += item.marker + item.seriesName + ': ' + item.data + '亿元<br/>';
-                } else if (item.seriesName == "增速") {
-                    str += item.marker + item.seriesName + ': ' + item.data + '%';
-                }
+          formatter: function (params) {
+            let str = params[0].name + "<br/>";
+            params.forEach((item) => {
+              if (item.seriesName == "产值") {
+                str +=
+                  item.marker +
+                  item.seriesName +
+                  ": " +
+                  item.data +
+                  "亿元<br/>";
+              } else if (item.seriesName == "增速") {
+                str += item.marker + item.seriesName + ": " + item.data + "%";
+              }
             });
             return str;
-           
-        }
+          },
         },
         legend: {
           x: "center",
@@ -160,11 +164,9 @@ export default {
             axisLabel: {
               interval: 0, //横轴信息全部显示
               rotate: 45, // 倾斜角度
-                color: "#ffffff",
+              color: "#ffffff",
               formatter: function (value) {
-                return value.length > 5
-                  ? value.substring(0, 5) + "..."
-                  : value;
+                return value.length > 5 ? value.substring(0, 5) + "..." : value;
               },
             },
           },
@@ -240,7 +242,8 @@ export default {
           {
             name: "产值",
             type: "bar",
-            barWidth:10,
+            barWidth: 10,
+            barGap:0,
             data: this.zsData,
             itemStyle: {
               //通常情况下：
@@ -271,7 +274,7 @@ export default {
           {
             name: "增速",
             type: "bar",
-            barWidth:10,
+            barWidth: 10,
             data: this.czData,
             symbolSize: 0,
             yAxisIndex: 1,
@@ -306,6 +309,11 @@ export default {
 
       // 使用刚指定的配置项和数据显示图表。
       myChart.setOption(option);
+
+      window.addEventListener("resize", () => {
+        // 自动渲染echarts
+        if (myChart) myChart.resize();
+      });
     },
   },
 };
@@ -330,6 +338,5 @@ export default {
   height: 100%;
   background: url(../../assets/img/midBotBg.png) no-repeat;
   background-size: 100% 100%;
-
 }
 </style>

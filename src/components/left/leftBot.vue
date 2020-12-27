@@ -7,16 +7,16 @@
         <div class="barName">
           <div :class="{'city':true,'yellow20':item==5}">广州经开区</div>
           <div class="money">
-            <span :class="{'white':true,'yellow26':item===5}">3572.95</span>
+            <span :class="{'DINAlternate-Bold':true,'white':true,'yellow26':item===5}">3572.95</span>
             <span class>亿元</span>
           </div>
           <div class="compare">
             同比
-            <span :class="{'white':true,'red22':item==5}" style="font-size:22px">-4.03%</span>
+            <span :class="{'DINAlternate-Bold':true,'white':true,'red22':item==5}" style="font-size:22px">-4.03%</span>
           </div>
         </div>
         <div class="bar">
-          <div :class="{'barContent':item!=5,'barContent50':item==5}" :style="{'width': 4.38*(10*item)+'px'}"></div>
+          <div :class="{'barContent':item!=5,'barContent50':item==5}" :style="{'width': 4.38*(10*10)+'px'}"></div>
         </div>
       </div>
     </div>
@@ -67,7 +67,7 @@ export default {
 .barName > div {
 }
 .city {
-  width: 180px;
+  width: 200px;
   flex: 1;
 }
 .money {
@@ -80,11 +80,12 @@ export default {
 .compare {
   display: flex;
   align-items: baseline;
-  width: 125px;
+  width: 110px;
   font-size: 16px;
   color: #ffffff;
   line-height: 22px;
   word-break: keep-all;
+  text-align: right;
 }
 .bar {
   height: 17px;

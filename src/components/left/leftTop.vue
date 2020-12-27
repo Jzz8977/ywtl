@@ -27,9 +27,9 @@
         </div>
         <div class="barWrap">
           <div class="bar">
-            <div class="barContent" :style="{'width': 4.38*50+'px'}"></div>
+            <div class="barContent" :style="{'width': 4.38*10*item+'px'}"></div>
           </div>
-          <div class="barNum">100%</div>
+          <div class="barNum">{{item*10}}%</div>
         </div>
       </div>
       <!-- <div class="card"></div>

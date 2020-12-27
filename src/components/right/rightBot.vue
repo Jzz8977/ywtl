@@ -12,7 +12,7 @@ export default {
   name: "rightBot",
   data() {
     return {
-      title: "国家级经济开发区工业总产值排名",
+      title: "重点产业工业总产值分析",
       time: "2020年1-8月",
       //   产值 / 增速
       xAxisMonth: [
@@ -48,7 +48,8 @@ export default {
 
       // 指定图表的配置项和数据
       let option = {
-        color: ["#F90CFD", "#985BFF", "#318BFF", "#7AFF77", "#FFE700"],
+        color: ["#FFE700", "#7AFF77", "#59FCFF",'#318BFF', "#985BFF", "#F90CFD"],
+       
         tooltip: {
           trigger: "axis",
           axisPointer: {
@@ -57,16 +58,13 @@ export default {
           formatter: function (params) {
             let str = params[0].name + "<br/>";
             params.forEach((item) => {
-              if (item.seriesName == "产值") {
                 str +=
                   item.marker +
                   item.seriesName +
                   ": " +
                   item.data +
                   "亿元<br/>";
-              } else if (item.seriesName == "增速") {
-                str += item.marker + item.seriesName + ": " + item.data + "%";
-              }
+             
             });
             return str;
           },
@@ -74,9 +72,10 @@ export default {
         legend: [
           {
             x: "center",
-            bottom: "5%",
+            bottom: "8%",
             itemWidth: 10,
             itemHeight: 10,
+            fontSize:16,
             data: [
               {
                 name: "生物技术和大健康",
@@ -133,10 +132,10 @@ export default {
           },
         ],
         grid: {
-          left: "5%",
+          left: "6%",
           right: "5%",
-          bottom: "13%",
-          top: "19%",
+          bottom: "15%",
+          top: "15%",
           containLabel: true,
         },
 
@@ -163,6 +162,7 @@ export default {
             axisLabel: {
               interval: 0, //横轴信息全部显示
               color: "#ffffff",
+              fontSize:16,
               formatter: function (value) {
                 return value.length > 5 ? value.substring(0, 5) + "..." : value;
               },
@@ -211,40 +211,44 @@ export default {
           {
             name: "生物技术和大健康",
             type: "line",
-            barWidth: 10,
+            smooth: true,
+            symbolSize: 0,
+
             data: this.carData,
           },
           {
             name: "新一代信息技术",
             type: "line",
-            barWidth: 10,
-            data: this.cityData,
+            smooth: true,
             symbolSize: 0,
+            data: this.cityData,
           },
           {
             name: "基础与新材料",
             type: "line",
-            barWidth: 10,
+            smooth: true,
+            symbolSize: 0,
             data: this.robotData,
           },
           {
             name: "机器人和智能制造",
             type: "line",
-            barWidth: 10,
-            data: this.basicData,
+            smooth: true,
             symbolSize: 0,
+            data: this.basicData,
           },
           {
             name: "都市",
             type: "line",
-            barWidth: 10,
+            smooth: true,
+            symbolSize: 0,
             data: this.technologyData,
           },
           {
             name: "高端汽车及新能源汽车",
             type: "line",
-            barWidth: 10,
             data: this.healthyData,
+            smooth: true,
             symbolSize: 0,
           },
         ],
@@ -252,6 +256,10 @@ export default {
 
       // 使用刚指定的配置项和数据显示图表。
       myChart.setOption(option);
+      window.addEventListener("resize", () => {
+        // 自动渲染echarts
+        if (myChart) myChart.resize();
+      });
     },
   },
 };

@@ -22,7 +22,9 @@ body {
 
 @font-face {
     font-family: DINAlternate-Bold;
-    src: url(../font/DINALTERNATE.otf);
+    /* src: url(../font/DINALTERNATE.otf); */
+    src: url(../font/DINAlternateBold.ttf);
+    /* src: url(../font/DINAlternateBold2.ttf); */
 }
 
 .white {
@@ -35,14 +37,19 @@ body {
     font-size: 40px;
 }
 
+.white34 {
+    color: #ffffff!important;
+    font-size: 34px!important;
+}
+
 .yellow {
     color: #ffec00;
     font-size: 32px;
 }
 
 .yellow34 {
-    color: #ffec00;
-    font-size: 34px;
+    color: #ffec00!important;
+    font-size: 34px!important;
 }
 
 .red {
@@ -68,6 +75,11 @@ body {
     font-size: 40px;
 }
 
+.yellow44 {
+    color: #ffec00;
+    font-size: 44px;
+}
+
 .yellow26 {
     color: #ffec00;
     font-size: 26px;
@@ -79,8 +91,8 @@ body {
 }
 
 .DINAlternate-Bold {
-    font-family: DINAlternate-Bold;
-    font-weight: normal;
+    font-family: DINAlternate-Bold!important;
+    font-weight: normal!important;
 }
 
 .white24 {
@@ -94,4 +106,24 @@ body {
 span {
     /* margin-right: -5px
      */
+}
+
+.size16 {
+    font-size: 16px!important;
+}
+
+.size14 {
+    font-size: 14px!important;
+}
+
+.line {
+    width: 80px;
+    height: 4px;
+    background: url(../../assets/img/leftLine.png) no-repeat;
+}
+
+.lineReserve {
+    width: 80px;
+    height: 4px;
+    background: url(../../assets/img/rightLine.png) no-repeat;
 }

@@ -8,7 +8,7 @@
           <img src="../../assets/img/moneyChart.png" alt />
           <div class="mr">
             <div class="mrt">
-              <span class="yellow40 DINAlternate-Bold">3577.118</span>
+              <span class="yellow44 DINAlternate-Bold">3577.118</span>
               <span>亿元</span>
             </div>
             <div class="mrb">经开区工业总产值</div>
@@ -29,7 +29,7 @@
           <img src="../../assets/img/pieChart.png" alt />
           <div class="mr">
             <div class="mrt">
-              <span class="white40">-24%</span>
+              <span class="white40 DINAlternate-Bold">-24%</span>
             </div>
             <div class="mrb A3D5FF">同比增幅</div>
           </div>
@@ -177,26 +177,12 @@ export default {
           axisPointer: {
             type: "shadow",
           },
-          formatter: (params) => {
-            if (!params.length) return "";
-            let s = params[0].axisValueLabel + "<br/>";
-            for (const iterator of params) {
-              let d = iterator.data < 0 ? -iterator.data : iterator.data;
-              s +=
-                iterator.marker +
-                iterator.seriesName +
-                "：" +
-                d +
-                "%" +
-                "<br/>";
-            }
-            return s;
-          },
+          formatter: "{b}:{c}%",
         },
 
         grid: {
           left: "9%",
-          right: "9%",
+          right: "13%",
           bottom: "9%",
           top: "12%",
           containLabel: true,
@@ -206,17 +192,23 @@ export default {
           {
             type: "value",
             axisLabel: {
+              color: "#ffffff",
+              fontSize: 16,
               formatter: (value) => {
-                if (value < 0) return -value;
-                else return value;
+                if (value < 0) return -value + "%";
+                else return value + "%";
               },
             },
-
+            axisTick: {
+              alignWithLabel: true,
+              show: true,
+              inside: "top",
+            },
             splitLine: {
               show: false,
             },
             axisLine: {
-              show: false,
+              show: true,
               lineStyle: {
                 color: "#3A82CA",
               }, // 样式
@@ -226,9 +218,16 @@ export default {
         yAxis: [
           {
             type: "category",
+            interval: 0,
             axisTick: {
               alignWithLabel: true,
+              show: true,
+              lineStyle: {
+                color: "#3A82CA",
+              },
             },
+            boundaryGap: true,
+            offset: 20,
             data: this.yAxisData,
             axisLabel: {
               formatter: "{value}",
@@ -237,8 +236,8 @@ export default {
                 color: "#fff",
               },
             },
-
             splitLine: {
+              interval: 0,
               show: true,
               lineStyle: {
                 color: "#3A82CA",
@@ -258,6 +257,7 @@ export default {
             type: "bar",
             barWidth: 10,
             stack: "总量",
+            barCategoryGap: "20%",
 
             label: {
               normal: {
@@ -265,7 +265,7 @@ export default {
                 formatter: "{c}%",
                 position: "right",
                 textStyle: {
-                  color: "#fff",
+                  color: "#ffffff",
                   fontSize: 14,
                 },
               },
@@ -305,9 +305,13 @@ export default {
                   // 设置label的位置
                   position: item > 0 ? "right" : "left",
                   // 设置label的文字颜色
-                  color: "#6783EE",
+                  fontSize: 20,
+                  color: "#ffffff",
+                  fontFamily: "DIN Alternate Bold",
                   // 格式化label文字
-                  formatter: item > 0 ? "{c}%" : "{c}%",
+                  formatter: function (item) {
+                    return item.value + "%";
+                  },
                 },
               };
             }),
@@ -317,6 +321,10 @@ export default {
 
       // 使用刚指定的配置项和数据显示图表。
       myChart.setOption(option);
+      window.addEventListener("resize", () => {
+        // 自动渲染echarts
+        if (myChart) myChart.resize();
+      });
     },
     initYearChart() {
       let that = this;
@@ -330,19 +338,21 @@ export default {
           trigger: "axis",
           axisPointer: {
             type: "shadow",
-            
           },
         },
         legend: {
           x: "center",
-          y: "bottom",
+          // y: "bottom",
+          bottom: "2%",
           itemWidth: 10,
           itemHeight: 10,
+          fontFamily: "PingFangSC-Regular, PingFang SC",
           data: [
             {
               name: "核心区",
               icon: "rect",
               textStyle: {
+                fontSize: 16,
                 color: "#A3D5FF", // 图例文字颜色
               },
             },
@@ -350,6 +360,7 @@ export default {
               name: "大兴区",
               icon: "rect",
               textStyle: {
+                fontSize: 16,
                 color: "#A3D5FF", // 图例文字颜色
               },
             },
@@ -357,6 +368,7 @@ export default {
               name: "台马区",
               icon: "rect",
               textStyle: {
+                fontSize: 16,
                 color: "#A3D5FF", // 图例文字颜色
               },
             },
@@ -370,7 +382,6 @@ export default {
           containLabel: true,
         },
 
-       
         xAxis: [
           {
             type: "category",
@@ -382,11 +393,14 @@ export default {
               alignWithLabel: true,
               show: false,
             },
+            axisLabel: {
+              fontSize: 16,
+              color: "#ffffff",
+            },
             axisLine: {
               show: true,
               lineStyle: {
-                color: "#ffffff",
-                fontSize: 22,
+                color: "#3A82CA",
               }, // 样式
             },
           },
@@ -463,6 +477,8 @@ export default {
             name: "核心区",
             type: "bar",
             data: this.hxBarData,
+            barGap:0,
+            barWidth:10,
             itemStyle: {
               //通常情况下：
               normal: {
@@ -493,6 +509,8 @@ export default {
             name: "大兴区",
             type: "bar",
             data: this.dxBarData,
+            barGap:0,
+            barWidth:10,
             itemStyle: {
               //通常情况下：
               normal: {
@@ -523,6 +541,8 @@ export default {
             name: "台马区",
             type: "bar",
             data: this.tmBarData,
+            barGap:0,
+            barWidth:10,
             itemStyle: {
               //通常情况下：
               normal: {
@@ -600,6 +620,10 @@ export default {
 
       // 使用刚指定的配置项和数据显示图表。
       myChart.setOption(option);
+      window.addEventListener("resize", () => {
+        // 自动渲染echarts
+        if (myChart) myChart.resize();
+      });
     },
   },
 };
@@ -680,7 +704,7 @@ span {
 .downUp {
   color: #ffffff;
   font-size: 22px;
-  text-indent: 18px;
+  text-indent: 22px;
 }
 .downUp > img {
   width: 18px;
@@ -740,15 +764,5 @@ span {
   font-weight: 500;
   color: #ffffff;
   line-height: 25px;
-}
-.line {
-  width: 80px;
-  height: 4px;
-  background: url(../../assets/img/leftLine.png) no-repeat;
-}
-.lineReserve {
-  width: 80px;
-  height: 4px;
-  background: url(../../assets/img/rightLine.png) no-repeat;
 }
 </style>
