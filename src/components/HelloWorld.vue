@@ -55,13 +55,12 @@ export default {
 }
 .header{
   width: 100%;
-  height: 29px;
+  height: 70px;
   background: #000;
 }
 .mainBody{
   overflow: hidden;
   width: 100%;
-  height: calc(1024px - 29px);
   padding: 10px;
   box-sizing: border-box;
 }

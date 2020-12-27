@@ -152,7 +152,7 @@ export default {
             axisLine: {
               show: true,
               lineStyle: {
-                color: "#ffffff",
+                color: "#3A82CA",
                 fontSize: 22,
               }, // 样式
             },
@@ -160,6 +160,7 @@ export default {
             axisLabel: {
               interval: 0, //横轴信息全部显示
               rotate: 45, // 倾斜角度
+                color: "#ffffff",
               formatter: function (value) {
                 return value.length > 5
                   ? value.substring(0, 5) + "..."
@@ -322,10 +323,13 @@ export default {
   width: 100%;
   height: 320px;
   padding: 0 10px 10px;
+  box-sizing: border-box;
 }
 .chartWrap {
   width: 100%;
   height: 100%;
   background: url(../../assets/img/midBotBg.png) no-repeat;
+  background-size: 100% 100%;
+
 }
 </style>
