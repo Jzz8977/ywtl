@@ -1,7 +1,15 @@
 <template>
   <div class="wrap">
     <div class="header">
+      <div >1</div>
+      <div >1</div>
+      <div >1</div>
+      <div >1</div>
 
+      <div >1</div>
+      <div >1</div>
+      <div >1</div>
+      <div >1</div>
     </div>
     <div class="mainBody">
       <div class="left">
@@ -57,6 +65,9 @@ export default {
   width: 100%;
   height: 70px;
   background: #000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .mainBody{
   overflow: hidden;
@@ -75,4 +86,5 @@ export default {
   float: left;
   margin: 0 10px ;
 }
+
 </style>

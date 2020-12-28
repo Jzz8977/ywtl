@@ -58,7 +58,6 @@ this.getEnterpriseTypeData();
       let res = await this.$get(request.enterpriseTypeData,{
         action:'zongchanzhi '
       })
-      debugger
     }
   }
 };
