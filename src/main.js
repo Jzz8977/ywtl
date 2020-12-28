@@ -40,7 +40,7 @@ let cancel, promiseArr = {}
 const CancelToken = axios.CancelToken
     // 请求拦截器
 axios.interceptors.request.use(config => {
-    let token = store.state.token;
+    let token = request.token;
     if (token) { // 判断是否存在token，如果存在的话，则每个http header都加上token
         config.headers.Authorization = token;
         console.log('interceptors config=', config)
@@ -127,7 +127,7 @@ axios.defaults.withCredentials = false;
 // 设置默认请求头
 axios.defaults.headers = {
     'Content-Type': 'application/json;',
-    'X-AUTH-TOKEN': Cookies.get('bimToken')
+    'X-AUTH-TOKEN': request.token
 }
 axios.defaults.timeout = 10000
 

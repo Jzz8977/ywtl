@@ -5,8 +5,16 @@
 </template>
 
 <script>
+import {request}from '@/utils/api.js'
 export default {
-  name: 'App'
+  name: 'App',
+  async mounted(){
+    // let result = await this.$get(request.getUserPermissionByToken+'?token='+request.token+'&type=1');
+    // let result = await this.$post(request.getUserPermissionByToken,{
+    //   token:request.token,
+    //   type:1
+    // });
+  }
 }
 </script>
 

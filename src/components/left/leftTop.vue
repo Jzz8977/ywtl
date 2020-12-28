@@ -40,6 +40,7 @@
 </template>
 
 <script>
+import {request}from '@/utils/api.js'
 export default {
   name: "leftTop",
 
@@ -49,6 +50,17 @@ export default {
       time: "2020年1-8月",
     };
   },
+  mounted(){
+this.getEnterpriseTypeData();
+  },
+  methods:{
+    async getEnterpriseTypeData(){
+      let res = await this.$get(request.enterpriseTypeData,{
+        action:'zongchanzhi '
+      })
+      debugger
+    }
+  }
 };
 </script>
 
