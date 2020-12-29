@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import { request } from "@/utils/api.js";
 export default {
   name: "rightBot",
   data() {
@@ -29,18 +30,63 @@ export default {
         "11月",
         "12月",
       ],
+      legendArr: [],
       carData: [0, 7, 13, 19, 25, 25, 25, 25, 25],
       cityData: [0, 6, 12, 18, 23, 23, 23, 23, 23],
       robotData: [0, 5, 11, 17, 21, 21, 21, 21, 21],
       basicData: [0, 4, 10, 16, 20, 20, 20, 20, 20],
       technologyData: [0, 3, 15, 19, 19, 19, 19, 19],
       healthyData: [0, 2, 8, 14, 17, 17, 17, 17, 17],
+
+      series: [
+        {
+          name: "生物技术和大健康",
+          type: "line",
+          smooth: true,
+          symbolSize: 0,
+
+          data: this.carData,
+        },
+      ],
     };
   },
   mounted() {
-    this.initRankingChart();
+    this.getEconomicsSituationV2();
   },
   methods: {
+    async getEconomicsSituationV2() {
+      let res = await this.$get(request.monthCategoryDataV2, {});
+      // this.dataArr = res.data.data || [];
+      // debugger;
+      this.time = res.data.date || "";
+      this.title = res.data.title || "";
+      let arr = res.data.data || [];
+      let legendArr = [];
+      let series = [];
+      for (let i = 0; i < arr.length; i++) {
+        let obj = arr[i];
+        let seriesObj = {
+          name: obj.name,
+          type: "line",
+          smooth: true,
+          symbolSize: 0,
+          data: obj.data,
+        };
+        series.push(seriesObj);
+
+        let legendObj = {
+          name: obj.name,
+          icon: "rect",
+          textStyle: {
+            color: "#A3D5FF", // 图例文字颜色
+          },
+        };
+        legendArr.push(legendObj);
+      }
+      this.series = series;
+      this.legendArr = legendArr;
+      this.initRankingChart();
+    },
     initRankingChart() {
       let that = this;
       // 基于准备好的dom，初始化echarts实例
@@ -48,8 +94,15 @@ export default {
 
       // 指定图表的配置项和数据
       let option = {
-        color: ["#FFE700", "#7AFF77", "#59FCFF",'#318BFF', "#985BFF", "#F90CFD"],
-       
+        color: [
+          "#FFE700",
+          "#7AFF77",
+          "#59FCFF",
+          "#318BFF",
+          "#985BFF",
+          "#F90CFD",
+        ],
+
         tooltip: {
           trigger: "axis",
           axisPointer: {
@@ -58,79 +111,23 @@ export default {
           formatter: function (params) {
             let str = params[0].name + "<br/>";
             params.forEach((item) => {
-                str +=
-                  item.marker +
-                  item.seriesName +
-                  ": " +
-                  item.data +
-                  "亿元<br/>";
-             
+              str +=
+                item.marker + item.seriesName + ": " + item.data + "亿元<br/>";
             });
             return str;
           },
         },
-        legend: [
-          {
-            x: "center",
-            bottom: "8%",
-            itemWidth: 10,
-            itemHeight: 10,
-            fontSize:16,
-            data: [
-              {
-                name: "生物技术和大健康",
-                icon: "rect",
-                textStyle: {
-                  color: "#A3D5FF", // 图例文字颜色
-                },
-              },
-              {
-                name: "新一代信息技术",
-                icon: "rect",
-                textStyle: {
-                  color: "#A3D5FF", // 图例文字颜色
-                },
-              },
-              {
-                name: "基础与新材料",
-                icon: "rect",
-                textStyle: {
-                  color: "#A3D5FF", // 图例文字颜色
-                },
-              },
-            ],
-          },
-          {
-            x: "center",
-            y: "bottom",
-
-            itemWidth: 10,
-            itemHeight: 10,
-            data: [
-              {
-                name: "机器人和智能制造",
-                icon: "rect",
-                textStyle: {
-                  color: "#A3D5FF", // 图例文字颜色
-                },
-              },
-              {
-                name: "都市",
-                icon: "rect",
-                textStyle: {
-                  color: "#A3D5FF", // 图例文字颜色
-                },
-              },
-              {
-                name: "高端汽车及新能源汽车",
-                icon: "rect",
-                textStyle: {
-                  color: "#A3D5FF", // 图例文字颜色
-                },
-              },
-            ],
-          },
-        ],
+        legend: {
+          x: "center",
+          y:'bottom',
+          // bottom: "8%",
+          // align:'center',
+          width:350,
+          itemWidth: 10,
+          itemHeight: 10,
+          fontSize: 16,
+          data: this.legendArr,
+        },
         grid: {
           left: "6%",
           right: "5%",
@@ -162,7 +159,7 @@ export default {
             axisLabel: {
               interval: 0, //横轴信息全部显示
               color: "#ffffff",
-              fontSize:16,
+              fontSize: 16,
               formatter: function (value) {
                 return value.length > 5 ? value.substring(0, 5) + "..." : value;
               },
@@ -207,51 +204,7 @@ export default {
             },
           },
         ],
-        series: [
-          {
-            name: "生物技术和大健康",
-            type: "line",
-            smooth: true,
-            symbolSize: 0,
-
-            data: this.carData,
-          },
-          {
-            name: "新一代信息技术",
-            type: "line",
-            smooth: true,
-            symbolSize: 0,
-            data: this.cityData,
-          },
-          {
-            name: "基础与新材料",
-            type: "line",
-            smooth: true,
-            symbolSize: 0,
-            data: this.robotData,
-          },
-          {
-            name: "机器人和智能制造",
-            type: "line",
-            smooth: true,
-            symbolSize: 0,
-            data: this.basicData,
-          },
-          {
-            name: "都市",
-            type: "line",
-            smooth: true,
-            symbolSize: 0,
-            data: this.technologyData,
-          },
-          {
-            name: "高端汽车及新能源汽车",
-            type: "line",
-            data: this.healthyData,
-            smooth: true,
-            symbolSize: 0,
-          },
-        ],
+        series: this.series,
       };
 
       // 使用刚指定的配置项和数据显示图表。

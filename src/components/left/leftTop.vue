@@ -3,33 +3,33 @@
     <headerTit :title="title" :time="time"></headerTit>
 
     <div class="main">
-      <div class="card" v-for=" item in 4">
+      <div class="card" v-for=" item in dataArr">
         <div class="cardTop">
-          <div class="leftDiv">工业总产值</div>
+          <div class="leftDiv">{{item.title.slice(0,6)}}</div>
           <div class="midDiv">
             <div class="midDivP">
               <span>已完成</span>
-              <span class="yellow DINAlternate-Bold">3177.81</span>
+              <span class="yellow DINAlternate-Bold">{{item.date.complation}}</span>
               <span>亿元</span>
             </div>
             <div class="midDivP2">
               <span>全年目标</span>
-              <span class="white DINAlternate-Bold">4188</span>
+              <span class="white DINAlternate-Bold">{{item.date.target}}</span>
               <span>亿元</span>
             </div>
           </div>
           <div class="rightDiv">
             <div
-              :class="{'rightDivP':true, 'red':item>=2,'green':item<2,'DINAlternate-Bold':true}"
-            >+4.21%</div>
-            <div class="rightDivP2">同比增强</div>
+              :class="{'rightDivP':true,'colorC':item.date.trend==0, 'red':item.date.trend>0,'green':item.date.trend<0,'DINAlternate-Bold':true}"
+            >{{item.date.trend==0?'- -':item.date.trend+'%'}}</div>
+            <div class="rightDivP2">同比增1强</div>
           </div>
         </div>
         <div class="barWrap">
           <div class="bar">
-            <div class="barContent" :style="{'width': 4.38*10*item+'px'}"></div>
+            <div class="barContent" :style="{'width': 4.38*(item.date.tb-2)+'px'}"></div>
           </div>
-          <div class="barNum">{{item*10}}%</div>
+          <div class="barNum">{{item.date.tb}}%</div>
         </div>
       </div>
       <!-- <div class="card"></div>
@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import {request}from '@/utils/api.js'
+import { request } from "@/utils/api.js";
 export default {
   name: "leftTop",
 
@@ -48,22 +48,27 @@ export default {
     return {
       title: "核心区经济指标完成情况",
       time: "2020年1-8月",
+      dataArr: [],
     };
   },
-  mounted(){
-this.getEnterpriseTypeData();
+  mounted() {
+    this.getEnterpriseTypeData();
   },
-  methods:{
-    async getEnterpriseTypeData(){
-      let res = await this.$get(request.enterpriseTypeData,{
-        action:'zongchanzhi '
-      })
-    }
-  }
+  methods: {
+    async getEnterpriseTypeData() {
+      let res = await this.$get(request.coreAreaSituationV2, {});
+      this.dataArr = res.data.data || [];
+      this.time = res.data.date || "";
+      this.title = res.data.title || "";
+    },
+  },
 };
 </script>
 
 <style scoped>
+.colorC {
+  color: #ffffff;
+}
 .leftTop {
   width: 100%;
   height: 590px;
@@ -97,7 +102,7 @@ this.getEnterpriseTypeData();
 }
 .leftDiv {
   width: 128px;
-  font-size: 20px;
+  font-size: 19px;
   font-family: PingFangSC-Medium, PingFang SC;
   font-weight: 500;
   line-height: 28px;
@@ -115,7 +120,7 @@ this.getEnterpriseTypeData();
 }
 .rightDiv {
   width: 85px;
-  text-align: left;
+  text-align: center;
   padding: 0 10px;
 }
 .barWrap {
@@ -185,6 +190,4 @@ this.getEnterpriseTypeData();
   color: #ffffff;
   line-height: 22px;
 }
-
-
 </style>

@@ -4,6 +4,17 @@ export const request = {
 
     getUserPermissionByToken: '/allInOne/sys/permission/getUserPermissionByToken',
 
-    enterpriseTypeData: '/community/enterpriseType-data',
+
+
+    coreAreaSituationV2: '/gs/coreAreaSituationV2', //left top
+
+
+    top10SituationV2: "/gs/top10SituationV2", //left bottom
+
+    economicsSituationV2: '/gs/economicsSituationV2', //middle top
+    everyAreaAnalysisV2: '/gs/everyAreaAnalysisV2', //middle bottom
+
+    fixedSituationV2: '/gs/fixedSituationV2', //right top 
+    monthCategoryDataV2: '/gs/monthCategoryDataV2', //right bottom
 
 }

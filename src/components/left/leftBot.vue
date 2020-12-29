@@ -3,20 +3,26 @@
     <!-- 11 -->
     <headerTit :title="title" :time="time"></headerTit>
     <div class="main">
-      <div class="mainChildDiv" v-for="item in 6">
+      <div class="mainChildDiv" v-for="item in dataArr">
         <div class="barName">
-          <div :class="{'city':true,'yellow20':item==5}">广州经开区</div>
+          <div :class="{'city':true,'yellow20':item.name=='北京经开区'}">{{item.name}}</div>
           <div class="money">
-            <span :class="{'DINAlternate-Bold':true,'white':true,'yellow26':item===5}">3572.95</span>
+            <span :class="{'DINAlternate-Bold':true,'white':true,'yellow26':item.name=='北京经开区'}">{{item.value}}</span>
             <span class>亿元</span>
           </div>
           <div class="compare">
             同比
-            <span :class="{'DINAlternate-Bold':true,'white':true,'red22':item==5}" style="font-size:22px">-4.03%</span>
+            <span
+              :class="{'DINAlternate-Bold':true,'white':true,'red22':item.name=='北京经开区'}"
+              style="font-size:22px;margin-left:5px"
+            >{{item.percentages}}%</span>
           </div>
         </div>
         <div class="bar">
-          <div :class="{'barContent':item!=5,'barContent50':item==5}" :style="{'width': 4.38*(10*10)+'px'}"></div>
+          <div
+            :class="{'barContent':item!=5,'barContent50':item==5}"
+            :style="{'width': 4.38*(10*10)+'px'}"
+          ></div>
         </div>
       </div>
     </div>
@@ -24,13 +30,26 @@
 </template>
 
 <script>
+import { request } from "@/utils/api.js";
 export default {
   name: "leftBot",
   data() {
     return {
       title: "国家级经济开发区工业总产值排名",
       time: "2020年1-8月",
+      dataArr:[]
     };
+  },
+  mounted() {
+    this.getTop10SituationV2();
+  },
+  methods: {
+    async getTop10SituationV2() {
+      let res = await this.$get(request.top10SituationV2, {});
+      this.dataArr = res.data.data || [];
+      this.time = res.data.date || "";
+      this.title = res.data.titel || "";
+    },
   },
 };
 </script>
@@ -100,7 +119,6 @@ export default {
   height: 100%;
   position: relative;
   opacity: 0.6;
-
 }
 .barContent::after {
   content: ".";
@@ -113,11 +131,9 @@ export default {
   border-right: 9px solid transparent;
 }
 .barContent50 {
-
-background: linear-gradient(270deg, #CAFF00 0%, #FFA000 100%);
+  background: linear-gradient(270deg, #caff00 0%, #ffa000 100%);
   height: 100%;
   position: relative;
-
 }
 .barContent50::after {
   content: ".";
@@ -126,7 +142,7 @@ background: linear-gradient(270deg, #CAFF00 0%, #FFA000 100%);
   top: 0;
   width: 0;
   height: 0;
-  border-top: 17px solid #CAFF00;
+  border-top: 17px solid #caff00;
   border-right: 9px solid transparent;
 }
 </style>

@@ -4,14 +4,17 @@
     <div class="main">
       <div class="mainTop">
         <div class="borederBot">
-          <div class="border-left padding20">
+          <div
+            :class="{'border-left':i!=2, 'padding20':true,'w154px':i==1}"
+            v-for="(item,i) in fixedDataSum"
+          >
             <p>
-              <span class="yellow34 DINAlternate-Bold">400</span>
-              <span>亿元</span>
+              <span :class="{'yellow34':i==0, 'DINAlternate-Bold':true,'white34':i!=0}">{{item.val}}</span>
+              <span>{{item.danWei}}</span>
             </p>
-            <p>经开区固投</p>
+            <p>{{item.title}}</p>
           </div>
-          <div class="border-left padding20 w154px">
+          <!-- <div class="border-left padding20 w154px">
             <p>
               <span class="white34 DINAlternate-Bold">+57.18%</span>
               <span>亿</span>
@@ -24,15 +27,29 @@
               <span></span>
             </p>
             <p>同比增幅</p>
-          </div>
+          </div>-->
         </div>
         <div class="borederBot noBorder">
-          <div class="border-leftReserve padding20">
+          <div
+            :class="{'border-leftReserve':i!=2, 'padding20':true,'w154px':i==1}"
+            v-for="(item,i) in fixedData"
+          >
             <p>
-              <span>核心区</span>
+              <span>{{item.title}}</span>
             </p>
-            <p class="margin alignLeft">
-              <i>固投:</i>
+            <div v-for="(itemm,a) in item.data">
+              <p
+                :class="{'margin':a==0, 'alignLeft':true}"
+                :style="{'text-indent:30px!important':a!=0}"
+              >
+                <i class="size14">{{itemm.title}}:</i>
+                <!-- <i class="size16">{{itemm.val}}</i> -->
+                <i class="size16">{{itemm.val.slice(0,4)}}</i>
+                <i class="size14">{{itemm.danWei}}</i>
+              </p>
+            </div>
+            <!-- <p class="margin alignLeft">
+              <i>{固投}:</i>
               <i class="size16">123</i>
               <i>亿元</i>
             </p>
@@ -40,9 +57,9 @@
               <i>建安:</i>
               <i class="size16">75</i>
               <i>亿元</i>
-            </p>
+            </p>-->
           </div>
-          <div class="border-leftReserve w154px padding20">
+          <!-- <div class="border-leftReserve w154px padding20">
             <p>
               <span>大兴部分</span>
             </p>
@@ -71,17 +88,15 @@
               <i class="size16">75</i>
               <i class="size14">亿元</i>
             </p>
-          </div>
+          </div>-->
         </div>
       </div>
       <div class="chartWrap">
         <div class="chartWrapOut">
           <div class="chartTitleWrap">
-            <div>&nbsp;</div>
             <div class="line"></div>
-            <div class="chartTitle">经开区本年固投建安与增速分析</div>
+            <div class="chartTitle">{{titleChart}}</div>
             <div class="lineReserve"></div>
-            <div>&nbsp;</div>
           </div>
           <div class="chartWrapIn">
             <div class="name">
@@ -128,6 +143,7 @@
 </template>
 
 <script>
+import { request } from "@/utils/api.js";
 export default {
   name: "rightTop",
   data() {
@@ -136,7 +152,7 @@ export default {
       time: "2020年1-8月",
       yMax: null,
       xData: [2019, 2020],
-      jkYB1Data: [40, 40],
+      jkYB1Data: [80, 40],
       jkYB2Data: [40, 40],
 
       hxFZData: [],
@@ -144,42 +160,92 @@ export default {
       hxYB2Data: [20, 20],
 
       tmFZData: [],
-      tmYB1Data: [10, 10],
+      tmYB1Data: [50, 10],
       tmYB2Data: [10, 10],
 
       dxYB1Data: [10, 10],
       dxYB2Data: [10, 10],
+      fixedDataSum: [],
+      fixedData: [],
+      titleChart: "",
     };
   },
   mounted() {
-    let a, b;
-    a = this.jkYB1Data[0] + this.jkYB2Data[0];
-    b = this.jkYB1Data[0] + this.jkYB2Data[0];
-    if (a >= b) {
-      this.yMax = a;
-    } else {
-      this.yMax = b;
-    }
-    let tmArr = [];
-    this.dxYB1Data.forEach((v, i) => {
-      let a = v + this.dxYB2Data[i];
-      tmArr.push(a);
-    });
-    this.tmFZData = tmArr;
-    
-    let arr = [];
-    this.hxYB1Data.forEach((v, i) => {
-      let a = v + this.tmFZData[i];
-      arr.push(a);
-    });
-    this.hxFZData = arr;
-    this.initSum();
-    this.initHxChart();
-    this.initTmChart();
-    this.initDxChart();
+    this.getFixedSituationV2();
+    this.initAll()
   },
   methods: {
-    initAll() {},
+    async getFixedSituationV2() {
+      let res = await this.$get(request.fixedSituationV2, {});
+      let dataArr = res.data.data || [];
+      this.time = res.data.date || "";
+      this.title = res.data.title || "";
+
+      this.fixedData = dataArr.fixedData; //核心 大兴 台马 固投和建安数据
+      this.fixedDataSum = dataArr.fixedDataSum; //经开区固投
+      // let fixedAnalysis = dataArr.fixedAnalysis; //ƒ图表
+      // console.log(fixedAnalysis, "123123");
+
+      // this.titleChart = fixedAnalysis.title;
+      // this.subArr(fixedAnalysis.data);
+    },
+    subArr(arr) {
+      arr.forEach((v) => {
+        // v.name=
+        if (v.name == "经开区") {
+          this.jkYB1Data = this.objToArr(v.jianAn);
+          this.jkYB2Data = this.objToArr(v.guTou);
+        } else if (v.name == "核心区") {
+          this.hxYB1Data = this.objToArr(v.jianAn);
+          this.hxYB2Data = this.objToArr(v.guTou);
+        } else if (v.name == "台马部分") {
+          this.tmYB1Data = this.objToArr(v.jianAn);
+          this.tmYB2Data = this.objToArr(v.guTou);
+        } else if (v.name == "大兴部分") {
+          this.dxYB1Data = this.objToArr(v.jianAn);
+          this.dxYB2Data = this.objToArr(v.guTou);
+        }
+      });
+
+      this.initAll();
+    },
+    objToArr(obj) {
+      let arr = [];
+      arr[0] = obj["2019"]-0;
+      arr[1] = obj["2020"]-0;
+      return arr;
+    },
+    initAll() {
+      let a, b;
+      a = this.jkYB1Data[0]+ this.jkYB2Data[0];
+      b = this.jkYB1Data[1]+ this.jkYB2Data[1];
+      // debugger
+      if (a >= b) {
+        this.yMax = a;
+      } else {
+        this.yMax = b;
+      }
+      let tmArr = [];
+      // debugger;
+      this.dxYB1Data.forEach((v, i) => {
+        let a = v + this.dxYB2Data[i];
+        tmArr.push(a);
+      });
+      this.tmFZData = tmArr;
+
+      let arr = [];
+      this.hxYB1Data.forEach((v, i) => {
+        let a = v + this.tmFZData[i];
+      // debugger
+        arr.push(a);
+      });
+      debugger
+      this.hxFZData = arr;
+      this.initSum();
+      this.initHxChart();
+      this.initTmChart();
+      this.initDxChart();
+    },
     initSum() {
       let that = this;
       var myChart = this.$echarts.init(document.getElementById("SumChart"));
@@ -1019,6 +1085,28 @@ i {
 .borederBot > div > p > i {
   font-style: normal;
 }
+/* !============ */
+.borederBot > div > div > p,
+.borederBot > div > div > p > span {
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #a3d5ff;
+  line-height: 25px;
+}
+.borederBot > div > div > p {
+  font-size: 18px;
+}
+.borederBot > div > div > p > span {
+  font-size: 18px;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #ffffff;
+  line-height: 25px;
+}
+.borederBot > div > div > p > i {
+  font-style: normal;
+}
+/* !============ */
 .padding20 {
   padding: 20px 0;
 }
@@ -1037,6 +1125,9 @@ i {
   text-indent: 18px;
 }
 .border-leftReserve > p > i {
+  font-size: 14px;
+}
+.border-leftReserve > div > p > i {
   font-size: 14px;
 }
 

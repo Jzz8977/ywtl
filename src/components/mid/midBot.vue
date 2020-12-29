@@ -8,80 +8,95 @@
 </template>
 
 <script>
+import { request } from "@/utils/api.js";
 export default {
   name: "midBot",
   data() {
     return {
-      title: "北京市各区工业总产值及增速比较分析",
-      time: "2020年1-8月",
+      title: "",
+      time: "",
       //   产值 / 增速
-      xAxisMonth: [
-        "通州区",
-        "朝阳区",
-        "门头沟区",
-        "西城区",
-        "亦庄开发区",
-        "石景山区",
-        "海淀区",
-        "朝阳区",
-        "昌平区",
-        "房山区",
-        "怀柔区",
-        "延庆区",
-        "平谷区",
-        "密云区",
-        "大兴区",
-        "丰台区",
-        "东城区",
-      ],
+      xAxisMonth: [],
+      zsData:[],
+      czData:[],
+      // [
+      //   "通州区",
+      //   "朝阳区",
+      //   "门头沟区",
+      //   "西城区",
+      //   "亦庄开发区",
+      //   "石景山区",
+      //   "海淀区",
+      //   "朝阳区",
+      //   "昌平区",
+      //   "房山区",
+      //   "怀柔区",
+      //   "延庆区",
+      //   "平谷区",
+      //   "密云区",
+      //   "大兴区",
+      //   "丰台区",
+      //   "东城区",
+      // ],
       // 核心区
-      czData: [
-        50,
-        80,
-        90,
-        100,
-        50,
-        80,
-        90,
-        100,
-        50,
-        80,
-        90,
-        100,
-        50,
-        80,
-        90,
-        100,
-        50,
-        80,
-      ],
-      // 台马区
-      zsData: [
-        50,
-        10,
-        100,
-        200,
-        50,
-        10,
-        100,
-        200,
-        50,
-        10,
-        100,
-        200,
-        50,
-        10,
-        100,
-        200,
-        50,
-        10,
-      ],
+      // czData: [
+      //   50,
+      //   80,
+      //   90,
+      //   100,
+      //   50,
+      //   80,
+      //   90,
+      //   100,
+      //   50,
+      //   80,
+      //   90,
+      //   100,
+      //   50,
+      //   80,
+      //   90,
+      //   100,
+      //   50,
+      //   80,
+      // ],
+      // // 台马区
+      // zsData: [
+      //   50,
+      //   10,
+      //   100,
+      //   200,
+      //   50,
+      //   10,
+      //   100,
+      //   200,
+      //   50,
+      //   10,
+      //   100,
+      //   200,
+      //   50,
+      //   10,
+      //   100,
+      //   200,
+      //   50,
+      //   10,
+      // ],
     };
   },
-  mounted() {
-    this.initSpeedChart();
+  created() {
+    this.getEveryAreaAnalysisV2()
   },
   methods: {
+    async getEveryAreaAnalysisV2() {
+      let res = await this.$get(request.everyAreaAnalysisV2, {});
+      this.dataArr = res.data.data || [];
+      this.time = res.data.date || "";
+      this.title = res.data.title || "";
+      this.xAxisMonth = res.data.name||[];
+      this.zsData = res.data.outValData||[];
+      this.czData = res.data.increaseData||[];
+      this.initSpeedChart();
+
+    },
     initSpeedChart() {
       let that = this;
       // 基于准备好的dom，初始化echarts实例
@@ -183,7 +198,6 @@ export default {
               alignWithLabel: true,
               show: false,
             },
-            data: this.yAxisData,
             axisLabel: {
               formatter: "{value}",
               textStyle: {
@@ -215,7 +229,6 @@ export default {
               alignWithLabel: true,
               show: false,
             },
-            data: this.yAxisData,
             axisLabel: {
               formatter: "{value}%",
               textStyle: {
@@ -252,11 +265,9 @@ export default {
                 //每个柱子的颜色即为colorList数组里的每一项，如果柱子数目多于colorList的长度，则柱子颜色循环使用该数组
                 color: function (params) {
                   var colorList;
-                  if (params.value < 0) {
-                    colorList = ["#0072FF", "#96D1FF"];
-                  } else {
+                
                     colorList = ["#00B7FF", "#96FEFF"];
-                  }
+                 
                   return new that.$echarts.graphic.LinearGradient(0, 1, 1, 0, [
                     {
                       offset: 0,
@@ -285,11 +296,9 @@ export default {
                 //每个柱子的颜色即为colorList数组里的每一项，如果柱子数目多于colorList的长度，则柱子颜色循环使用该数组
                 color: function (params) {
                   var colorList;
-                  if (params.value < 0) {
-                    colorList = ["#0072FF", "#96D1FF"];
-                  } else {
+                 
                     colorList = ["#FF8E00", "#FFEA37"];
-                  }
+                  
                   return new that.$echarts.graphic.LinearGradient(0, 1, 1, 0, [
                     {
                       offset: 0,

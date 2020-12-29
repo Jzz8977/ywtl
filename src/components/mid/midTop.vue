@@ -4,17 +4,21 @@
     <headerTit :title="title" :time="time"></headerTit>
     <div class="main">
       <div class="mainTop">
-        <div class="up">
-          <img src="../../assets/img/moneyChart.png" alt />
+        <div class="up" v-for="(item,i) in outValSumData">
+          <img src="../../assets/img/moneyChart.png" v-if="i==0" alt />
+          <img src="../../assets/img/lineChart.png" v-else-if="i==1" alt />
+          <img src="../../assets/img/pieChart.png" v-else-if="i==2" alt />
           <div class="mr">
             <div class="mrt">
-              <span class="yellow44 DINAlternate-Bold">3577.118</span>
-              <span>亿元</span>
+              <span class="yellow44 DINAlternate-Bold" v-if="i==0">{{item.val}}</span>
+              <span class="white40 DINAlternate-Bold" v-if="i==1">{{item.val}}</span>
+              <span class="white40 DINAlternate-Bold" v-else-if="i==2">{{item.val}}%</span>
+              <span>{{item.danWei}}</span>
             </div>
-            <div class="mrb">经开区工业总产值</div>
+            <div class="mrb">{{item.title}}</div>
           </div>
         </div>
-        <div class="up">
+        <!-- <div class="up">
           <img src="../../assets/img/lineChart.png" alt />
           <div class="mr">
             <div class="mrt">
@@ -34,31 +38,32 @@
             <div class="mrb A3D5FF">同比增幅</div>
           </div>
           <div>&nbsp;</div>
-        </div>
-        <div class="down">
+        </div>-->
+        <div class="down" v-for="(item,i) in outValData">
           <div class="downUp">
             <img src="../../assets/img/diamond.png" alt />
-            <span>核心区</span>
-            <span class="yellow34 DINAlternate-Bold">3527.71</span>
+            <span>{{item.chanZhiName}}</span>
+            <span class="yellow34 DINAlternate-Bold">{{item.chanZhiNum}}</span>
             <span>亿元</span>
           </div>
           <div class="downBot">
             <div>
-              <p>同步增长</p>
+              <p>{{item.tongBiName}}</p>
+              <!-- <p>同比增长</p> -->
               <p>
-                <span class="white24">141.12</span>
-                <span>亿元</span>
+                <span class="white24">{{item.tongBiNum}}</span>
+                <span>{{item.tongBiDanWei}}</span>
               </p>
             </div>
             <div>
-              <p>同比增幅</p>
+              <p>{{item.zengFuName}}</p>
               <p>
-                <span class="white24">4.17%</span>
+                <span class="white24">{{item.zengFuNum}}{{item.zengFuDanWei}}</span>
               </p>
             </div>
           </div>
         </div>
-        <div class="down">
+        <!-- <div class="down">
           <div class="downUp">
             <img src="../../assets/img/diamond.png" alt />
             <span>大兴部分</span>
@@ -103,7 +108,7 @@
               </p>
             </div>
           </div>
-        </div>
+        </div>-->
       </div>
       <div class="mainBot">
         <div class="chartWrap">
@@ -111,7 +116,7 @@
             <div>&nbsp;</div>
             <div>&nbsp;</div>
             <div class="line"></div>
-            <div class="chartTitle">总产值增速区域对比</div>
+            <div class="chartTitle">{{titleLeft}}</div>
             <div class="lineReserve"></div>
             <div>&nbsp;</div>
             <div>&nbsp;</div>
@@ -124,7 +129,7 @@
           <div class="chartTitleWrap">
             <div>&nbsp;</div>
             <div class="line"></div>
-            <div class="chartTitle">经开区本年度产值与增速</div>
+            <div class="chartTitle">{{titleRight}}</div>
             <div class="lineReserve"></div>
             <div>&nbsp;</div>
           </div>
@@ -138,6 +143,7 @@
 </template>
 
 <script>
+import { request } from "@/utils/api.js";
 export default {
   name: "midTop",
   data() {
@@ -158,13 +164,115 @@ export default {
       // 台马区
       tmBarData: [50, 10, 100, 200],
       tmLineData: [80, 70, 50, 100],
+
+      outValSumData: [],
+      outValData: [],
+      IncreaseData: [],
+      outValIncreaseMonthData: [],
+      titleLeft: "",
+      titleRight: "",
     };
   },
   mounted() {
-    this.initAreaChart();
+    this.getEconomicsSituationV2();
     this.initYearChart();
   },
   methods: {
+    async getEconomicsSituationV2() {
+      let res = await this.$get(request.economicsSituationV2, {});
+      // this.dataArr = res.data.data || [];
+      this.time = res.data.date || "";
+      this.title = res.data.title || "";
+      this.outValSumData = res.data.data.outValSumData || []; //经开区 经开区产值
+      let arr = res.data.data.outValData || []; // 核心区 大兴部分 台马部分 产值数据
+
+      this.outValData = this.subArr(arr);
+
+      let IncreaseData = res.data.data.IncreaseData || []; //leftC "总产值增速区域对比"
+      this.titleLeft = IncreaseData.title;
+      let data = IncreaseData.data;
+      let objLeft = this.subChart(data);
+      this.yAxisData = objLeft.legendArr;
+      this.xAxisData = objLeft.dataArr;
+      this.initAreaChart();
+
+      let outValIncreaseMonthData = res.data.data.outValIncreaseMonthData || []; //rightC "经开区本年度产值与增速"
+      this.titleRight = outValIncreaseMonthData.title;
+      let dataRight = outValIncreaseMonthData.data;
+      this.subChartRight(dataRight);
+      this.initYearChart();
+
+      // debugger;
+      // this.yAxisData = objRight.dataArr;
+    },
+    // 核心区 同比变化 同比增幅
+    subArr(arr) {
+      // 过滤数组
+      let outValDataArr = [];
+      arr.forEach((element) => {
+        let brr = element;
+        let useObj = {
+          chanZhiName: "",
+          chanZhiNum: "",
+          chanZhiDanWei: "",
+
+          tongBiName: "",
+          tongBiNum: "",
+          tongBiDanWei: "",
+
+          zengFuName: "",
+          zengFuNum: "",
+          zengFuDanWei: "",
+        };
+        brr.forEach((element) => {
+          let obj = element;
+          if (obj["title"].indexOf("幅") != -1) {
+            useObj.zengFuName = obj["title"];
+            useObj.zengFuNum = obj["val"];
+            useObj.zengFuDanWei = obj["danWei"];
+          } else if (obj["title"].indexOf("值") != -1) {
+            useObj.tongBiName = obj["title"];
+            useObj.tongBiNum = obj["val"];
+            useObj.tongBiDanWei = obj["danWei"];
+          } else {
+            useObj.chanZhiName = obj["title"];
+            useObj.chanZhiNum = obj["val"];
+            useObj.chanZhiDanWei = obj["danWei"];
+          }
+        });
+        outValDataArr.push(useObj);
+      });
+      return outValDataArr;
+    },
+    subChart(arr) {
+      let legendArr = [];
+      let dataArr = [];
+      arr.forEach((v) => {
+        legendArr.push(v.name);
+        dataArr.push(v.val);
+      });
+      return {
+        legendArr,
+        dataArr,
+      };
+    },
+    subChartRight(arr) {
+      let legendArr = [];
+      let outValDataArr = [];
+      let increaseDataArr = [];
+      arr.forEach((v) => {
+        if (v.name === "核心区") {
+          this.hxBarData = v.outValData;
+          this.hxLineData = v.increaseData;
+        } else if (v.name == "大兴地区") {
+          this.dxBarData = v.outValData;
+          this.dxLineData = v.increaseData;
+        } else if (v.name == "台马地区") {
+          this.tmBarData = v.outValData;
+          this.tmLineData = v.increaseData;
+        }
+      });
+    },
     initAreaChart() {
       let that = this;
       // 基于准备好的dom，初始化echarts实例
@@ -181,7 +289,7 @@ export default {
         },
 
         grid: {
-          left: "9%",
+          left: "10%",
           right: "13%",
           bottom: "9%",
           top: "12%",
@@ -227,7 +335,7 @@ export default {
               },
             },
             boundaryGap: true,
-            offset: 20,
+            offset: 40,
             data: this.yAxisData,
             axisLabel: {
               formatter: "{value}",
@@ -417,7 +525,7 @@ export default {
               alignWithLabel: true,
               show: false,
             },
-            data: this.yAxisData,
+            data: this.yAxisDataRight,
             axisLabel: {
               formatter: "{value}",
               textStyle: {
@@ -477,8 +585,8 @@ export default {
             name: "核心区",
             type: "bar",
             data: this.hxBarData,
-            barGap:0,
-            barWidth:10,
+            barGap: 0,
+            barWidth: 10,
             itemStyle: {
               //通常情况下：
               normal: {
@@ -509,8 +617,8 @@ export default {
             name: "大兴区",
             type: "bar",
             data: this.dxBarData,
-            barGap:0,
-            barWidth:10,
+            barGap: 0,
+            barWidth: 10,
             itemStyle: {
               //通常情况下：
               normal: {
@@ -541,8 +649,8 @@ export default {
             name: "台马区",
             type: "bar",
             data: this.tmBarData,
-            barGap:0,
-            barWidth:10,
+            barGap: 0,
+            barWidth: 10,
             itemStyle: {
               //通常情况下：
               normal: {
