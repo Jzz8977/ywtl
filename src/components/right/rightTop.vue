@@ -127,11 +127,11 @@
             </div>
             <div>
               <span style="background:#318BFF"></span>
-              固投
+              建安
             </div>
             <div>
               <span style="background:#93FDFF"></span>
-              固投
+              同比变化
             </div>
             <div></div>
             <div></div>
@@ -160,7 +160,7 @@ export default {
       hxYB2Data: [20, 20],
 
       tmFZData: [],
-      tmYB1Data: [50, 10],
+      tmYB1Data: [30, 10],
       tmYB2Data: [10, 10],
 
       dxYB1Data: [10, 10],
@@ -183,11 +183,11 @@ export default {
 
       this.fixedData = dataArr.fixedData; //核心 大兴 台马 固投和建安数据
       this.fixedDataSum = dataArr.fixedDataSum; //经开区固投
-      // let fixedAnalysis = dataArr.fixedAnalysis; //ƒ图表
-      // console.log(fixedAnalysis, "123123");
+      let fixedAnalysis = dataArr.fixedAnalysis; //ƒ图表
+      console.log(fixedAnalysis, "123123");
 
-      // this.titleChart = fixedAnalysis.title;
-      // this.subArr(fixedAnalysis.data);
+      this.titleChart = fixedAnalysis.title;
+      this.subArr(fixedAnalysis.data);
     },
     subArr(arr) {
       arr.forEach((v) => {
@@ -211,8 +211,8 @@ export default {
     },
     objToArr(obj) {
       let arr = [];
-      arr[0] = obj["2019"]-0;
-      arr[1] = obj["2020"]-0;
+      arr[0] = (obj["2019"]-0)/1000;
+      arr[1] = (obj["2020"]-0)/1000;
       return arr;
     },
     initAll() {
@@ -233,13 +233,13 @@ export default {
       });
       this.tmFZData = tmArr;
 
-      let arr = [];
-      this.hxYB1Data.forEach((v, i) => {
-        let a = v + this.tmFZData[i];
-      // debugger
-        arr.push(a);
-      });
-      debugger
+      let arr = [];console.log(this.hxYB1Data,this.hxYB2Data,this.tmFZData);
+ 
+      let x= this.tmYB1Data[0] +this.tmYB2Data[0]  + this.tmFZData[0];
+      let x2=this.tmYB1Data[1]  + this.tmYB2Data[1]  + this.tmFZData[1];
+        arr.push(x);
+        arr.push(x2);
+
       this.hxFZData = arr;
       this.initSum();
       this.initHxChart();
@@ -297,7 +297,7 @@ export default {
         },
         yAxis: {
           type: "value",
-          name: "亿元   ",
+          name: "亿元                 ",
           nameTextStyle: {
             color: "#06FEF7",
           },
@@ -305,6 +305,7 @@ export default {
             alignWithLabel: true,
             show: false,
           },
+          max:this.yMax,
           data: this.yAxisData,
           axisLabel: {
             formatter: "{value}",
@@ -400,7 +401,7 @@ export default {
             data: this.jkYB1Data,
             type: "line",
             stack: 2,
-            data: [40, 40],
+            // data: [40, 40],
             color: "#00FFFD",
           },
           {
@@ -408,7 +409,6 @@ export default {
             stack: 2,
             type: "line",
             data: this.jkYB2Data,
-
             color: "#00FFFD",
           },
         ],
@@ -473,14 +473,14 @@ export default {
           nameTextStyle: {
             color: "#06FEF7",
           },
-          max: this.max,
+          max: this.yMax,
           axisTick: {
             alignWithLabel: true,
             show: false,
           },
           data: this.yAxisData,
           axisLabel: {
-            show: false,
+            show: false,////
             formatter: "{value}",
             textStyle: {
               //改变刻度字体样式
@@ -888,6 +888,8 @@ export default {
           nameTextStyle: {
             color: "#06FEF7",
           },
+        
+
           max: this.yMax,
           axisTick: {
             alignWithLabel: true,
