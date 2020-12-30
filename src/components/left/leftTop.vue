@@ -3,7 +3,7 @@
     <headerTit :title="title" :time="time"></headerTit>
 
     <div class="main">
-      <div class="card" v-for=" item in dataArr">
+      <div class="card" v-for=" (item,i) in dataArr">
         <div class="cardTop">
           <div class="leftDiv">{{item.title.slice(0,6)}}</div>
           <div class="midDiv">
@@ -22,7 +22,8 @@
             <div
               :class="{'rightDivP':true,'colorC':item.date.trend==0, 'red':item.date.trend>0,'green':item.date.trend<0,'DINAlternate-Bold':true}"
             >{{item.date.trend==0?'- -':item.date.trend+'%'}}</div>
-            <div class="rightDivP2">同比增1强</div>
+            <div class="rightDivP2" v-if="i==0">同比增强</div>
+            <div class="rightDivP2" v-else>同期对比</div>
           </div>
         </div>
         <div class="barWrap">

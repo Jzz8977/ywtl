@@ -17,8 +17,8 @@ export default {
       time: "",
       //   产值 / 增速
       xAxisMonth: [],
-      zsData:[],
-      czData:[],
+      zsData: [],
+      czData: [],
       // [
       //   "通州区",
       //   "朝阳区",
@@ -83,7 +83,7 @@ export default {
     };
   },
   created() {
-    this.getEveryAreaAnalysisV2()
+    this.getEveryAreaAnalysisV2();
   },
   methods: {
     async getEveryAreaAnalysisV2() {
@@ -91,11 +91,10 @@ export default {
       this.dataArr = res.data.data || [];
       this.time = res.data.date || "";
       this.title = res.data.title || "";
-      this.xAxisMonth = res.data.name||[];
-      this.zsData = res.data.outValData||[];
-      this.czData = res.data.increaseData||[];
+      this.xAxisMonth = res.data.name || [];
+      this.zsData = res.data.outValData || [];
+      this.czData = res.data.increaseData || [];
       this.initSpeedChart();
-
     },
     initSpeedChart() {
       let that = this;
@@ -191,6 +190,21 @@ export default {
           {
             type: "value",
             name: "总产值/亿元    ",
+            max: function (value) {
+              if (Math.abs(value.max) > Math.abs(value.min)) {
+                return (Math.abs(value.max) * 1.2).toFixed(2);
+              } else {
+                return (Math.abs(value.min) * 1.2).toFixed(2);
+              }
+            },
+            min: function (value) {
+              if (Math.abs(value.max) > Math.abs(value.min)) {
+                return (-Math.abs(value.max) * 1.2).toFixed(2);
+              } else {
+                return (-Math.abs(value.min) * 1.2).toFixed(2);
+              }
+            },
+
             nameTextStyle: {
               color: "#06FEF7",
             },
@@ -225,6 +239,21 @@ export default {
               color: "#06FEF7",
             },
             type: "value",
+            max: function (value) {
+              if (Math.abs(value.max) > Math.abs(value.min)) {
+                return (Math.abs(value.max) * 1.2).toFixed(2);
+              } else {
+                return (Math.abs(value.min) * 1.2).toFixed(2);
+              }
+            },
+            min: function (value) {
+              if (Math.abs(value.max) > Math.abs(value.min)) {
+                return (-Math.abs(value.max) * 1.2).toFixed(2);
+              } else {
+                return (-Math.abs(value.min) * 1.2).toFixed(2);
+              }
+            },
+
             axisTick: {
               alignWithLabel: true,
               show: false,
@@ -255,8 +284,8 @@ export default {
           {
             name: "产值",
             type: "bar",
-            barWidth: 10,
-            barGap:0,
+            barWidth: 20,
+            barGap: 0,
             data: this.zsData,
             itemStyle: {
               //通常情况下：
@@ -265,9 +294,9 @@ export default {
                 //每个柱子的颜色即为colorList数组里的每一项，如果柱子数目多于colorList的长度，则柱子颜色循环使用该数组
                 color: function (params) {
                   var colorList;
-                
-                    colorList = ["#00B7FF", "#96FEFF"];
-                 
+
+                  colorList = ["#00B7FF", "#96FEFF"];
+
                   return new that.$echarts.graphic.LinearGradient(0, 1, 1, 0, [
                     {
                       offset: 0,
@@ -285,7 +314,7 @@ export default {
           {
             name: "增速",
             type: "bar",
-            barWidth: 10,
+            barWidth: 20,
             data: this.czData,
             symbolSize: 0,
             yAxisIndex: 1,
@@ -296,9 +325,9 @@ export default {
                 //每个柱子的颜色即为colorList数组里的每一项，如果柱子数目多于colorList的长度，则柱子颜色循环使用该数组
                 color: function (params) {
                   var colorList;
-                 
-                    colorList = ["#FF8E00", "#FFEA37"];
-                  
+
+                  colorList = ["#FF8E00", "#FFEA37"];
+
                   return new that.$echarts.graphic.LinearGradient(0, 1, 1, 0, [
                     {
                       offset: 0,

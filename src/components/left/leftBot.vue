@@ -3,7 +3,7 @@
     <!-- 11 -->
     <headerTit :title="title" :time="time"></headerTit>
     <div class="main">
-      <div class="mainChildDiv" v-for="item in dataArr">
+      <div class="mainChildDiv" v-for="(item,i) in dataArr">
         <div class="barName">
           <div :class="{'city':true,'yellow20':item.name=='北京经开区'}">{{item.name}}</div>
           <div class="money">
@@ -20,8 +20,8 @@
         </div>
         <div class="bar">
           <div
-            :class="{'barContent':item!=5,'barContent50':item==5}"
-            :style="{'width': 4.38*(10*10)+'px'}"
+            :class="{'barContent':i!=4,'barContent50':i==4}"
+            :style="{'width': 4.38*(item.value/max*100)+'px'}"
           ></div>
         </div>
       </div>
@@ -37,7 +37,8 @@ export default {
     return {
       title: "国家级经济开发区工业总产值排名",
       time: "2020年1-8月",
-      dataArr:[]
+      dataArr:[],
+      max:0,
     };
   },
   mounted() {
@@ -49,6 +50,7 @@ export default {
       this.dataArr = res.data.data || [];
       this.time = res.data.date || "";
       this.title = res.data.titel || "";
+     this.max = Math.max.apply(Math, this.dataArr.map(function(o) {return o.value}))
     },
   },
 };

@@ -111,8 +111,12 @@ export default {
           formatter: function (params) {
             let str = params[0].name + "<br/>";
             params.forEach((item) => {
+              let b = item.seriesName
+              if(item.seriesName.length>4){
+                b = b.slice(0,6)
+              }
               str +=
-                item.marker + item.seriesName + ": " + item.data + "亿元<br/>";
+                item.marker + b + ": " + item.data + "亿元<br/>";
             });
             return str;
           },

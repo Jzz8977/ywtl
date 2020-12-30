@@ -13,6 +13,7 @@
         <div class="headerRight">风险预警</div>
         <div class="headerRight">经济AI</div>
       </div>
+      <div class="headerAntherBg"></div>
     </div>
     <div class="mainBody">
       <div class="left">
@@ -70,6 +71,15 @@ export default {
   background-size: 100% 100%;
   justify-content: space-between;
   /* align-items: center; */
+  position: relative;
+}
+.headerAntherBg{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: url(../assets/img/headerAntherBg.png) no-repeat;
+  z-index: -1;
+  /* background: red; */
 }
 .header > div > div {
   float: left;

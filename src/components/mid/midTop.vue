@@ -48,8 +48,8 @@
           </div>
           <div class="downBot">
             <div>
-              <p>{{item.tongBiName}}</p>
-              <!-- <p>同比增长</p> -->
+              <!-- <p>{{item.tongBiName}}</p> -->
+              <p>同比增长</p>
               <p>
                 <span class="white24">{{item.tongBiNum}}</span>
                 <span>{{item.tongBiDanWei}}</span>
@@ -171,11 +171,15 @@ export default {
       outValIncreaseMonthData: [],
       titleLeft: "",
       titleRight: "",
+      yBarMax: "",
+      yBarMin: "",
+      yLineMax: "",
+      yLineMin: "",
     };
   },
   mounted() {
     this.getEconomicsSituationV2();
-    this.initYearChart();
+    // this.initYearChart();
   },
   methods: {
     async getEconomicsSituationV2() {
@@ -272,6 +276,18 @@ export default {
           this.tmLineData = v.increaseData;
         }
       });
+      this.subMax();
+      this.subLineMax()
+    },
+    subMax() {
+      let a = this.hxBarData.concat(this.dxBarData, this.tmBarData);
+      this.yBarMax = Math.max(...a);
+      this.yBarMin = Math.min(...a);
+    },
+    subLineMax() {
+      let a = this.hxLineData.concat(this.dxLineData, this.tmLineData);
+      this.yLineMax = Math.max(...a);
+      this.yLineMin = Math.min(...a);
     },
     initAreaChart() {
       let that = this;
@@ -447,6 +463,29 @@ export default {
           axisPointer: {
             type: "shadow",
           },
+          formatter: function (params, ticket, callback) {
+            var showHtm = "";
+            var month = params[0].name;
+            for (var i = 0; i < params.length; i++) {
+              let obj = params[i];
+              //x轴名称
+
+              var name = obj.name;
+              //名称
+              var text = obj.seriesName;
+              //值
+              var value = obj.value;
+              if (i > 2) {
+                text += "增速";
+                value += "%";
+              } else {
+                text += "产值";
+                value += "亿元";
+              }
+              showHtm += text + ":" + value + "<br/>";
+            }
+            return month + "<br/>" + showHtm;
+          },
         },
         legend: {
           x: "center",
@@ -525,7 +564,6 @@ export default {
               alignWithLabel: true,
               show: false,
             },
-            data: this.yAxisDataRight,
             axisLabel: {
               formatter: "{value}",
               textStyle: {
@@ -533,7 +571,9 @@ export default {
                 color: "#fff",
               },
             },
-
+            max: this.yBarMax,
+            // min: this.yBarMin,
+            
             splitLine: {
               show: false,
               lineStyle: {
@@ -552,6 +592,9 @@ export default {
             nameTextStyle: {
               color: "#06FEF7",
             },
+            max: this.yLineMax,
+            // min: this.yLineMin,
+            interval:10,
             type: "value",
             axisTick: {
               alignWithLabel: true,

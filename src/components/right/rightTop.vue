@@ -40,11 +40,11 @@
             <div v-for="(itemm,a) in item.data">
               <p
                 :class="{'margin':a==0, 'alignLeft':true}"
-                :style="{'text-indent:30px!important':a!=0}"
+                :style="{'text-indent:30px!important':a!=0,'white-space:nowrap;':true}"
               >
                 <i class="size14">{{itemm.title}}:</i>
                 <!-- <i class="size16">{{itemm.val}}</i> -->
-                <i class="size16">{{itemm.val.slice(0,4)}}</i>
+                <i class="size16">{{itemm.val}}</i>
                 <i class="size14">{{itemm.danWei}}</i>
               </p>
             </div>
@@ -105,7 +105,7 @@
               <div>台马部分</div>
               <div>大兴部分</div>
             </div>
-            <div id="SumChart" class="midTopChart" style="width:120px">
+            <div id="SumChart" class="midTopChart" style="width:150px">
               <!-- 经开区本年固投建安与增速分析 -->
             </div>
             <div id="hxChart" class="midTopChart">
@@ -211,8 +211,8 @@ export default {
     },
     objToArr(obj) {
       let arr = [];
-      arr[0] = (obj["2019"]-0)/1000;
-      arr[1] = (obj["2020"]-0)/1000;
+      arr[0] = (obj["2019"]-0);
+      arr[1] = (obj["2020"]-0);
       return arr;
     },
     initAll() {
@@ -251,11 +251,17 @@ export default {
       var myChart = this.$echarts.init(document.getElementById("SumChart"));
       let option = {
         tooltip: {
-          trigger: "axis",
-          axisPointer: {
+          trigger: "item",
             position: "right",
-            type: "shadow",
-          },
+           formatter:function( params, ticket, callback){
+            if(params.seriesName =='辅助'){
+              return ''
+            }else{
+              return  params.name +'<br/>'+params.seriesName+':'+params.value
+            }
+
+         
+          }
         },
         grid: {
           left: "5%",
@@ -333,7 +339,7 @@ export default {
         },
         series: [
           {
-            name: "2019年",
+            name: "建安",
             type: "bar",
             stack: "1",
             data: this.jkYB1Data,
@@ -365,7 +371,8 @@ export default {
             },
           },
           {
-            name: "2020年",
+            // name: "2020年",
+            name: "固投",
             stack: "1",
             type: "bar",
             data: this.jkYB2Data,
@@ -397,7 +404,7 @@ export default {
             },
           },
           {
-            name: "2019年",
+            name: "同比变化",
             data: this.jkYB1Data,
             type: "line",
             stack: 2,
@@ -405,7 +412,7 @@ export default {
             color: "#00FFFD",
           },
           {
-            name: "2020年",
+            name: "同比变化",
             stack: 2,
             type: "line",
             data: this.jkYB2Data,
@@ -425,10 +432,19 @@ export default {
       var myChart = this.$echarts.init(document.getElementById("hxChart"));
       let option = {
         tooltip: {
-          trigger: "axis",
+          trigger: "item",
           axisPointer: {
             type: "shadow",
           },
+          formatter:function( params, ticket, callback){
+            if(params.seriesName =='辅助'){
+              return ''
+            }else{
+              return  params.name +'<br/>'+params.seriesName+':'+params.value
+            }
+
+         
+          }
         },
         grid: {
           left: "0%",
@@ -542,7 +558,7 @@ export default {
             type: "line",
           },
           {
-            name: "2019年",
+            name: "建安",
             type: "bar",
             barWidth: 10,
             stack: "1",
@@ -574,7 +590,7 @@ export default {
             },
           },
           {
-            name: "2020年",
+            name: "固投",
             stack: "1",
             type: "bar",
             data: this.hxYB2Data,
@@ -605,7 +621,7 @@ export default {
             },
           },
           {
-            name: "2019年",
+            name: "同比变化",
             type: "line",
             stack: 2,
             data: this.hxYB1Data,
@@ -613,7 +629,7 @@ export default {
             color: "#00FFFD",
           },
           {
-            name: "2020年",
+            name: "同比变化",
             stack: 2,
             type: "line",
             data: this.hxYB2Data,
@@ -633,10 +649,21 @@ export default {
       var myChart = this.$echarts.init(document.getElementById("tmChart"));
       let option = {
         tooltip: {
-          trigger: "axis",
+          trigger: "item",
           axisPointer: {
             type: "shadow",
           },
+          // formatter:'{b}<br />{a}{c}'
+          formatter:function( params, ticket, callback){
+            if(params.seriesName =='辅助'){
+              return ''
+            }else{
+              return  params.name +'<br/>'+params.seriesName+':'+params.value
+            }
+
+         
+          }
+          
         },
         grid: {
           left: "0%",
@@ -750,7 +777,7 @@ export default {
             type: "line",
           },
           {
-            name: "2019年",
+            name: "建安",
             type: "bar",
             barWidth: 10,
             stack: "1",
@@ -782,7 +809,7 @@ export default {
             },
           },
           {
-            name: "2020年",
+            name: "固投",
             stack: "1",
             type: "bar",
             data: this.tmYB2Data,
@@ -813,14 +840,14 @@ export default {
             },
           },
           {
-            name: "2019年",
+            name: "同比变化",
             type: "line",
             stack: 2,
             data: this.tmYB1Data,
             color: "#00FFFD",
           },
           {
-            name: "2020年",
+            name: "同比变化",
             stack: 2,
             type: "line",
             data: this.tmYB2Data,
@@ -840,10 +867,20 @@ export default {
       var myChart = this.$echarts.init(document.getElementById("dxChart"));
       let option = {
         tooltip: {
-          trigger: "axis",
+          trigger: "item",
           axisPointer: {
             type: "shadow",
           },
+          formatter:function( params, ticket, callback){
+            if(params.seriesName =='辅助'){
+              return ''
+            }else{
+              return  params.name +'<br/>'+params.seriesName+':'+params.value
+            }
+
+         
+          }
+          
         },
         grid: {
           left: "0%",
@@ -923,7 +960,8 @@ export default {
         },
         series: [
           {
-            name: "2019年",
+            name: "建安",
+
             type: "bar",
             barWidth: 10,
             stack: "1",
@@ -955,7 +993,7 @@ export default {
             },
           },
           {
-            name: "2020年",
+            name: "固投",
             stack: "1",
             type: "bar",
             data: this.dxYB2Data,
@@ -986,14 +1024,14 @@ export default {
             },
           },
           {
-            name: "2019年",
+            name: "同比变化",
             type: "line",
             stack: 2,
             data: this.dxYB1Data,
             color: "#00FFFD",
           },
           {
-            name: "2020年",
+            name: "同比变化",
             stack: 2,
             type: "line",
             data: this.dxYB2Data,
@@ -1124,7 +1162,7 @@ i {
 .alignLeft {
   text-align: left !important;
   width: 100%;
-  text-indent: 18px;
+  /* text-indent: 18px; */
 }
 .border-leftReserve > p > i {
   font-size: 14px;
@@ -1170,7 +1208,7 @@ i {
 }
 .midTopChart {
   float: left;
-  width: 100px;
+  width: 90px;
   height: 100%;
 }
 .name {
