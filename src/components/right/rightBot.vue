@@ -104,6 +104,8 @@ export default {
         ],
 
         tooltip: {
+          textStyle: { fontSize: 18 },
+          padding: 10,
           trigger: "axis",
           axisPointer: {
             type: "shadow",
@@ -111,31 +113,32 @@ export default {
           formatter: function (params) {
             let str = params[0].name + "<br/>";
             params.forEach((item) => {
-              let b = item.seriesName
-              if(item.seriesName.length>4){
-                b = b.slice(0,6)
+              let b = item.seriesName;
+              if (item.seriesName.length > 4) {
+                b = b.slice(0, 6);
               }
-              str +=
-                item.marker + b + ": " + item.data + "亿元<br/>";
+              str += item.marker + b + ": " + item.data + "亿元<br/>";
             });
             return str;
           },
         },
         legend: {
           x: "center",
-          y:'bottom',
+          y: "bottom",
           // bottom: "8%",
           // align:'center',
-          width:350,
-          itemWidth: 10,
-          itemHeight: 10,
-          fontSize: 16,
+          width: 450,
+          itemWidth: 15,
+          itemHeight: 15,
+          textStyle:{
+            fontSize:16,
+          },
           data: this.legendArr,
         },
         grid: {
           left: "6%",
           right: "5%",
-          bottom: "15%",
+          bottom: "16%",
           top: "15%",
           containLabel: true,
         },
@@ -144,6 +147,7 @@ export default {
           {
             type: "category",
             data: this.xAxisMonth,
+            boundaryGap:false,
             splitLine: {
               show: false,
             },

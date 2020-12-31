@@ -150,20 +150,20 @@ export default {
     return {
       title: "国家级经济开发区工业总产值排名",
       time: "2020年1-8月",
-      yAxisData: ["大兴部分", "大兴区", "核心区", "通州区", "台马部分"],
-      xAxisData: ["-10", "-5", 10, 20, 100],
+      yAxisData: [],
+      xAxisData: [],
 
       //   产值 / 增速
-      xAxisMonth: ["1月", "2月", "3月", "4月"],
+      xAxisMonth: ['1-2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
       // 核心区
-      hxBarData: [20, 30, 200, 200],
-      hxLineData: [50, 80, 90, 100],
+      hxBarData: [],
+      hxLineData: [],
       // 大兴区
-      dxBarData: [80, 70, 250, 100],
-      dxLineData: [20, 30, 60, 100],
+      dxBarData: [],
+      dxLineData: [],
       // 台马区
-      tmBarData: [50, 10, 100, 200],
-      tmLineData: [80, 70, 50, 100],
+      tmBarData: [],
+      tmLineData: [],
 
       outValSumData: [],
       outValData: [],
@@ -205,8 +205,7 @@ export default {
       let dataRight = outValIncreaseMonthData.data;
       this.subChartRight(dataRight);
       this.initYearChart();
-
-      // debugger;
+      // debugger
       // this.yAxisData = objRight.dataArr;
     },
     // 核心区 同比变化 同比增幅
@@ -276,8 +275,19 @@ export default {
           this.tmLineData = v.increaseData;
         }
       });
+      // this.subMonthArr();
       this.subMax();
-      this.subLineMax()
+      this.subLineMax();
+    },
+    subMonthArr() {
+      let a = this.hxBarData.length;
+      let month = new Date();
+      month = month.getMonth();
+      let arr = [];
+      for (let i = 0; i < a; i++) {
+        arr.unshift(month - i + "月");
+      }
+      this.xAxisMonth = arr;
     },
     subMax() {
       let a = this.hxBarData.concat(this.dxBarData, this.tmBarData);
@@ -297,6 +307,8 @@ export default {
       // 指定图表的配置项和数据
       let option = {
         tooltip: {
+          textStyle: { fontSize: 18 },
+          padding: 10,
           trigger: "axis",
           axisPointer: {
             type: "shadow",
@@ -305,8 +317,8 @@ export default {
         },
 
         grid: {
-          left: "10%",
-          right: "13%",
+          left: "13%",
+          right: "15%",
           bottom: "9%",
           top: "12%",
           containLabel: true,
@@ -459,10 +471,12 @@ export default {
       let option = {
         color: ["#00FFFD", "#FFE700", "#1890FF"],
         tooltip: {
+          textStyle: { fontSize: 18 },
           trigger: "axis",
           axisPointer: {
             type: "shadow",
           },
+          padding: 10,
           formatter: function (params, ticket, callback) {
             var showHtm = "";
             var month = params[0].name;
@@ -491,8 +505,8 @@ export default {
           x: "center",
           // y: "bottom",
           bottom: "2%",
-          itemWidth: 10,
-          itemHeight: 10,
+          itemWidth: 15,
+          itemHeight: 15,
           fontFamily: "PingFangSC-Regular, PingFang SC",
           data: [
             {
@@ -522,10 +536,10 @@ export default {
           ],
         },
         grid: {
-          left: "9%",
-          right: "9%",
+          left: "5%",
+          right: "5%",
           bottom: "14%",
-          top: "12%",
+          top: "17%",
           containLabel: true,
         },
 
@@ -573,7 +587,7 @@ export default {
             },
             max: this.yBarMax,
             // min: this.yBarMin,
-            
+
             splitLine: {
               show: false,
               lineStyle: {
@@ -594,7 +608,7 @@ export default {
             },
             max: this.yLineMax,
             // min: this.yLineMin,
-            interval:10,
+            interval: 10,
             type: "value",
             axisTick: {
               alignWithLabel: true,

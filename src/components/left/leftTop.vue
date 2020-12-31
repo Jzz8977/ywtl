@@ -22,7 +22,7 @@
             <div
               :class="{'rightDivP':true,'colorC':item.date.trend==0, 'red':item.date.trend>0,'green':item.date.trend<0,'DINAlternate-Bold':true}"
             >{{item.date.trend==0?'- -':item.date.trend+'%'}}</div>
-            <div class="rightDivP2" v-if="i==0">同比增强</div>
+            <div class="rightDivP2" v-if="item.title!=='地方级收入'">同比增幅</div>
             <div class="rightDivP2" v-else>同期对比</div>
           </div>
         </div>

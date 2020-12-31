@@ -105,6 +105,8 @@ export default {
       let option = {
         color: ["#93FDFF", "#FFE700"],
         tooltip: {
+          textStyle: { fontSize: 18 },
+          padding: 10,
           trigger: "axis",
           axisPointer: {
             type: "shadow",
@@ -114,13 +116,12 @@ export default {
             params.forEach((item) => {
               if (item.seriesName == "产值") {
                 str +=
-                  item.marker +
                   item.seriesName +
                   ": " +
                   item.data +
                   "亿元<br/>";
               } else if (item.seriesName == "增速") {
-                str += item.marker + item.seriesName + ": " + item.data + "%";
+                str +=  item.seriesName + ": " + item.data + "%";
               }
             });
             return str;
@@ -128,9 +129,13 @@ export default {
         },
         legend: {
           x: "center",
-          y: "top",
-          itemWidth: 10,
-          itemHeight: 10,
+          top: "1%",
+          itemWidth: 15,
+          itemHeight: 15,
+          textStyle:{
+          fontSize:16,
+
+          },
           data: [
             {
               name: "产值",
@@ -176,6 +181,7 @@ export default {
             },
 
             axisLabel: {
+              fontSize:16,
               interval: 0, //横轴信息全部显示
               rotate: 45, // 倾斜角度
               color: "#ffffff",
@@ -284,7 +290,7 @@ export default {
           {
             name: "产值",
             type: "bar",
-            barWidth: 20,
+            barWidth: 15,
             barGap: 0,
             data: this.zsData,
             itemStyle: {
@@ -314,7 +320,7 @@ export default {
           {
             name: "增速",
             type: "bar",
-            barWidth: 20,
+            barWidth: 15,
             data: this.czData,
             symbolSize: 0,
             yAxisIndex: 1,
@@ -363,7 +369,8 @@ export default {
   width: 924px;
   height: 385px;
   background: url(../../assets/img/midBot.png) no-repeat;
-  overflow: hidden;
+  /* overflow: hidden; */
+  border: 1px solid transparent;
 }
 .main {
   width: 100%;

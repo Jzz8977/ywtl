@@ -151,28 +151,35 @@ export default {
       title: "经开区固投情况",
       time: "2020年1-8月",
       yMax: null,
-      xData: [2019, 2020],
-      jkYB1Data: [80, 40],
-      jkYB2Data: [40, 40],
+      xData: [],
+      jkYB1Data: [],
+      jkYB2Data: [],
 
       hxFZData: [],
-      hxYB1Data: [20, 20],
-      hxYB2Data: [20, 20],
+      hxYB1Data: [],
+      hxYB2Data: [],
 
       tmFZData: [],
-      tmYB1Data: [30, 10],
-      tmYB2Data: [10, 10],
+      tmYB1Data: [],
+      tmYB2Data: [],
 
-      dxYB1Data: [10, 10],
-      dxYB2Data: [10, 10],
+      dxYB1Data: [],
+      dxYB2Data: [],
       fixedDataSum: [],
       fixedData: [],
       titleChart: "",
+      year:null,
     };
   },
   mounted() {
+    let date = new Date();
+   let year = this.year =  date.getFullYear();
+    let arr = [];
+    arr.push(year - 1);
+    arr.push(year);
+    this.xData = arr;
     this.getFixedSituationV2();
-    this.initAll()
+    this.initAll();
   },
   methods: {
     async getFixedSituationV2() {
@@ -211,14 +218,14 @@ export default {
     },
     objToArr(obj) {
       let arr = [];
-      arr[0] = (obj["2019"]-0);
-      arr[1] = (obj["2020"]-0);
+      arr[0] = obj[this.year-1+''] - 0;
+      arr[1] = obj[this.year+''] - 0;
       return arr;
     },
     initAll() {
       let a, b;
-      a = this.jkYB1Data[0]+ this.jkYB2Data[0];
-      b = this.jkYB1Data[1]+ this.jkYB2Data[1];
+      a = this.jkYB1Data[0] + this.jkYB2Data[0];
+      b = this.jkYB1Data[1] + this.jkYB2Data[1];
       // debugger
       if (a >= b) {
         this.yMax = a;
@@ -233,12 +240,13 @@ export default {
       });
       this.tmFZData = tmArr;
 
-      let arr = [];console.log(this.hxYB1Data,this.hxYB2Data,this.tmFZData);
- 
-      let x= this.tmYB1Data[0] +this.tmYB2Data[0]  + this.tmFZData[0];
-      let x2=this.tmYB1Data[1]  + this.tmYB2Data[1]  + this.tmFZData[1];
-        arr.push(x);
-        arr.push(x2);
+      let arr = [];
+      console.log(this.hxYB1Data, this.hxYB2Data, this.tmFZData);
+
+      let x = this.tmYB1Data[0] + this.tmYB2Data[0] + this.tmFZData[0];
+      let x2 = this.tmYB1Data[1] + this.tmYB2Data[1] + this.tmFZData[1];
+      arr.push(x);
+      arr.push(x2);
 
       this.hxFZData = arr;
       this.initSum();
@@ -251,17 +259,19 @@ export default {
       var myChart = this.$echarts.init(document.getElementById("SumChart"));
       let option = {
         tooltip: {
+          textStyle: { fontSize: 18 },
+          padding: 10,
           trigger: "item",
-            position: "right",
-           formatter:function( params, ticket, callback){
-            if(params.seriesName =='辅助'){
-              return ''
-            }else{
-              return  params.name +'<br/>'+params.seriesName+':'+params.value
+          position: "right",
+          formatter: function (params, ticket, callback) {
+            if (params.seriesName == "辅助") {
+              return "";
+            } else {
+              return (
+                params.name + "<br/>" + params.seriesName + ":" + params.value
+              );
             }
-
-         
-          }
+          },
         },
         grid: {
           left: "5%",
@@ -311,7 +321,7 @@ export default {
             alignWithLabel: true,
             show: false,
           },
-          max:this.yMax,
+          max: this.yMax,
           data: this.yAxisData,
           axisLabel: {
             formatter: "{value}",
@@ -432,19 +442,21 @@ export default {
       var myChart = this.$echarts.init(document.getElementById("hxChart"));
       let option = {
         tooltip: {
+          textStyle: { fontSize: 18 },
+          padding: 10,
           trigger: "item",
           axisPointer: {
             type: "shadow",
           },
-          formatter:function( params, ticket, callback){
-            if(params.seriesName =='辅助'){
-              return ''
-            }else{
-              return  params.name +'<br/>'+params.seriesName+':'+params.value
+          formatter: function (params, ticket, callback) {
+            if (params.seriesName == "辅助") {
+              return "";
+            } else {
+              return (
+                params.name + "<br/>" + params.seriesName + ":" + params.value
+              );
             }
-
-         
-          }
+          },
         },
         grid: {
           left: "0%",
@@ -496,7 +508,7 @@ export default {
           },
           data: this.yAxisData,
           axisLabel: {
-            show: false,////
+            show: false, ////
             formatter: "{value}",
             textStyle: {
               //改变刻度字体样式
@@ -649,21 +661,22 @@ export default {
       var myChart = this.$echarts.init(document.getElementById("tmChart"));
       let option = {
         tooltip: {
+          textStyle: { fontSize: 18 },
+          padding: 10,
           trigger: "item",
           axisPointer: {
             type: "shadow",
           },
           // formatter:'{b}<br />{a}{c}'
-          formatter:function( params, ticket, callback){
-            if(params.seriesName =='辅助'){
-              return ''
-            }else{
-              return  params.name +'<br/>'+params.seriesName+':'+params.value
+          formatter: function (params, ticket, callback) {
+            if (params.seriesName == "辅助") {
+              return "";
+            } else {
+              return (
+                params.name + "<br/>" + params.seriesName + ":" + params.value
+              );
             }
-
-         
-          }
-          
+          },
         },
         grid: {
           left: "0%",
@@ -867,20 +880,21 @@ export default {
       var myChart = this.$echarts.init(document.getElementById("dxChart"));
       let option = {
         tooltip: {
+          textStyle: { fontSize: 18 },
+          padding: 10,
           trigger: "item",
           axisPointer: {
             type: "shadow",
           },
-          formatter:function( params, ticket, callback){
-            if(params.seriesName =='辅助'){
-              return ''
-            }else{
-              return  params.name +'<br/>'+params.seriesName+':'+params.value
+          formatter: function (params, ticket, callback) {
+            if (params.seriesName == "辅助") {
+              return "";
+            } else {
+              return (
+                params.name + "<br/>" + params.seriesName + ":" + params.value
+              );
             }
-
-         
-          }
-          
+          },
         },
         grid: {
           left: "0%",
@@ -925,7 +939,6 @@ export default {
           nameTextStyle: {
             color: "#06FEF7",
           },
-        
 
           max: this.yMax,
           axisTick: {
@@ -1179,7 +1192,7 @@ i {
   position: relative;
 }
 .chartWrapOut {
-  width: calc(100% - 20px);
+  width:100%;
   height: 100%;
   background: url(../../assets/img/rightBotBg.png) no-repeat;
   background-size: 100% 100%;
@@ -1208,7 +1221,7 @@ i {
 }
 .midTopChart {
   float: left;
-  width: 90px;
+  width: 100px;
   height: 100%;
 }
 .name {
@@ -1249,8 +1262,8 @@ i {
   line-height: 22px;
 }
 .legend > div > span {
-  width: 10px;
-  height: 10px;
+  width: 15px;
+  height: 15px;
   margin-right: 10px;
 }
 .margin {
