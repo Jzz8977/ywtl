@@ -127,7 +127,7 @@ axios.defaults.withCredentials = false;
 // 设置默认请求头
 axios.defaults.headers = {
     'Content-Type': 'application/json;',
-    'X-AUTH-TOKEN': request.token
+    'X-Access-Token': request.token
 }
 axios.defaults.timeout = 10000
 

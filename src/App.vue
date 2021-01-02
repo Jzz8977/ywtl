@@ -70,7 +70,7 @@ export default {
     }
   },
   async mounted(){
-    // let result = await this.$get(request.getUserPermissionByToken+'?token='+request.token+'&type=1');
+   
     // result = this.res;
     // let menu = result.result.menu;
     // console.log(menu);

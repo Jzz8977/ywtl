@@ -2,16 +2,21 @@
   <div class="wrap">
     <div class="header">
       <div class="navWrap1">
-        <div class="headerLeft">运行调度</div>
-        <div class="headerLeft">产业集群</div>
+        <div class="headerLeft" v-for="(item) in menu1" @click="toPath(item)">{{item.meta.title}}</div>
+        <!-- <div class="headerLeft">产业集群</div>
         <div class="headerLeft">园区楼宇</div>
-        <div class="headerLeft">产业链分析</div>
+        <div class="headerLeft">产业链分析</div>-->
       </div>
       <div class="navWrap2">
-        <div class="headerRight" style="font-size:16px">“五新”重点项目</div>
-        <div class="headerRight">企业群落</div>
+        <div
+          class="headerRight"
+          :style="{'font-size:16px':item2.meta.title.length>5}"
+          v-for="(item2) in menu2"
+          @click="toPath(item2)"
+        >{{item2.meta.title}}</div>
+        <!-- <div class="headerRight">企业群落</div>
         <div class="headerRight">风险预警</div>
-        <div class="headerRight">经济AI</div>
+        <div class="headerRight">经济AI</div>-->
       </div>
       <div class="headerAntherBg"></div>
     </div>
@@ -33,6 +38,7 @@
 </template>
 
 <script>
+import { request } from "@/utils/api.js";
 import leftTop from "./left/leftTop";
 import leftBot from "./left/leftBot";
 import rightTop from "./right/rightTop";
@@ -50,7 +56,34 @@ export default {
     midTop,
   },
   data() {
-    return {};
+    return {
+      menu1: [],
+      menu2: [],
+    };
+  },
+  async created() {
+    let result = await this.$get(
+      request.getUserPermissionByToken + "?token=" + request.token + "&type=1"
+    );
+    let menu = result.data.result.menu;
+    menu.shift();
+    menu.shift();
+    let menu1 = [];
+    let menu2 = [];
+    menu.forEach((v, i) => {
+      if (i < 4) {
+        menu1.push(v);
+      } else {
+        menu2.push(v);
+      }
+    });
+    this.menu1 = menu1;
+    this.menu2 = menu2;
+  },
+  methods: {
+    toPath(item) {
+      location.href =request.lineURL+ item.path;
+    },
   },
 };
 </script>
@@ -73,7 +106,7 @@ export default {
   /* align-items: center; */
   position: relative;
 }
-.headerAntherBg{
+.headerAntherBg {
   position: absolute;
   width: 100%;
   height: 100%;
