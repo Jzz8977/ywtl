@@ -62,7 +62,6 @@ export default {
     };
   },
   async created() {
-    debugger
     let result = await this.$get(
       request.getUserPermissionByToken + "?token=" + request.token + "&type=1"
     );
@@ -83,7 +82,7 @@ export default {
   },
   methods: {
     toPath(item) {
-      location.href =request.lineURL+ item.path;
+      location.href = request.lineURL + item.path;
     },
   },
 };
@@ -95,6 +94,7 @@ export default {
   width: 100%;
   height: 100%;
   background: url(../../assets/img/bg.png) no-repeat;
+  background-size: 100% 100%;
 }
 .header {
   width: 100%;
@@ -112,6 +112,8 @@ export default {
   width: 100%;
   height: 100%;
   background: url(../../assets/img/headerAntherBg.png) no-repeat;
+  background-size: 100% 100%;
+
   z-index: -1;
   /* background: red; */
 }
@@ -138,29 +140,36 @@ export default {
 }
 .headerLeft {
   background: url(../../assets/img/navBtnLeft.png) no-repeat;
+  background-size: 100% 100%;
+
   margin-left: -33px;
 }
 .headerRight {
   background: url(../../assets/img/navBtnRight.png) no-repeat;
+  background-size: 100% 100%;
+
   margin-left: -33px;
 }
 .mainBody {
   clear: both;
   overflow: hidden;
   width: 100%;
+  height: calc(100% - 75px);
   padding: 10px;
   box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
 }
 .left,
 .right {
   width: 478px;
   height: 100%;
-  float: left;
+  /* float: left; */
 }
 .mid {
   width: 924px;
   height: 100%;
-  float: left;
+  /* float: left; */
   margin: 0 10px;
 }
 </style>

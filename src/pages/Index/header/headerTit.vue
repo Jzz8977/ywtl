@@ -1,6 +1,6 @@
 <template>
   <div class="title">
-    <div class="word" :class="{'pointer':url}" @click="toDetail">{{title}}</div>
+    <div class="word" :style="{'cursor:pointer':url}" @click="toDetail">{{title}}</div>
     <div class="time">{{time}}</div>
   </div>
 </template>
@@ -11,7 +11,7 @@ export default {
   props: ["title", "time", "url"],
   methods: {
     toDetail() {
-      if (this.url) location.href = this.url
+      if (this.url) location.href = url;
     },
   },
 };
@@ -27,14 +27,13 @@ export default {
     justify-content: space-between;
     align-items: center; */
   border: 0;
-    
 }
 .word {
   min-width: 258px;
   height: 41px;
   padding-left: 21px;
   box-sizing: border-box;
-  background: url(../../assets/img/headerTitleBg.png) -10px center no-repeat;
+  background: url(../../../assets/img/headerTitleBg.png) -10px center no-repeat;
     background-size: 100% 100%;
 
   font-size: 20px;
@@ -42,7 +41,6 @@ export default {
   font-weight: 600;
   color: #ffffff;
   float: left;
-  
 }
 .time {
   font-size: 18px;
@@ -53,8 +51,5 @@ export default {
   font-weight: 400;
   color: #a3d5ff;
   line-height: 41px;
-}
-.pointer{
-  cursor: pointer;
 }
 </style>

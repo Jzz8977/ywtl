@@ -21,7 +21,7 @@
         <div class="bar">
           <div
             :class="{'barContent':i!=4,'barContent50':i==4}"
-            :style="{'width': 4.38*(item.value/max*100)+'px'}"
+            :style="{'width': (item.value/max*100)+'%'}"
           ></div>
         </div>
       </div>
@@ -63,6 +63,8 @@ export default {
   width: 100%;
   height: 385px;
   background: url(../../../assets/img/leftBot.png) no-repeat;
+    background-size: 100% 100%;
+
   overflow: hidden;
 }
 .main {
@@ -80,7 +82,7 @@ export default {
   margin-top: 0;
 }
 .barName {
-  overflow: hidden;
+  /* overflow: hidden; */
   font-size: 20px;
   color: #ffffff;
   line-height: 28px;
@@ -89,7 +91,7 @@ export default {
 .barName > div {
 }
 .city {
-  width: 200px;
+  width: 180px;
   flex: 1;
 }
 .money {
@@ -97,7 +99,8 @@ export default {
   font-size: 16px;
   color: #ffffff;
   line-height: 22px;
-  word-break: keep-all;
+  /* word-break: keep-all; */
+  white-space: nowrap;
 }
 .compare {
   display: flex;
@@ -124,7 +127,7 @@ export default {
   opacity: 0.6;
 }
 .barContent::after {
-  content: ".";
+  content: " ";
   position: absolute;
   right: -9px;
   top: 0;
@@ -139,7 +142,7 @@ export default {
   position: relative;
 }
 .barContent50::after {
-  content: ".";
+  content: " ";
   position: absolute;
   right: -9px;
   top: 0;

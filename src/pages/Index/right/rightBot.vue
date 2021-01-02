@@ -1,6 +1,6 @@
 <template>
   <div class="rightBot">
-    <headerTit :title="title" :time="time" :url='url'></headerTit>
+    <headerTit :title="title" :time="time" :url="url"></headerTit>
     <div class="main">
       <div class="chartWrap" id="rankingChart"></div>
     </div>
@@ -32,6 +32,7 @@ export default {
         "12月",
       ],
       legendArr: [],
+      legendArr2: [],
       carData: [],
       cityData: [],
       robotData: [],
@@ -75,7 +76,8 @@ export default {
         legendArr.push(legendObj);
       }
       this.series = series;
-      this.legendArr = legendArr;
+      this.legendArr = legendArr.slice(0, 3);
+      this.legendArr2 = legendArr.slice(3, 6);
       this.initRankingChart();
     },
     initRankingChart() {
@@ -95,7 +97,10 @@ export default {
         ],
 
         tooltip: {
-          textStyle: { fontSize: 18 },
+          textStyle: {
+            // fontSize: 18
+            fontSize: that.subFont(0.18),
+          },
           padding: 10,
           trigger: "axis",
           axisPointer: {
@@ -113,19 +118,34 @@ export default {
             return str;
           },
         },
-        legend: {
-          x: "center",
-          y: "bottom",
-          // bottom: "8%",
-          // align:'center',
-          width: 450,
-          itemWidth: 15,
-          itemHeight: 15,
-          textStyle: {
-            fontSize: 16,
-          },
-          data: this.legendArr,
-        },
+        legend:[{
+                  x: "center",
+                  y: "bottom",
+                  // bottom: "8%",
+                  // align:'center',
+                  width: 550,
+                  itemWidth: 15,
+                  itemHeight: 15,
+                  textStyle: {
+                    // fontSize: 16,
+                    fontSize: that.subFont(0.16),
+                  },
+                  data: this.legendArr,
+                },
+                {
+                  x: "center",
+                  // y: "bottom",
+                  bottom: "8%",
+                  // align:'center',
+                  width: 550,
+                  itemWidth: 15,
+                  itemHeight: 15,
+                  textStyle: {
+                    // fontSize: 16,
+                    fontSize: that.subFont(0.16),
+                  },
+                  data: this.legendArr2,
+                },],
         grid: {
           left: "6%",
           right: "5%",
@@ -151,14 +171,14 @@ export default {
               show: true,
               lineStyle: {
                 color: "#3A82CA",
-                fontSize: 22,
+                fontSize: that.subFont(0.22),
               }, // 样式
             },
 
             axisLabel: {
               interval: 0, //横轴信息全部显示
               color: "#ffffff",
-              fontSize: 16,
+              fontSize: that.subFont(0.16),
               formatter: function (value) {
                 return value.length > 5 ? value.substring(0, 5) + "..." : value;
               },
@@ -210,7 +230,155 @@ export default {
       myChart.setOption(option);
       window.addEventListener("resize", () => {
         // 自动渲染echarts
-        if (myChart) myChart.resize();
+        if (myChart) {
+          myChart.setOption(
+            {
+              color: [
+                "#FFE700",
+                "#7AFF77",
+                "#59FCFF",
+                "#318BFF",
+                "#985BFF",
+                "#F90CFD",
+              ],
+
+              tooltip: {
+                textStyle: {
+                  // fontSize: 18
+                  fontSize: that.subFont(0.18),
+                },
+                padding: 10,
+                trigger: "axis",
+                axisPointer: {
+                  type: "shadow",
+                },
+                formatter: function (params) {
+                  let str = params[0].name + "<br/>";
+                  params.forEach((item) => {
+                    let b = item.seriesName;
+                    if (item.seriesName.length > 4) {
+                      b = b.slice(0, 6);
+                    }
+                    str += item.marker + b + ": " + item.data + "亿元<br/>";
+                  });
+                  return str;
+                },
+              },
+              legend: [
+                {
+                  x: "center",
+                  y: "bottom",
+                  // bottom: "8%",
+                  // align:'center',
+                  width: 550,
+                  itemWidth: 15,
+                  itemHeight: 15,
+                  textStyle: {
+                    // fontSize: 16,
+                    fontSize: that.subFont(0.16),
+                  },
+                  data: this.legendArr,
+                },
+                {
+                  x: "center",
+                  // y: "bottom",
+                  bottom: "8%",
+                  // align:'center',
+                  width: 550,
+                  itemWidth: 15,
+                  itemHeight: 15,
+                  textStyle: {
+                    // fontSize: 16,
+                    fontSize: that.subFont(0.16),
+                  },
+                  data: this.legendArr2,
+                },
+              ],
+              grid: {
+                left: "6%",
+                right: "5%",
+                bottom: "16%",
+                top: "15%",
+                containLabel: true,
+              },
+
+              xAxis: [
+                {
+                  type: "category",
+                  data: this.xAxisMonth,
+                  boundaryGap: false,
+                  splitLine: {
+                    show: false,
+                  },
+                  axisTick: {
+                    alignWithLabel: true,
+                    show: true,
+                    inside: "top",
+                  },
+                  axisLine: {
+                    show: true,
+                    lineStyle: {
+                      color: "#3A82CA",
+                      fontSize: that.subFont(0.22),
+                    }, // 样式
+                  },
+
+                  axisLabel: {
+                    interval: 0, //横轴信息全部显示
+                    color: "#ffffff",
+                    fontSize: that.subFont(0.16),
+                    formatter: function (value) {
+                      return value.length > 5
+                        ? value.substring(0, 5) + "..."
+                        : value;
+                    },
+                  },
+                },
+              ],
+
+              yAxis: [
+                {
+                  type: "value",
+                  name: "亿元    ",
+                  nameTextStyle: {
+                    color: "#06FEF7",
+                  },
+                  axisTick: {
+                    alignWithLabel: true,
+                    show: false,
+                  },
+                  data: this.yAxisData,
+                  axisLabel: {
+                    formatter: "{value}",
+                    textStyle: {
+                      //改变刻度字体样式
+                      color: "#fff",
+                    },
+                  },
+
+                  splitLine: {
+                    show: true,
+                    lineStyle: {
+                      // 使用深浅的间隔色
+                      color: "#3A82CA",
+
+                      type: "dashed",
+                    },
+                  },
+                  axisLine: {
+                    show: true,
+                    lineStyle: {
+                      color: "#3A82CA",
+                    }, // 样式
+                  },
+                },
+              ],
+              series: this.series,
+            },
+            true
+          );
+          myChart.resize();
+        }
       });
     },
   },
@@ -223,7 +391,9 @@ export default {
   width: 100%;
   height: 385px;
   background: url(../../../assets/img/leftBot.png) no-repeat;
-  overflow: hidden;
+  background-size: 100% 100%;
+  border: 1px solid transparent;
+  /* overflow: hidden; */
 }
 .main {
   width: 100%;
@@ -235,6 +405,8 @@ export default {
   width: 100%;
   height: 100%;
   background: url(../../../assets/img/rightBotBg.png) no-repeat;
+  background-size: 100% 100%;
+
   background-size: 100% 100%;
 }
 </style>

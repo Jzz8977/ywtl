@@ -3,7 +3,8 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-
+import { setRemInit } from '../static/rem'
+setRemInit();
 Vue.config.productionTip = false
 import Cookies from 'js-cookie'
 // 请求地址参数
@@ -170,6 +171,14 @@ Vue.prototype.$post = (url, param, responseType) => {
             }
         })
     })
+}
+
+Vue.prototype.subFont = (size) => {
+    let docEl = document.documentElement,
+        clientWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    if (!clientWidth) return;
+    let fontSize = 100 * (clientWidth / 1920);
+    return size * fontSize;
 }
 
 function loginErr() {

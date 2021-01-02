@@ -1,6 +1,6 @@
 <template>
   <div class="leftTop">
-    <headerTit :title="title" :time="time" :url='url'></headerTit>
+    <headerTit :title="title" :time="time" :url="url"></headerTit>
 
     <div class="main">
       <div class="card" v-for=" (item,i) in dataArr">
@@ -28,7 +28,7 @@
         </div>
         <div class="barWrap">
           <div class="bar">
-            <div class="barContent" :style="{'width': 4.38*(item.date.tb-2)+'px'}"></div>
+            <div class="barContent" :style="{'width': (item.date.tb-2)+'%'}"></div>
           </div>
           <div class="barNum">{{item.date.tb}}%</div>
         </div>
@@ -50,7 +50,7 @@ export default {
       title: "核心区经济指标完成情况",
       time: "2020年1-8月",
       dataArr: [],
-      url:request.LeftTopTitleDirector,
+      url: request.LeftTopTitleDirector,
     };
   },
   mounted() {
@@ -75,6 +75,8 @@ export default {
   width: 100%;
   height: 590px;
   background: url(../../../assets/img/leftTop.png) no-repeat;
+  background-size: 100% 100%;
+
   overflow: hidden;
 }
 .main {
@@ -89,10 +91,13 @@ export default {
   margin-bottom: 10px;
 
   background: url(../../../assets/img/leftTopBgDiv.png) no-repeat;
+  background-size: 100% 100%;
+
   border-radius: 4px;
 }
 .card:nth-child(even) {
-  background: url(../../../assets/img/leftTopBgDiv2.png) no-repeat;
+  background: url(../../../assets/img/leftTopBgDiv2.png) left  center  no-repeat;
+  background-size: 100% 100%;
 }
 
 .cardTop {
@@ -118,6 +123,7 @@ export default {
   padding: 0 10px;
   font-size: 16px;
   background: url(../../../assets/img/line.png) right center no-repeat;
+
   position: relative;
 }
 .rightDiv {
@@ -150,7 +156,7 @@ export default {
   position: relative;
 }
 .barContent::after {
-  content: ".";
+  content: " ";
   /* width: 9px; */
   /* height: 17px; */
   position: absolute;

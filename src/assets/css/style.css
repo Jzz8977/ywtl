@@ -6,15 +6,21 @@
 html,
 body {
     height: 100%;
+    width: 100%;
     /* width: 100%; */
-    min-width: 1920px;
-    max-width: 1920px;
+    /* min-width: 1920px; */
+    /* max-width: 1920px; */
     /* height: 1024px; */
-    overflow: auto;
+    /* overflow: auto;
     cursor: default;
     -moz-user-select: none;
     -webkit-user-select: none;
-    user-select: none;
+    user-select: none; */
+}
+
+ul,
+ul li {
+    list-style: none
 }
 
 #app {
@@ -123,10 +129,12 @@ span {
     width: 80px;
     height: 4px;
     background: url(../../assets/img/leftLine.png) no-repeat;
+    background-size: 100% 100%;
 }
 
 .lineReserve {
     width: 80px;
     height: 4px;
     background: url(../../assets/img/rightLine.png) no-repeat;
+    background-size: 100% 100%;
 }

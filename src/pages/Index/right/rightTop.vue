@@ -105,7 +105,7 @@
               <div>台马部分</div>
               <div>大兴部分</div>
             </div>
-            <div id="SumChart" class="midTopChart" style="width:150px">
+            <div id="SumChart" class="midTopChart w150px" >
               <!-- 经开区本年固投建安与增速分析 -->
             </div>
             <div id="hxChart" class="midTopChart">
@@ -1077,6 +1077,8 @@ i {
   width: 100%;
   height: 590px;
   background: url(../../../assets/img/leftTop.png) no-repeat;
+    background-size: 100% 100%;
+
   overflow: hidden;
 }
 .main {
@@ -1086,11 +1088,10 @@ i {
 .mainTop {
   width: 100%;
   height: 250px;
-  padding: 0 29px;
+  padding: 0 20px;
   box-sizing: border-box;
 }
 .borederBot {
-  overflow: hidden;
   height: 120px;
   border-bottom: 2px solid #fff;
   border-image: linear-gradient(
@@ -1124,6 +1125,7 @@ i {
   font-weight: 400;
   color: #a3d5ff;
   line-height: 25px;
+  white-space: nowrap;
 }
 .borederBot > div > p {
   font-size: 18px;
@@ -1139,6 +1141,9 @@ i {
   font-style: normal;
 }
 /* !============ */
+.borederBot > div > div{
+  white-space: nowrap;
+}
 .borederBot > div > div > p,
 .borederBot > div > div > p > span {
   font-family: PingFangSC-Regular, PingFang SC;
@@ -1223,6 +1228,9 @@ i {
   float: left;
   width: 100px;
   height: 100%;
+}
+.w150px{
+  width: 150px;
 }
 .name {
   position: absolute;

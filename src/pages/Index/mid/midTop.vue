@@ -113,13 +113,9 @@
       <div class="mainBot">
         <div class="chartWrap">
           <div class="chartTitleWrap">
-            <div>&nbsp;</div>
-            <div>&nbsp;</div>
             <div class="line"></div>
             <div class="chartTitle">{{titleLeft}}</div>
             <div class="lineReserve"></div>
-            <div>&nbsp;</div>
-            <div>&nbsp;</div>
           </div>
           <div id="areaChart" class="midTopChart">
             <!-- 总产值增速区域对比 -->
@@ -127,11 +123,9 @@
         </div>
         <div class="chartWrap">
           <div class="chartTitleWrap">
-            <div>&nbsp;</div>
             <div class="line"></div>
             <div class="chartTitle">{{titleRight}}</div>
             <div class="lineReserve"></div>
-            <div>&nbsp;</div>
           </div>
           <div id="yearChart" class="midTopChart">
             <!-- 经开区本年度产值与增速 -->
@@ -154,7 +148,19 @@ export default {
       xAxisData: [],
 
       //   产值 / 增速
-      xAxisMonth: ['1-2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
+      xAxisMonth: [
+        "1-2月",
+        "3月",
+        "4月",
+        "5月",
+        "6月",
+        "7月",
+        "8月",
+        "9月",
+        "10月",
+        "11月",
+        "12月",
+      ],
       // 核心区
       hxBarData: [],
       hxLineData: [],
@@ -471,7 +477,9 @@ export default {
       let option = {
         color: ["#00FFFD", "#FFE700", "#1890FF"],
         tooltip: {
-          textStyle: { fontSize: 18 },
+          textStyle: {
+            fontSize: that.subFont(0.18),
+          },
           trigger: "axis",
           axisPointer: {
             type: "shadow",
@@ -513,7 +521,7 @@ export default {
               name: "核心区",
               icon: "rect",
               textStyle: {
-                fontSize: 16,
+                fontSize: that.subFont(0.16),
                 color: "#A3D5FF", // 图例文字颜色
               },
             },
@@ -521,7 +529,7 @@ export default {
               name: "大兴区",
               icon: "rect",
               textStyle: {
-                fontSize: 16,
+                fontSize: that.subFont(0.16),
                 color: "#A3D5FF", // 图例文字颜色
               },
             },
@@ -529,7 +537,7 @@ export default {
               name: "台马区",
               icon: "rect",
               textStyle: {
-                fontSize: 16,
+                fontSize: that.subFont(0.16),
                 color: "#A3D5FF", // 图例文字颜色
               },
             },
@@ -555,7 +563,7 @@ export default {
               show: false,
             },
             axisLabel: {
-              fontSize: 16,
+              fontSize: that.subFont(0.16),
               color: "#ffffff",
             },
             axisLine: {
@@ -787,7 +795,46 @@ export default {
       myChart.setOption(option);
       window.addEventListener("resize", () => {
         // 自动渲染echarts
-        if (myChart) myChart.resize();
+        if (myChart) {
+          // myChart.clear()
+          myChart.setOption({
+            legend: {
+              x: "center",
+              // y: "bottom",
+              bottom: "2%",
+              itemWidth: 15,
+              itemHeight: 15,
+              fontFamily: "PingFangSC-Regular, PingFang SC",
+              data: [
+                {
+                  name: "核心区",
+                  icon: "rect",
+                  textStyle: {
+                    fontSize: that.subFont(0.16),
+                    color: "#A3D5FF", // 图例文字颜色
+                  },
+                },
+                {
+                  name: "大兴区",
+                  icon: "rect",
+                  textStyle: {
+                    fontSize: that.subFont(0.16),
+                    color: "#A3D5FF", // 图例文字颜色
+                  },
+                },
+                {
+                  name: "台马区",
+                  icon: "rect",
+                  textStyle: {
+                    fontSize: that.subFont(0.16),
+                    color: "#A3D5FF", // 图例文字颜色
+                  },
+                },
+              ],
+            },
+          });
+          myChart.resize();
+        }
       });
     },
   },
@@ -804,6 +851,8 @@ span {
   width: 924px;
   height: 590px;
   background: url(../../../assets/img/midTop.png);
+  background-size: 100% 100%;
+
   overflow: hidden;
 }
 .midTopChart {
@@ -817,15 +866,17 @@ span {
 .mainTop {
   height: 241px;
   width: 100%;
-  padding: 10px;
+  padding: 10px 10px;
   box-sizing: border-box;
   background: url(../../../assets/img/midTopBg.png) 11px center no-repeat;
+  background-size: 100% 100%;
+
   display: flex;
   flex-wrap: wrap;
   align-items: center;
 }
 .mainTop > div {
-  width: 292px;
+  width: 290px;
   height: 110px;
   padding: 10px;
   box-sizing: border-box;
@@ -839,6 +890,12 @@ span {
   width: 50px;
   height: 50px;
 }
+.up:nth-child(2) {
+  width: 310px;
+}
+.up:nth-child(3) {
+  width: 270px;
+}
 .mr {
 }
 .mrt {
@@ -848,6 +905,7 @@ span {
   font-weight: 400;
   color: #ffffff;
   line-height: 40px;
+  white-space: nowrap;
 }
 .mrb {
   height: 40px;
@@ -865,11 +923,17 @@ span {
   padding-top: 20px !important;
   box-sizing: border-box;
 }
-
+.down:nth-child(5) {
+  width: 310px;
+}
+.down:nth-child(6) {
+  width: 270px;
+}
 .downUp {
   color: #ffffff;
   font-size: 22px;
   text-indent: 22px;
+  white-space: nowrap;
 }
 .downUp > img {
   width: 18px;
@@ -897,8 +961,7 @@ span {
   color: #ffffff;
   line-height: 22px;
   text-indent: 18px;
-  word-wrap: none;
-  word-break: keep-all;
+  white-space: nowrap;
 }
 .downBot > div > p:nth-child(2) {
   /* height: ; */
@@ -912,7 +975,9 @@ span {
 .chartWrap {
   width: 445px;
   height: 248px;
-  background: url(../../../assets/img/chartBg.png);
+  background: url(../../../assets/img/chartBg.png) no-repeat;
+  background-size: 100% 100%;
+
   padding-top: 16px;
 }
 .chartTitleWrap {
