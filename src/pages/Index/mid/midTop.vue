@@ -5,9 +5,9 @@
     <div class="main">
       <div class="mainTop">
         <div class="up" v-for="(item,i) in outValSumData">
-          <img src="../../assets/img/moneyChart.png" v-if="i==0" alt />
-          <img src="../../assets/img/lineChart.png" v-else-if="i==1" alt />
-          <img src="../../assets/img/pieChart.png" v-else-if="i==2" alt />
+          <img src="../../../assets/img/moneyChart.png" v-if="i==0" alt />
+          <img src="../../../assets/img/lineChart.png" v-else-if="i==1" alt />
+          <img src="../../../assets/img/pieChart.png" v-else-if="i==2" alt />
           <div class="mr">
             <div class="mrt">
               <span class="yellow44 DINAlternate-Bold" v-if="i==0">{{item.val}}</span>
@@ -41,7 +41,7 @@
         </div>-->
         <div class="down" v-for="(item,i) in outValData">
           <div class="downUp">
-            <img src="../../assets/img/diamond.png" alt />
+            <img src="../../../assets/img/diamond.png" alt />
             <span>{{item.chanZhiName}}</span>
             <span class="yellow34 DINAlternate-Bold">{{item.chanZhiNum}}</span>
             <span>亿元</span>
@@ -803,7 +803,7 @@ span {
 .midTop {
   width: 924px;
   height: 590px;
-  background: url(../../assets/img/midTop.png);
+  background: url(../../../assets/img/midTop.png);
   overflow: hidden;
 }
 .midTopChart {
@@ -819,7 +819,7 @@ span {
   width: 100%;
   padding: 10px;
   box-sizing: border-box;
-  background: url(../../assets/img/midTopBg.png) 11px center no-repeat;
+  background: url(../../../assets/img/midTopBg.png) 11px center no-repeat;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -885,7 +885,7 @@ span {
   font-family: PingFangSC-Medium, PingFang SC;
   font-weight: 500;
   line-height: 30px;
-  background: url(../../assets/img/linePoint.png) left center no-repeat;
+  background: url(../../../assets/img/linePoint.png) left center no-repeat;
 }
 .downBot > div:nth-child(1) {
   margin-left: 45px;
@@ -912,7 +912,7 @@ span {
 .chartWrap {
   width: 445px;
   height: 248px;
-  background: url(../../assets/img/chartBg.png);
+  background: url(../../../assets/img/chartBg.png);
   padding-top: 16px;
 }
 .chartTitleWrap {

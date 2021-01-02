@@ -33,7 +33,7 @@
     height: 41px;
     padding-left: 21px;
     box-sizing: border-box;
-    background: url(../../assets/img/headerTitleBg.png) -10px center no-repeat;
+    background: url(../../../assets/img/headerTitleBg.png) -10px center no-repeat;
     font-size: 20px;
     font-family: PingFangSC-Semibold, PingFang SC;
     font-weight: 600;

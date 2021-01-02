@@ -93,14 +93,14 @@ export default {
 .wrap {
   width: 100%;
   height: 100%;
-  background: url(../assets/img/bg.png) no-repeat;
+  background: url(../../assets/img/bg.png) no-repeat;
 }
 .header {
   width: 100%;
   height: 75px;
   background: #000;
   display: flex;
-  background: url(../assets/img/headerBg.png) no-repeat;
+  background: url(../../assets/img/headerBg.png) no-repeat;
   background-size: 100% 100%;
   justify-content: space-between;
   /* align-items: center; */
@@ -110,7 +110,7 @@ export default {
   position: absolute;
   width: 100%;
   height: 100%;
-  background: url(../assets/img/headerAntherBg.png) no-repeat;
+  background: url(../../assets/img/headerAntherBg.png) no-repeat;
   z-index: -1;
   /* background: red; */
 }
@@ -136,11 +136,11 @@ export default {
   clear: both;
 }
 .headerLeft {
-  background: url(../assets/img/navBtnLeft.png) no-repeat;
+  background: url(../../assets/img/navBtnLeft.png) no-repeat;
   margin-left: -33px;
 }
 .headerRight {
-  background: url(../assets/img/navBtnRight.png) no-repeat;
+  background: url(../../assets/img/navBtnRight.png) no-repeat;
   margin-left: -33px;
 }
 .mainBody {

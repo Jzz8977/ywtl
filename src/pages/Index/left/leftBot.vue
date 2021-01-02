@@ -61,7 +61,7 @@ export default {
   margin-top: 10px;
   width: 100%;
   height: 385px;
-  background: url(../../assets/img/leftBot.png) no-repeat;
+  background: url(../../../assets/img/leftBot.png) no-repeat;
   overflow: hidden;
 }
 .main {

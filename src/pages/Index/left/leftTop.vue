@@ -73,7 +73,7 @@ export default {
 .leftTop {
   width: 100%;
   height: 590px;
-  background: url(../../assets/img/leftTop.png) no-repeat;
+  background: url(../../../assets/img/leftTop.png) no-repeat;
   overflow: hidden;
 }
 .main {
@@ -87,11 +87,11 @@ export default {
   height: 120px;
   margin-bottom: 10px;
 
-  background: url(../../assets/img/leftTopBgDiv.png) no-repeat;
+  background: url(../../../assets/img/leftTopBgDiv.png) no-repeat;
   border-radius: 4px;
 }
 .card:nth-child(even) {
-  background: url(../../assets/img/leftTopBgDiv2.png) no-repeat;
+  background: url(../../../assets/img/leftTopBgDiv2.png) no-repeat;
 }
 
 .cardTop {
@@ -108,7 +108,7 @@ export default {
   font-weight: 500;
   line-height: 28px;
   color: #ffffff;
-  background: url(../../assets/img/line.png) right center no-repeat;
+  background: url(../../../assets/img/line.png) right center no-repeat;
 }
 .midDiv {
   width: 221px;
@@ -116,7 +116,7 @@ export default {
   color: #ffffff;
   padding: 0 10px;
   font-size: 16px;
-  background: url(../../assets/img/line.png) right center no-repeat;
+  background: url(../../../assets/img/line.png) right center no-repeat;
   position: relative;
 }
 .rightDiv {

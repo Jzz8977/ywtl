@@ -1076,7 +1076,7 @@ i {
 .rightTop {
   width: 100%;
   height: 590px;
-  background: url(../../assets/img/leftTop.png) no-repeat;
+  background: url(../../../assets/img/leftTop.png) no-repeat;
   overflow: hidden;
 }
 .main {
@@ -1194,7 +1194,7 @@ i {
 .chartWrapOut {
   width:100%;
   height: 100%;
-  background: url(../../assets/img/rightBotBg.png) no-repeat;
+  background: url(../../../assets/img/rightBotBg.png) no-repeat;
   background-size: 100% 100%;
 }
 .chartTitleWrap {

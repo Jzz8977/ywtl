@@ -368,7 +368,7 @@ export default {
   margin-top: 10px;
   width: 924px;
   height: 385px;
-  background: url(../../assets/img/midBot.png) no-repeat;
+  background: url(../../../assets/img/midBot.png) no-repeat;
   /* overflow: hidden; */
   border: 1px solid transparent;
 }
@@ -381,7 +381,7 @@ export default {
 .chartWrap {
   width: 100%;
   height: 100%;
-  background: url(../../assets/img/midBotBg.png) no-repeat;
+  background: url(../../../assets/img/midBotBg.png) no-repeat;
   background-size: 100% 100%;
 }
 </style>
