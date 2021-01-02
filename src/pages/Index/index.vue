@@ -62,6 +62,7 @@ export default {
     };
   },
   async created() {
+    debugger
     let result = await this.$get(
       request.getUserPermissionByToken + "?token=" + request.token + "&type=1"
     );

@@ -1,6 +1,6 @@
 <template>
   <div class="leftTop">
-    <headerTit :title="title" :time="time"></headerTit>
+    <headerTit :title="title" :time="time" :url='url'></headerTit>
 
     <div class="main">
       <div class="card" v-for=" (item,i) in dataArr">
@@ -50,6 +50,7 @@ export default {
       title: "核心区经济指标完成情况",
       time: "2020年1-8月",
       dataArr: [],
+      url:request.LeftTopTitleDirector,
     };
   },
   mounted() {

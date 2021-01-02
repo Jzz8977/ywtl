@@ -1,7 +1,7 @@
 <template>
   <div class="leftBot">
     <!-- 11 -->
-    <headerTit :title="title" :time="time"></headerTit>
+    <headerTit :title="title" :time="time" :url='url'></headerTit>
     <div class="main">
       <div class="mainChildDiv" v-for="(item,i) in dataArr">
         <div class="barName">
@@ -39,6 +39,7 @@ export default {
       time: "2020年1-8月",
       dataArr:[],
       max:0,
+      url:request.LeftBotTitleDirector,
     };
   },
   mounted() {

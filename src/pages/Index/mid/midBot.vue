@@ -1,6 +1,6 @@
 <template>
   <div class="midBot">
-    <headerTit :title="title" :time="time"></headerTit>
+    <headerTit :title="title" :time="time" :url='url'></headerTit>
     <div class="main">
       <div class="chartWrap" id="speedChart"></div>
     </div>
@@ -15,6 +15,7 @@ export default {
     return {
       title: "",
       time: "",
+      url:request.midBotTitleDirector,
       //   产值 / 增速
       xAxisMonth: [],
       zsData: [],

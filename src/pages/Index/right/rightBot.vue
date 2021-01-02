@@ -1,6 +1,6 @@
 <template>
   <div class="rightBot">
-    <headerTit :title="title" :time="time"></headerTit>
+    <headerTit :title="title" :time="time" :url='url'></headerTit>
     <div class="main">
       <div class="chartWrap" id="rankingChart"></div>
     </div>
@@ -13,8 +13,9 @@ export default {
   name: "rightBot",
   data() {
     return {
-      title: "重点产业工业总产值分析",
-      time: "2020年1-8月",
+      title: "",
+      time: "",
+      url: request.rightBotTitleDirector,
       //   产值 / 增速
       xAxisMonth: [
         "1月",
@@ -31,23 +32,13 @@ export default {
         "12月",
       ],
       legendArr: [],
-      carData: [0, 7, 13, 19, 25, 25, 25, 25, 25],
-      cityData: [0, 6, 12, 18, 23, 23, 23, 23, 23],
-      robotData: [0, 5, 11, 17, 21, 21, 21, 21, 21],
-      basicData: [0, 4, 10, 16, 20, 20, 20, 20, 20],
-      technologyData: [0, 3, 15, 19, 19, 19, 19, 19],
-      healthyData: [0, 2, 8, 14, 17, 17, 17, 17, 17],
-
-      series: [
-        {
-          name: "生物技术和大健康",
-          type: "line",
-          smooth: true,
-          symbolSize: 0,
-
-          data: this.carData,
-        },
-      ],
+      carData: [],
+      cityData: [],
+      robotData: [],
+      basicData: [],
+      technologyData: [],
+      healthyData: [],
+      series: [],
     };
   },
   mounted() {
@@ -130,8 +121,8 @@ export default {
           width: 450,
           itemWidth: 15,
           itemHeight: 15,
-          textStyle:{
-            fontSize:16,
+          textStyle: {
+            fontSize: 16,
           },
           data: this.legendArr,
         },
@@ -147,7 +138,7 @@ export default {
           {
             type: "category",
             data: this.xAxisMonth,
-            boundaryGap:false,
+            boundaryGap: false,
             splitLine: {
               show: false,
             },

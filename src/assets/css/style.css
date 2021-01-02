@@ -12,6 +12,9 @@ body {
     /* height: 1024px; */
     overflow: auto;
     cursor: default;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 #app {
