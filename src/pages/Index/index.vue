@@ -93,8 +93,8 @@ export default {
 .wrap {
   width: 100%;
   height: 100%;
-  background: url(../../assets/img/bg.png) no-repeat;
-  background-size: 100% 100%;
+  /* overflow: auto; */
+  
 }
 .header {
   width: 100%;
@@ -152,9 +152,10 @@ export default {
 }
 .mainBody {
   clear: both;
-  overflow: hidden;
+  /* overflow: auto; */
   width: 100%;
-  height: calc(100% - 75px);
+  /* height: calc(100% - 75px); */
+  height: 950px;
   padding: 10px;
   box-sizing: border-box;
   display: flex;

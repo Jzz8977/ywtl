@@ -1209,6 +1209,7 @@ i {
   width: 100%;
   height: 25px;
   padding-top: 16px;
+  white-space: nowrap;
 }
 .chartTitle {
   height: 25px;
