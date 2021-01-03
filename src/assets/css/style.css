@@ -40,6 +40,17 @@ ul li {
     /* src: url(../font/DINAlternateBold2.ttf); */
 }
 
+@font-face {
+    font-family: DINAlternate;
+    src: url(../font/DINALTERNATE.otf);
+    /* src: url(../font/DINAlternateBold.ttf); */
+    /* src: url(../font/DINAlternateBold2.ttf); */
+}
+
+.DINAlternate {
+    font-family: DINAlternate;
+}
+
 .white {
     color: #ffffff;
     font-size: 26px;
@@ -141,4 +152,64 @@ span {
     height: 4px;
     background: url(../../assets/img/rightLine.png) no-repeat;
     background-size: 100% 100%;
+}
+
+@media screen and (max-width: 1500px) {
+    .white {
+        color: #ffffff;
+        font-size: 20px;
+    }
+    .white40 {
+        color: #ffffff;
+        font-size: 30px;
+    }
+    .white34 {
+        color: #ffffff!important;
+        font-size: 24px!important;
+    }
+    .yellow {
+        color: #ffec00;
+        font-size: 22px;
+    }
+    .yellow34 {
+        color: #ffec00!important;
+        font-size: 24px!important;
+    }
+    .red {
+        font-weight: bold;
+        color: #ff6161;
+        font-size: 16px;
+        line-height: 30px;
+    }
+    .green {
+        color: #00ff00;
+        font-weight: bold;
+        font-size: 16px;
+    }
+    .yellow20 {
+        color: #ffec00;
+        font-size: 10px;
+    }
+    .yellow40 {
+        color: #ffec00;
+        font-size: 30px;
+    }
+    .yellow44 {
+        color: #ffec00;
+        font-size: 34px;
+    }
+    .yellow26 {
+        color: #ffec00;
+        font-size: 16px;
+    }
+    .red22 {
+        color: #ff6161;
+        font-size: 12px;
+    }
+    .size16 {
+        font-size: 14px!important;
+    }
+    .size14 {
+        font-size: 12px!important;
+    }
 }

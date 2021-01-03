@@ -5,7 +5,7 @@
       <div class="mainTop">
         <div class="borederBot">
           <div
-            :class="{'border-left':i!=2, 'padding20':true,'w154px':i==1}"
+            :class="{'border-left':i!=2, 'padding20':true,'w154px':i==1,'w160':i==2}"
             v-for="(item,i) in fixedDataSum"
           >
             <p>
@@ -31,7 +31,7 @@
         </div>
         <div class="borederBot noBorder">
           <div
-            :class="{'border-leftReserve':i!=2, 'padding20':true,'w154px':i==1}"
+            :class="{'border-leftReserve':i!=2, 'padding20':true,'w154px':i==1,'w160':i==2}"
             v-for="(item,i) in fixedData"
           >
             <p>
@@ -1110,7 +1110,7 @@ i {
 }
 .borederBot > div {
   float: left;
-  width: 132px;
+  width: 142px;
   height: 120px;
   display: flex;
   flex-direction: column;
@@ -1176,7 +1176,9 @@ i {
   border-right: 2px solid #fff;
   border-image: linear-gradient(to bottom, #1a76bb, rgba(26, 199, 189, 0)) 1 10;
 }
-
+.w160{
+  width: 150px;
+}
 .alignLeft {
   text-align: left !important;
   width: 100%;
@@ -1192,7 +1194,7 @@ i {
 .chartWrap {
   width: 100%;
   height: 267px;
-  padding: 10px 10px 0;
+  padding: 0 10px 0;
   box-sizing: border-box;
   position: relative;
 }

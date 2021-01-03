@@ -12,8 +12,8 @@
             <div class="mrt">
               <span class="yellow44 DINAlternate-Bold" v-if="i==0">{{item.val}}</span>
               <span class="white40 DINAlternate-Bold" v-if="i==1">{{item.val}}</span>
-              <span class="white40 DINAlternate-Bold" v-else-if="i==2">{{item.val}}%</span>
-              <span>{{item.danWei}}</span>
+              <span class="white40 DINAlternate-Bold" v-else-if="i==2">{{item.val}}</span>
+              <span :class="{'DINAlternate':true,'white40':i==2}">{{item.danWei}}</span>
             </div>
             <div class="mrb">{{item.title}}</div>
           </div>
@@ -369,12 +369,13 @@ export default {
               },
             },
             boundaryGap: true,
-            offset: 40,
+            offset: that.subFont(0.4),
             data: this.yAxisData,
             axisLabel: {
               formatter: "{value}",
               textStyle: {
                 //改变刻度字体样式
+                fontSize: that.subFont(0.16),
                 color: "#fff",
               },
             },
@@ -408,7 +409,7 @@ export default {
                 position: "right",
                 textStyle: {
                   color: "#ffffff",
-                  fontSize: 14,
+                  fontSize: that.subFont(0.14),
                 },
               },
             },
@@ -447,7 +448,7 @@ export default {
                   // 设置label的位置
                   position: item > 0 ? "right" : "left",
                   // 设置label的文字颜色
-                  fontSize: 20,
+                  fontSize: that.subFont(0.2),
                   color: "#ffffff",
                   fontFamily: "DIN Alternate Bold",
                   // 格式化label文字
@@ -465,7 +466,168 @@ export default {
       myChart.setOption(option);
       window.addEventListener("resize", () => {
         // 自动渲染echarts
-        if (myChart) myChart.resize();
+        if (myChart) {
+          myChart.setOption(
+            {
+              tooltip: {
+                textStyle: { fontSize: 18 },
+                padding: 10,
+                trigger: "axis",
+                axisPointer: {
+                  type: "shadow",
+                },
+                formatter: "{b}:{c}%",
+              },
+
+              grid: {
+                left: "13%",
+                right: "15%",
+                bottom: "9%",
+                top: "12%",
+                containLabel: true,
+              },
+
+              xAxis: [
+                {
+                  type: "value",
+                  axisLabel: {
+                    color: "#ffffff",
+                    fontSize: 16,
+                    formatter: (value) => {
+                      if (value < 0) return -value + "%";
+                      else return value + "%";
+                    },
+                  },
+                  axisTick: {
+                    alignWithLabel: true,
+                    show: true,
+                    inside: "top",
+                  },
+                  splitLine: {
+                    show: false,
+                  },
+                  axisLine: {
+                    show: true,
+                    lineStyle: {
+                      color: "#3A82CA",
+                    }, // 样式
+                  },
+                },
+              ],
+              yAxis: [
+                {
+                  type: "category",
+                  interval: 0,
+                  axisTick: {
+                    alignWithLabel: true,
+                    show: true,
+                    lineStyle: {
+                      color: "#3A82CA",
+                    },
+                  },
+                  boundaryGap: true,
+                  offset: that.subFont(0.4),
+                  data: this.yAxisData,
+                  axisLabel: {
+                    formatter: "{value}",
+                    textStyle: {
+                      //改变刻度字体样式
+                      fontSize: that.subFont(0.16),
+                      color: "#fff",
+                    },
+                  },
+                  splitLine: {
+                    interval: 0,
+                    show: true,
+                    lineStyle: {
+                      color: "#3A82CA",
+                    },
+                  },
+                  axisLine: {
+                    show: true,
+                    lineStyle: {
+                      color: "#3A82CA",
+                    }, // 样式
+                  },
+                },
+              ],
+              series: [
+                {
+                  name: "流入",
+                  type: "bar",
+                  barWidth: 10,
+                  stack: "总量",
+                  barCategoryGap: "20%",
+
+                  label: {
+                    normal: {
+                      show: true,
+                      formatter: "{c}%",
+                      position: "right",
+                      textStyle: {
+                        color: "#ffffff",
+                        fontSize: that.subFont(0.14),
+                      },
+                    },
+                  },
+                  itemStyle: {
+                    //通常情况下：
+                    normal: {
+                      // barBorderRadius: 8,
+                      //每个柱子的颜色即为colorList数组里的每一项，如果柱子数目多于colorList的长度，则柱子颜色循环使用该数组
+                      color: function (params) {
+                        var colorList;
+                        if (params.value < 0) {
+                          colorList = ["#0072FF", "#96D1FF"];
+                        } else {
+                          colorList = ["#FFA000", "#CAFF00"];
+                        }
+                        return new that.$echarts.graphic.LinearGradient(
+                          1,
+                          0,
+                          0,
+                          0,
+                          [
+                            {
+                              offset: 0,
+                              color: colorList[0],
+                            },
+                            {
+                              offset: 1,
+                              color: colorList[1],
+                            },
+                          ]
+                        );
+                      },
+                    },
+                  },
+                  // data: this.xAxisData,
+                  data: this.xAxisData.map((item) => {
+                    return {
+                      value: item,
+                      label: {
+                        // 设置显示label
+                        show: true,
+                        // 设置label的位置
+                        position: item > 0 ? "right" : "left",
+                        // 设置label的文字颜色
+                        fontSize: that.subFont(0.2),
+                        color: "#ffffff",
+                        fontFamily: "DIN Alternate Bold",
+                        // 格式化label文字
+                        formatter: function (item) {
+                          return item.value + "%";
+                        },
+                      },
+                    };
+                  }),
+                },
+              ],
+            },
+            true
+          );
+          myChart.resize();
+        }
       });
     },
     initYearChart() {
@@ -920,7 +1082,7 @@ span {
   color: #a3d5ff;
 }
 .down {
-  padding-top: 20px !important;
+  padding-top: 10px !important;
   box-sizing: border-box;
 }
 .down:nth-child(5) {

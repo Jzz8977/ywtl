@@ -14,7 +14,7 @@
             同比
             <span
               :class="{'DINAlternate-Bold':true,'white':true,'red22':item.name=='北京经开区'&&item.percentages>0,'green':item.name=='北京经开区'&&item.percentages<0,}"
-              style="font-size:22px;margin-left:5px"
+              style="margin-left:5px"
             >{{item.percentages}}%</span>
           </div>
         </div>
