@@ -3,7 +3,9 @@ export const request = {
     lineURL: 'http://210.12.166.198:8081',
     LeftTopTitleDirector: "https://dmp.retchat.com/login/?username=jingfa_chart&siteid=P0V1",
     LeftBotTitleDirector: 'https://dmp.retchat.com/login/?username=jingfa_chart&siteid=P0V2',
+    midTopTitleDirector: 'https://dmp.retchat.com/login/?username=jingfa_chart&siteid=P1S1D1',
     midBotTitleDirector: 'https://dmp.retchat.com/login/?username=jingfa_chart&siteid=P0V3',
+    rightTopTitleDirector: 'https://dmp.retchat.com/login/?username=jingfa_chart&siteid=P1S2C2D1',
     rightBotTitleDirector: 'https://dmp.retchat.com/login/?username=jingfa_chart&siteid=P0V5',
 
     token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MDAzOTU4ODksInVzZXJuYW1lIjoiYWRtaW4ifQ.UH3fek-YFguQQBAPpvxYAO6IyValk-MMMNIbbeIKin8',

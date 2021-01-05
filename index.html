@@ -10,5 +10,53 @@
     <div id="app"></div>
     <!-- built files will be auto injected -->
 </body>
+<script src="./static/js/jquery.min.js"></script>
+<script src="./static/js/resize.js"></script>
+<script>
+    // $(function() {
+    //     var r = document.body.offsetWidth / window.screen.availWidth;
+    //     $(document.body).css("-webkit-transform", "scale(" + r + ")");
+    // });
+    // $(window).resize(function() {
+    //     var r = document.body.offsetWidth / window.screen.availWidth;
+    //     $(document.body).css("-webkit-transform", "scale(" + r + ")");
+    // });
+
+    // function resize() {
+    //     var ratioX = $(window).width() / 1152;
+    //     var ratioY = $(window).height() / 400;
+    //     $("body").css({
+    //         transform: "scale(" + ratioX + "," + ratioY + ")",
+    //         transformOrigin: "left top",
+    //         backgroundSize: "100% 100%"
+    //     });
+    //     $("html").css({
+    //         'overflow': 'hidden'
+    //     })
+    // }
+
+    // $(window, document).resize(function() {
+    //     resize();
+    // });
+    // resize();
+    // ! function resizeScale(id) {
+    //     var dom = document.getElementById(id);
+    //     var domW = dom.clientWidth;
+    //     var domH = dom.clientHeight;
+    //     setScale();
+    //     window.addEventListener('resize', function() {
+    //         setScale();
+    //     }, false);
+
+    //     function setScale() {
+    //         var winW = window.innerWidth,
+    //             winH = window.innerHeight,
+    //             scaleX = winW / domW,
+    //             scaleY = winH / domH;
+    //         dom.style.transform = 'scale(' + scaleX + ',' + scaleY + ')';
+    //     }
+    // }('app');
+</script>
+
 
 </html>

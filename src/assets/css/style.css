@@ -11,7 +11,8 @@ body {
     /* min-width: 1920px; */
     /* max-width: 1920px; */
     /* height: 1024px; */
-    overflow: auto;
+    /* overflow: auto; */
+    overflow: hidden;
     cursor: default;
     -moz-user-select: none;
     -webkit-user-select: none;

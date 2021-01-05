@@ -1,7 +1,7 @@
 <template>
   <div class="midTop">
     <!-- 11 -->
-    <headerTit :title="title" :time="time"></headerTit>
+    <headerTit :title="title" :time="time" :url='url'></headerTit>
     <div class="main">
       <div class="mainTop">
         <div class="up" v-for="(item,i) in outValSumData">
@@ -146,6 +146,8 @@ export default {
       time: "2020年1-8月",
       yAxisData: [],
       xAxisData: [],
+      url:request.midTopTitleDirector,
+
 
       //   产值 / 增速
       xAxisMonth: [

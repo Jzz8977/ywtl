@@ -1,6 +1,6 @@
 <template>
   <div class="rightTop">
-    <headerTit :title="title" :time="time"></headerTit>
+    <headerTit :title="title" :time="time" :url='url'></headerTit>
     <div class="main">
       <div class="mainTop">
         <div class="borederBot">
@@ -150,6 +150,7 @@ export default {
     return {
       title: "经开区固投情况",
       time: "2020年1-8月",
+      url:request.rightTopTitleDirector,
       yMax: null,
       xData: [],
       jkYB1Data: [],
@@ -172,14 +173,9 @@ export default {
     };
   },
   mounted() {
-    let date = new Date();
-   let year = this.year =  date.getFullYear();
-    let arr = [];
-    arr.push(year - 1);
-    arr.push(year);
-    this.xData = arr;
+    
     this.getFixedSituationV2();
-    this.initAll();
+    // this.initAll();
   },
   methods: {
     async getFixedSituationV2() {
@@ -187,16 +183,16 @@ export default {
       let dataArr = res.data.data || [];
       this.time = res.data.date || "";
       this.title = res.data.title || "";
-
+      this.xData = dataArr.xAxisArr;
+      this.year = this.xData[1]
       this.fixedData = dataArr.fixedData; //核心 大兴 台马 固投和建安数据
       this.fixedDataSum = dataArr.fixedDataSum; //经开区固投
       let fixedAnalysis = dataArr.fixedAnalysis; //ƒ图表
-      console.log(fixedAnalysis, "123123");
-
-      this.titleChart = fixedAnalysis.title;
-      this.subArr(fixedAnalysis.data);
+      this.titleChart = fixedAnalysis&&fixedAnalysis.title;
+      this.subArr(fixedAnalysis&&fixedAnalysis.data);
     },
     subArr(arr) {
+      if(arr)
       arr.forEach((v) => {
         // v.name=
         if (v.name == "经开区") {
