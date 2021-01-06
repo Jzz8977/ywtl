@@ -28,4 +28,5 @@ export default {
 
 <style>
 @import url(./assets/css/style.css);
+@import url(./assets/css/autoFix.css);
 </style>

@@ -54,7 +54,5 @@ export default {
   color: #a3d5ff;
   line-height: 41px;
 }
-.pointer{
-  cursor: pointer;
-}
+
 </style>

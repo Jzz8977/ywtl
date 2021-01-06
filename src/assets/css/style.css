@@ -19,8 +19,6 @@ body {
     user-select: none;
     /* background: rgb(13, 28, 68); */
     /* background: rgb(11, 38, 110); */
-    background: url(../../assets/img/bg.png) no-repeat;
-    background-size: 100% 100%;
 }
 
 ul,
@@ -45,6 +43,20 @@ ul li {
 @font-face {
     font-family: DINAlternate;
     src: url(../font/DINALTERNATE.otf);
+    /* src: url(../font/DINAlternateBold.ttf); */
+    /* src: url(../font/DINAlternateBold2.ttf); */
+}
+
+@font-face {
+    font-family: FZZCHJW--GB1-0;
+    src: url(../font/FZZCHJW--GB1-0.ttf);
+    /* src: url(../font/DINAlternateBold.ttf); */
+    /* src: url(../font/DINAlternateBold2.ttf); */
+}
+
+@font-face {
+    font-family: PingFangSC-Regular;
+    src: url(../font/PingFang-Regular.otf);
     /* src: url(../font/DINAlternateBold.ttf); */
     /* src: url(../font/DINAlternateBold2.ttf); */
 }
@@ -214,4 +226,8 @@ span {
     .size14 {
         font-size: 12px!important;
     }
+}
+
+.pointer {
+    cursor: pointer;
 }

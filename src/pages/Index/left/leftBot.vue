@@ -1,13 +1,15 @@
 <template>
   <div class="leftBot">
     <!-- 11 -->
-    <headerTit :title="title" :time="time" :url='url'></headerTit>
+    <headerTit :title="title" :time="time" :url="url"></headerTit>
     <div class="main">
       <div class="mainChildDiv" v-for="(item,i) in dataArr">
         <div class="barName">
           <div :class="{'city':true,'yellow20':item.name=='北京经开区'}">{{item.name}}</div>
           <div class="money">
-            <span :class="{'DINAlternate-Bold':true,'white':true,'yellow26':item.name=='北京经开区'}">{{item.value}}</span>
+            <span
+              :class="{'DINAlternate-Bold':true,'white':true,'yellow26':item.name=='北京经开区'}"
+            >{{item.value}}</span>
             <span class>亿元</span>
           </div>
           <div class="compare">
@@ -37,9 +39,9 @@ export default {
     return {
       title: "国家级经济开发区工业总产值排名",
       time: "2020年1-8月",
-      dataArr:[],
-      max:0,
-      url:request.LeftBotTitleDirector,
+      dataArr: [],
+      max: 0,
+      url: request.LeftBotTitleDirector,
     };
   },
   mounted() {
@@ -51,7 +53,12 @@ export default {
       this.dataArr = res.data.data || [];
       this.time = res.data.date || "";
       this.title = res.data.titel || "";
-     this.max = Math.max.apply(Math, this.dataArr.map(function(o) {return o.value}))
+      this.max = Math.max.apply(
+        Math,
+        this.dataArr.map(function (o) {
+          return o.value;
+        })
+      );
     },
   },
 };
@@ -63,7 +70,7 @@ export default {
   width: 100%;
   height: 385px;
   background: url(../../../assets/img/leftBot.png) no-repeat;
-    background-size: 100% 100%;
+  background-size: 100% 100%;
 
   overflow: hidden;
 }

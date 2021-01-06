@@ -1,37 +1,39 @@
 <template>
-  <div class="wrap" id='wrap' ref="wrap">
-    <div class="header">
-      <div class="navWrap1">
-        <div class="headerLeft" v-for="(item) in menu1" @click="toPath(item)">{{item.meta.title}}</div>
-        <!-- <div class="headerLeft">产业集群</div>
+  <div class="bgWrap">
+    <div class="wrap" id="wrap" ref="wrap">
+      <div class="header">
+        <div class="navWrap1">
+          <div class="headerLeft" v-for="(item) in menu1" @click="toPath(item)">{{item.meta.title}}</div>
+          <!-- <div class="headerLeft">产业集群</div>
         <div class="headerLeft">园区楼宇</div>
-        <div class="headerLeft">产业链分析</div>-->
-      </div>
-      <div class="navWrap2">
-        <div
-          class="headerRight"
-          :style="{'font-size:16px':item2.meta.title.length>5}"
-          v-for="(item2) in menu2"
-          @click="toPath(item2)"
-        >{{item2.meta.title}}</div>
-        <!-- <div class="headerRight">企业群落</div>
+          <div class="headerLeft">产业链分析</div>-->
+        </div>
+        <div class="navWrap2">
+          <div
+            class="headerRight"
+            :style="{'font-size:16px':item2.meta.title.length>5}"
+            v-for="(item2) in menu2"
+            @click="toPath(item2)"
+          >{{item2.meta.title}}</div>
+          <!-- <div class="headerRight">企业群落</div>
         <div class="headerRight">风险预警</div>
-        <div class="headerRight">经济AI</div>-->
+          <div class="headerRight">经济AI</div>-->
+        </div>
+        <div class="headerAntherBg"></div>
       </div>
-      <div class="headerAntherBg"></div>
-    </div>
-    <div class="mainBody">
-      <div class="left">
-        <leftTop></leftTop>
-        <leftBot></leftBot>
-      </div>
-      <div class="mid">
-        <midTop></midTop>
-        <midBot></midBot>
-      </div>
-      <div class="right">
-        <rightTop></rightTop>
-        <rightBot></rightBot>
+      <div class="mainBody">
+        <div class="left">
+          <leftTop></leftTop>
+          <leftBot></leftBot>
+        </div>
+        <div class="mid">
+          <midTop></midTop>
+          <midBot></midBot>
+        </div>
+        <div class="right">
+          <rightTop></rightTop>
+          <rightBot></rightBot>
+        </div>
       </div>
     </div>
   </div>
@@ -45,10 +47,10 @@ import rightTop from "./right/rightTop";
 import rightBot from "./right/rightBot";
 import midBot from "./mid/midBot";
 import midTop from "./mid/midTop";
-import {autoFix} from "@/mixins"
+import { autoFix } from "@/mixins";
 export default {
   name: "HelloWorld",
-  mixins:[autoFix],
+  mixins: [autoFix],
   components: {
     leftTop,
     leftBot,
@@ -82,9 +84,7 @@ export default {
     this.menu1 = menu1;
     this.menu2 = menu2;
   },
-  mounted(){
-
-  },
+  mounted() {},
   methods: {
     toPath(item) {
       location.href = request.lineURL + item.path;
@@ -95,12 +95,13 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.wrap {
-  width: 1920px;
-  height: 1080px;
+.bgWrap {
+  width: 100%;
+  height: 100%;
   overflow: hidden;
-  top: 50%;
-  left: 50%;
+  position: relative;
+  background: url(../../assets/img/bg.png) no-repeat;
+  background-size: 100% 100%;
 }
 .header {
   width: 100%;
