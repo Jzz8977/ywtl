@@ -1,5 +1,5 @@
 <template>
-  <div class="wrap">
+  <div class="wrap" id='wrap' ref="wrap">
     <div class="header">
       <div class="navWrap1">
         <div class="headerLeft" v-for="(item) in menu1" @click="toPath(item)">{{item.meta.title}}</div>
@@ -45,8 +45,10 @@ import rightTop from "./right/rightTop";
 import rightBot from "./right/rightBot";
 import midBot from "./mid/midBot";
 import midTop from "./mid/midTop";
+import {autoFix} from "@/mixins"
 export default {
   name: "HelloWorld",
+  mixins:[autoFix],
   components: {
     leftTop,
     leftBot,
@@ -80,6 +82,9 @@ export default {
     this.menu1 = menu1;
     this.menu2 = menu2;
   },
+  mounted(){
+
+  },
   methods: {
     toPath(item) {
       location.href = request.lineURL + item.path;
@@ -91,10 +96,11 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .wrap {
-  width: 100%;
-  height: 100%;
-  /* overflow: auto; */
-  
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+  top: 50%;
+  left: 50%;
 }
 .header {
   width: 100%;

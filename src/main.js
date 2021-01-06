@@ -3,8 +3,10 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import { setRemInit } from '../static/rem'
-setRemInit();
+// import { setRemInit } from '../static/rem'
+// setRemInit();
+import $ from 'jquery'
+Vue.prototype.$ = $;
 Vue.config.productionTip = false
 import Cookies from 'js-cookie'
 // 请求地址参数
