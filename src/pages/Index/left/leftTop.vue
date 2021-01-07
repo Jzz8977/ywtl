@@ -30,7 +30,7 @@
           <div class="bar">
             <div class="barContent" :style="{'width': (item.date.tb-2)+'%'}"></div>
           </div>
-          <div class="barNum">{{item.date.tb}}%</div>
+          <div class="barNum DINAlternate-Bold">{{item.date.tb}}%</div>
         </div>
       </div>
       <!-- <div class="card"></div>
@@ -160,11 +160,11 @@ export default {
   /* width: 9px; */
   /* height: 17px; */
   position: absolute;
-  right: -9px;
+  right: -8px;
   top: 0;
   width: 0;
   height: 0;
-  border-top: 17px solid #25d3e7;
+  border-top: 18px solid #25d3e7;
   border-right: 9px solid transparent;
 }
 

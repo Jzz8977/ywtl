@@ -5,7 +5,7 @@
       <div class="mainTop">
         <div class="borederBot">
           <div
-            :class="{'border-left':i!=2, 'padding20':true,'w154px':i==1,'w160':i==2}"
+            :class="{'border-left':i!=2, 'padding30':true,'w154px':i==1,'w160':i==2}"
             v-for="(item,i) in fixedDataSum"
           >
             <p>
@@ -31,21 +31,21 @@
         </div>
         <div class="borederBot noBorder">
           <div
-            :class="{'border-leftReserve':i!=2, 'padding20':true,'w154px':i==1,'w160':i==2}"
+            :class="{'border-leftReserve':i!=2, 'padding30':true,'w154px':i==1,'w160':i==2,'noIndent':i==0}"
             v-for="(item,i) in fixedData"
           >
             <p>
               <span>{{item.title}}</span>
             </p>
-            <div v-for="(itemm,a) in item.data">
+            <div v-for="(itemm,a) in item.data" class="pWidthNoIndent">
               <p
-                :class="{'margin':a==0, 'alignLeft':true}"
-                :style="{'text-indent:30px!important':a!=0,'white-space:nowrap;':true}"
+                :class="{'margin':a==0, 'alignLeft':true,}"
+                :style="{'white-space:nowrap;':true}"
               >
                 <i class="size14">{{itemm.title}}:</i>
                 <!-- <i class="size16">{{itemm.val}}</i> -->
-                <i class="size16">{{itemm.val}}</i>
-                <i class="size14">{{itemm.danWei}}</i>
+                <i class="size16 DINAlternate-Bold">{{itemm.val}}</i>
+                <i class="size14 left5">{{itemm.danWei}}</i>
               </p>
             </div>
             <!-- <p class="margin alignLeft">
@@ -100,7 +100,8 @@
           </div>
           <div class="chartWrapIn">
             <div class="name">
-              <div style="margin-left:20px">经开区</div>
+              <div style="width:10px"></div>
+              <div style="margin-left:0px">经开区</div>
               <div>核心区</div>
               <div>台马部分</div>
               <div>大兴部分</div>
@@ -1164,6 +1165,9 @@ i {
 .padding20 {
   padding: 20px 0;
 }
+.padding30 {
+  padding: 30px 0 20px;
+}
 .border-left {
   border-right: 2px solid #fff;
   border-image: linear-gradient(to bottom, rgba(26, 199, 189, 0), #1a76bc) 1 10;
@@ -1275,6 +1279,20 @@ i {
 }
 .margin {
   margin-top: 10px;
-  margin-bottom: 5px;
+}
+.left5{
+  margin-left:-5px;
+}
+.pWidthNoIndent{
+  width: 100%!important;
+}
+.pWidthNoIndent>p{
+  text-indent:20px;
+}
+.pWidthNoIndent:nth-child(1)>p{
+}
+.noIndent >div>p{
+  text-indent:5px;
+  
 }
 </style>

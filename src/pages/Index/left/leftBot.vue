@@ -15,7 +15,7 @@
           <div class="compare">
             同比
             <span
-              :class="{'DINAlternate-Bold':true,'white':true,'red22':item.name=='北京经开区'&&item.percentages>0,'green':item.name=='北京经开区'&&item.percentages<0,}"
+              :class="{'DINAlternate-Bold':true,'white':true,'red26':item.name=='北京经开区'&&item.percentages>0,'green26':item.name=='北京经开区'&&item.percentages<0,}"
               style="margin-left:5px"
             >{{item.percentages}}%</span>
           </div>
@@ -37,8 +37,8 @@ export default {
   name: "leftBot",
   data() {
     return {
-      title: "国家级经济开发区工业总产值排名",
-      time: "2020年1-8月",
+      title: "",
+      time: "",
       dataArr: [],
       max: 0,
       url: request.LeftBotTitleDirector,
@@ -94,12 +94,14 @@ export default {
   color: #ffffff;
   line-height: 28px;
   display: flex;
+  width: 100%;
 }
 .barName > div {
 }
 .city {
   width: 180px;
-  flex: 1;
+  word-break: keep-all
+  
 }
 .money {
   width: 150px;
@@ -136,11 +138,11 @@ export default {
 .barContent::after {
   content: " ";
   position: absolute;
-  right: -9px;
+  right: -8px;
   top: 0;
   width: 0;
   height: 0;
-  border-top: 17px solid #25d3e7;
+  border-top: 18px solid #25d3e7;
   border-right: 9px solid transparent;
 }
 .barContent50 {
@@ -151,11 +153,11 @@ export default {
 .barContent50::after {
   content: " ";
   position: absolute;
-  right: -9px;
+  right: -8px;
   top: 0;
   width: 0;
   height: 0;
-  border-top: 17px solid #caff00;
+  border-top: 18px solid #caff00;
   border-right: 9px solid transparent;
 }
 </style>

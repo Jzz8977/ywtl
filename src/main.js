@@ -179,7 +179,7 @@ Vue.prototype.subFont = (size) => {
     let docEl = document.documentElement,
         clientWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
     if (!clientWidth) return;
-    let fontSize = 100 * (clientWidth / 1920);
+    let fontSize = 100
     return size * fontSize;
 }
 

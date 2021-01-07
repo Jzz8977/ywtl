@@ -27,7 +27,11 @@ export default {
     justify-content: space-between;
     align-items: center; */
   border: 0;
-    
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  word-break: keep-all;
+
 }
 .word {
   min-width: 258px;
@@ -35,19 +39,16 @@ export default {
   padding-left: 21px;
   box-sizing: border-box;
   background: url(../../assets/img/headerTitleBg.png) -10px center no-repeat;
-    background-size: 100% 100%;
-
+  background-size: 100% 100%;
   font-size: 20px;
   font-family: PingFangSC-Semibold, PingFang SC;
   font-weight: 600;
   color: #ffffff;
-  float: left;
-  
+  word-break: keep-all;
 }
 .time {
   font-size: 18px;
-  float: right;
-  padding: 0 21px;
+  padding: 0 21px 0 0;
   height: 41px;
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;

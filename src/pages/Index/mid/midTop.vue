@@ -1098,6 +1098,7 @@ span {
   font-size: 22px;
   text-indent: 22px;
   white-space: nowrap;
+  margin-top: 5px;
 }
 .downUp > img {
   width: 18px;
@@ -1105,6 +1106,7 @@ span {
 }
 .downBot {
   display: flex;
+  margin: 5px 0 0 0;
 }
 .downBot > div {
   width: 100%;
