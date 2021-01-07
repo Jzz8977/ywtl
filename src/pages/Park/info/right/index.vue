@@ -276,7 +276,7 @@
                             axisLabel: {
                                 interval: 0, //横轴信息全部显示
                                 color: "#ffffff",
-                                fontSize: that.subFont(0.28),
+                                fontSize: that.subFont(0.22),
                                 // formatter: function (value) {
                                 //     return value.length > 5 ? value.substring(0, 5) + "..." : value;
                                 // },
@@ -302,7 +302,7 @@
                                     color: '#fff',
 
                                 },
-                                fontSize: that.subFont(0.28),
+                                fontSize: that.subFont(0.22),
                                 fontWeight:'500'
 
                             },
