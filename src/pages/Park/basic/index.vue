@@ -1,13 +1,13 @@
 <template>
   <div class="basiceWrap">
     <div class="left">
-      <left />
+      <Left />
     </div>
     <div class="middle">
-      <middel />
+      <Middle />
     </div>
     <div class="right">
-      <right />
+      <Right />
     </div>
   </div>
 </template>
@@ -45,7 +45,6 @@ export default {
 }
 .middle {
   width: 880px;
-  background: #000;
 }
 .right {
   width: 510px;

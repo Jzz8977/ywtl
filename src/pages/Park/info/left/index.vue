@@ -217,6 +217,7 @@
     font-size: 22px;
     font-weight: bold;
     color: #ffec00;
+    margin-left: -6px;
 
 }
 .botLine{
