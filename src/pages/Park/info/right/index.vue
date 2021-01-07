@@ -7,7 +7,13 @@
                     选择时段：
                 </span>
                 <select name="" class="selSty">
-                    <option value="0">营收收入</option>
+                    <option value="0">选择时间</option>
+                </select>
+                <span class="lines">
+
+                </span>
+                 <select name="" class="selSty">
+                    <option value="0">选择时间</option>
                 </select>
                 <span class="selTit l35">
                     指标类型：
@@ -451,6 +457,13 @@
 .chartWrap{
     width: 100%;
     height: calc(100% - 50px);
+}
+.lines{
+    width: 18px;
+    height: 2px;
+    display: block;
+    background: #A1D3FC;
+    margin: 0 10px;
 }
 .serBox{
     display: flex;
