@@ -25,7 +25,7 @@
             </div>
             <div class="dataBox">
                 <div class="dataImg">
-                    <img src="../../../../assets/parkImg/icon1.png" alt="">
+                    <img src="../../../../assets/parkImg/icon2.png" alt="">
                 </div>
                 <div class="dataDeta">
                     <div class="dataName white24">
@@ -46,7 +46,7 @@
             </div>
             <div class="dataBox">
                 <div class="dataImg">
-                    <img src="../../../../assets/parkImg/icon1.png" alt="">
+                    <img src="../../../../assets/parkImg/icon3.png" alt="">
                 </div>
                 <div class="dataDeta">
                     <div class="dataName white24">
@@ -67,7 +67,7 @@
             </div>
             <div class="dataBox">
                 <div class="dataImg">
-                    <img src="../../../../assets/parkImg/icon1.png" alt="">
+                    <img src="../../../../assets/parkImg/icon4.png" alt="">
                 </div>
                 <div class="dataDeta">
                     <div class="dataName white24">
@@ -88,7 +88,7 @@
             </div>
             <div class="dataBox">
                 <div class="dataImg">
-                    <img src="../../../../assets/parkImg/icon1.png" alt="">
+                    <img src="../../../../assets/parkImg/icon5.png" alt="">
                 </div>
                 <div class="dataDeta">
                     <div class="dataName white24">
@@ -109,7 +109,7 @@
             </div>
             <div class="dataBox">
                 <div class="dataImg">
-                    <img src="../../../../assets/parkImg/icon1.png" alt="">
+                    <img src="../../../../assets/parkImg/icon6.png" alt="">
                 </div>
                 <div class="dataDeta">
                     <div class="dataName white24">
@@ -130,7 +130,7 @@
             </div>
             <div class="dataBox">
                 <div class="dataImg">
-                    <img src="../../../../assets/parkImg/icon1.png" alt="">
+                    <img src="../../../../assets/parkImg/icon7.png" alt="">
                 </div>
                 <div class="dataDeta">
                     <div class="dataName white24">
@@ -201,10 +201,12 @@
     margin-left: 12px;
     justify-content: space-between;
     align-items: center;
+    background: url(../../../../assets/parkImg/Line.png)right bottom no-repeat ;
+    
 }
 .dataName{
     font-weight:500;
-    font-family: PingFangSC-Medium, PingFang SC;
+    font-family: PingFangSC-Regular;
 }
 .dataImg img{
     height: 100%;
@@ -222,7 +224,7 @@
 }
 .botLine{
     width: 100%;
-    height: 18px;
+    height: 0;
     background: url(../../../../assets/parkImg/Line.png) no-repeat center;
 }
 </style>
