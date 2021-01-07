@@ -69,7 +69,10 @@ ul li {
     color: #ffffff;
     font-size: 26px;
 }
-
+.white24 {
+    color: #ffffff;
+    font-size: 24px;
+}
 .white40 {
     color: #ffffff;
     font-size: 40px;
@@ -166,6 +169,18 @@ span {
     height: 4px;
     background: url(../../assets/img/rightLine.png) no-repeat;
     background-size: 100% 100%;
+}
+.l35{
+    margin-left: 35px;
+}
+.l38{
+    margin-left: 38px;
+}
+.l55{
+    margin-left: 55px;
+}
+.l130{
+    margin-left: 130px;
 }
 
 @media screen and (max-width: 1500px) {
