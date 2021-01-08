@@ -53,7 +53,9 @@
     <div class="mainWrap">
       <div class="imgWrap">
         <div class="imgBR">
-          <img src="../../../../assets/parkImg/cirImg.png" alt />
+          <img src="../../../../assets/parkImg/cirImg.jpg" alt />
+        </div>
+         <div class="imgBRShaDow">
         </div>
       </div>
     </div>
@@ -187,6 +189,19 @@ export default {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+  overflow: hidden;
+}
+.imgBRShaDow{
+  width: 562px;
+  height: 563px;
+  border-radius: 50%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  box-shadow:#dadada 0px 0px 100px inset;
+
 }
 .imgBR img {
   width: 100%;

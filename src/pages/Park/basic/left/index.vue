@@ -1,6 +1,6 @@
 <template>
   <div class="leftWrap">
-    <headerTit :title="title" :time="time" ></headerTit>
+    <headerTit :title="title" :time="time"></headerTit>
     <div class="main">
       <div class="mainBody">
         <div class="mainSon1">
@@ -123,6 +123,16 @@
               <div class="AllPLeft">企业邮箱</div>
               <div class="AllPRight">xingshengyuan@163.com</div>
             </div>
+            <div class="AllP">
+              <div class="AllPLeft">公司地址</div>
+              <div class="AllPRight">北京市经济技术开发区同济中路7号</div>
+            </div>
+            <div class="AllP">
+              <div class="AllPLeft">园区介绍</div>
+              <div
+                class="AllPRight"
+              >服务于五百强企业的区域共建配套综合体，周边云集诺基亚园区、富士康园区、拜耳、可口可乐、DHL物流园等世界五百强企业。项目占地7375平米，建筑面积22049平米,由7幢8…</div>
+            </div>
           </div>
         </div>
       </div>
@@ -157,13 +167,24 @@ export default {
 .mainBody {
   width: 467px;
   height: 858px;
-  background: url(../../../../assets/parkImg/rightBorderBg.png) right center
-    no-repeat;
+  /* background: url(../../../../assets/parkImg/rightBorderBg.png) right center
+    no-repeat; */
+  overflow: auto;
   /* background-size: 100% 100%; */
 }
+.mainBody::-webkit-scrollbar {
+  width: 2px;
+}
+.mainBody::-webkit-scrollbar-track {
+  background-color: #1f4076;
+}
+.mainBody::-webkit-scrollbar-thumb {
+  background-color: #009dd8;
+}
 .mainSon1 {
-  width: 100%;
+  /* width: 100%; */
   height: 360px;
+  padding: 0 20px 0 0px;
 }
 .AllLegend {
   width: 100%;
@@ -204,7 +225,7 @@ export default {
   line-height: 30px;
 }
 .mainSon2 {
-  width: 100%;
+  /* width: 100%; */
   height: 253px;
   padding: 0 20px;
 }
@@ -222,8 +243,8 @@ export default {
   align-items: center;
 }
 .legendWrap50 > div:nth-child(1) {
-  width: 62px;
-  height: 62px;
+  width: 60px;
+  height: 60px;
 }
 .legendWrap50 > div:nth-child(1) img {
   width: 100%;
@@ -246,7 +267,7 @@ export default {
 }
 .mainSon3 {
   width: 100%;
-  height: 228px;
+  height: 328px;
   padding: 0 20px;
   box-sizing: border-box;
 }
@@ -255,13 +276,12 @@ export default {
   height: 11px;
   background: url(../../../../assets/parkImg/basicBorderTopBg.png) left center
     no-repeat;
-  background-size: 95% 100%;
+  background-size: 100% 100%;
 }
 
-.AllPWrap{
+.AllPWrap {
   padding: 10px 0;
   overflow: hidden;
-
 }
 .AllP {
   width: 437px;

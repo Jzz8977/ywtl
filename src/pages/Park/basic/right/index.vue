@@ -1,25 +1,30 @@
 <template>
   <div class="rightWrap">
-    <headerTit :title="title" :time="time" ></headerTit>
+    <headerTit :title="title" :time="time"></headerTit>
     <div class="wrapW">
       <div class="charWrap">
-        <div id="pie" class="chart"></div>
+        <div class="chart">
+          <div id="pie" class="chart">
+
+          </div>
+          <div class="pieWrod">注册资金</div>
+        </div>
         <div class="pieRight">
           <p>
             <span class="c-FDEC16">35%</span>
             500万以下
           </p>
           <p class="marginLeft">
-            <span class="c-00F19D">35%</span>
-            500万以下
+            <span class="c-00F19D">25.5%</span>
+            500-1000万
           </p>
           <p class="marginTop16">
-            <span class="c-2DC5FF">35%</span>
-            500万以下
+            <span class="c-2DC5FF">20%</span>
+            1000-5000万
           </p>
           <p class="marginLeft marginTop16">
-            <span class="c-AC71FF">35%</span>
-            500万以下
+            <span class="c-AC71FF">15%</span>
+            5000万以上
           </p>
         </div>
       </div>
@@ -91,12 +96,11 @@ export default {
       let that = this;
       var myChart = this.$echarts.init(document.getElementById("pie"));
       let option = {
-        color:['#FDEC16','#00FF8F','#2DC5FF','#AC71FF'],
+        color: ["#FDEC16", "#00FF8F", "#2DC5FF", "#AC71FF"],
         tooltip: {
           trigger: "item",
           formatter: "{a} <br/>{b} : {c} ({d}%)",
         },
-
         series: [
           {
             name: "姓名",
@@ -104,11 +108,11 @@ export default {
             radius: "85%",
             center: ["50%", "50%"],
             data: that.pieDataArr,
-            labelLine:{
-              show:false,
+            labelLine: {
+              show: false,
             },
-            label:{
-              show:false
+            label: {
+              show: false,
             },
             emphasis: {
               itemStyle: {
@@ -151,6 +155,22 @@ export default {
 .chart {
   width: 200px;
   height: 174px;
+  position: relative;
+  z-index: 0;
+}
+.pieWrod {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 84px;
+  height: 29px;
+  font-size: 21px;
+  font-family: PingFangSC-Regular;
+  font-weight: bolder;
+  color: #00508a;
+  line-height: 29px;
+  z-index: 1;
 }
 .pieRight {
   width: 282px;

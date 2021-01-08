@@ -121,9 +121,10 @@ export default {
   /* width: 100%; */
   position: absolute;
   bottom: 0;
+  font-size: 22px;
   width: 180px;
   height: 54px;
-  font-family: PingFangSC-Medium, PingFang SC;
+  font-family: PingFangSC-Regular;
   font-weight: 500;
   color: #ffffff;
   letter-spacing: 1px;
@@ -131,14 +132,14 @@ export default {
   line-height: 54px;
 }
 .activeTabBtnBasic {
-  font-family: PingFangSC-Medium, PingFang SC;
+  font-family: PingFangSC-Regular;
   color: #ffffff;
   letter-spacing: 1px;
   background: url(../../assets/parkImg/activeBtnBasic.png) left top no-repeat;
   background-size: 100% 100%;
 }
 .activeTabBtnInfo{
-  font-family: PingFangSC-Medium, PingFang SC;
+  font-family: PingFangSC-Regular;
   color: #ffffff;
   letter-spacing: 1px;
   background: url(../../assets/parkImg/activeBtnInfo.png) left top no-repeat;
