@@ -25,7 +25,7 @@
                     指数周期：
                 </span>
                 <select name="" class="selSty">
-                    <option value="0">营收收入</option>
+                    <option value="0">年指数</option>
                 </select>
                 <div  class="btnSer l55">
 
@@ -448,7 +448,7 @@
 }
 .chartTitle {
   height: 25px;
-  font-size: 18px;
+  font-size: 20px;
   font-family: PingFangSC-Medium, PingFang SC;
   font-weight: 500;
   color: #ffffff;
@@ -537,6 +537,13 @@
     font-family: PingFangSC-Regular, PingFang SC;
     font-weight: 400;
     text-align: center;
+}
+
+.tabTit th:first-child{
+    width: 112px;
+}
+.tabTit th:last-child{
+    width: 180px;
 }
 .tabCon td{
     text-align: center;
