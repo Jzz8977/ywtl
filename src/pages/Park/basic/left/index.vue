@@ -184,12 +184,16 @@ export default {
 .mainSon1 {
   /* width: 100%; */
   height: 360px;
-  padding: 0 20px 0 0px;
+  padding: 0 20px 0 20px;
+  padding-top: 20px;
+  position: relative;
+
 }
 .AllLegend {
   width: 100%;
-  padding: 0 20px;
+  padding: 0 20px 0 0;
   box-sizing: border-box;
+  position: relative;
 }
 .legendWrap {
   margin: 15px 0;
@@ -228,6 +232,10 @@ export default {
   /* width: 100%; */
   height: 253px;
   padding: 0 20px;
+  padding-top: 20px;
+
+  position: relative;
+
 }
 
 .AllLegendWrap {
@@ -269,14 +277,20 @@ export default {
   width: 100%;
   height: 328px;
   padding: 0 20px;
+  padding-top: 20px;
   box-sizing: border-box;
+  position: relative;
+
 }
 .borderTop {
-  width: 100%;
-  height: 11px;
-  background: url(../../../../assets/parkImg/basicBorderTopBg.png) left center
+  width: 445px;
+  height: 25px;
+  background: url(../../../../assets/parkImg/basicBorderTopBg.png) 0px 1px 
     no-repeat;
-  background-size: 100% 100%;
+    background-size: contain;
+  position: absolute;
+  left: 0px;
+  top: 0;
 }
 
 .AllPWrap {
@@ -288,7 +302,6 @@ export default {
   display: flex;
   justify-content: start;
   margin-bottom: 14px;
-  margin: 15px 0;
 }
 .AllPLeft {
   width: 82px;
