@@ -297,7 +297,7 @@ export default {
 }
 
 .legendWrap50 {
-  margin: 10px 0 0 0;
+  margin: 15px 0 0 0;
   display: flex;
   justify-content: start;
   align-items: center;

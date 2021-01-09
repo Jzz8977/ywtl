@@ -35,7 +35,7 @@
             <div class="cardTitle">
               <img v-show="item.istrue=='1'" src="../../../../assets/parkImg/lightPoint.png" alt />
               <b v-show="item.istrue!='1'">企业名称</b>
-              <span>{{item.qymc}}</span>
+              <span>{{item.qymc||'- -'}}</span>
             </div>
             <div class="cardType">
               <b>所属产业</b>
@@ -88,6 +88,7 @@ export default {
           value: 18,
         },
       ],
+      parkId:'BJJK006',
       topArr: [],
       bottomArr: [],
     };
@@ -109,6 +110,7 @@ export default {
         this.title = res.title;
         let topArr = res.top || [];
         topArr.forEach((v) => {
+          v.name=v.title;
           v.value = v.val;
         });
         this.pieDataArr = topArr

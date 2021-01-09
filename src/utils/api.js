@@ -38,10 +38,10 @@ export const request = {
     moveEnterprises: '/parkDistribution/moveEnterprises',
     // 楼宇画像
     getEssentialInformationLy: '/parkDistribution/getEssentialInformationLy',
+    getMiddleDataLy: '/parkDistribution/getMiddleDataLy',
+    getSettlementEnterpriseSituationLy: '/parkDistribution/getSettlementEnterpriseSituationLy',
 
-
-
-
-
+    getEmphasisDataLy: '/parkDistribution/getEmphasisDataLy',
+    moveEnterprisesLy: '/parkDistribution/moveEnterprisesLy',
 
 }

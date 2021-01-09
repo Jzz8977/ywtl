@@ -111,7 +111,7 @@ export default {
   name: "infoLeft",
   data() {
     return {
-      title: "园区重点数据",
+      title: "",
       time: "",
       url: "",
       parkId: "BJJK006",
@@ -130,6 +130,7 @@ export default {
       let res = result.data || {};
       if (res && res.data) {
         let resArr = res.data || [];
+        this.title = res.title;
         this.leftArr = this.subArr(resArr);
         console.log(this.leftArr)
       }

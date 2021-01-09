@@ -189,7 +189,7 @@ export default {
     };
   },
   mounted() {
-    this.parkId = (this.$route.query && this.$route.query.parkId) || "BJJK006";
+    this.buildingId = (this.$route.query && this.$route.query.buildingId) || "JK01007";
     this.getEssentialInformationLy();
   },
   methods: {
@@ -348,7 +348,7 @@ export default {
 }
 
 .legendWrap50 {
-  margin: 10px 0 0 0;
+  margin: 15px 0 0 0;
   display: flex;
   justify-content: start;
   align-items: center;
