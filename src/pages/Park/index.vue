@@ -37,8 +37,20 @@ export default {
   data() {
     return {
       parkName: "青春梦影视产业园（国光高科一期）",
-      tabBtn:'basic'
+      tabBtn:'basic',
+      parkId:'BJJK006'
     };
+  },
+  mounted(){
+    // this.getEssentialInformation();
+  },
+  methods:{
+    async getEssentialInformation(){
+      let result = await this.$get(request.getEssentialInformation,{
+        id:this.parkId
+      })
+      debugger
+    }
   },
   computed:{
     activeBaic(){

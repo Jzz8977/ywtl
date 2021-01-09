@@ -1,10 +1,10 @@
 <template>
   <div class="infoWrap">
     <div class="left">
-      <left />
+      <Left />
     </div>
     <div class="right">
-      <right/>
+      <Right/>
     </div>
   </div>
 </template>

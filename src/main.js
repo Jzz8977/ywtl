@@ -17,6 +17,11 @@ Vue.component('headerTit', headerTit)
 import echarts from 'echarts'
 
 Vue.prototype.$echarts = echarts;
+
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+
+Vue.use(ElementUI);
 import axios from 'axios'
 // import Cookies from 'js-cookie'
 //  获取角色信息，根据用户权限动态加载路由

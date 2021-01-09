@@ -4,17 +4,18 @@
     <div class="wrapW">
       <div class="charWrap">
         <div class="chart">
-          <div id="pie" class="chart">
-
-          </div>
+          <div id="pie" class="chart"></div>
           <div class="pieWrod">注册资金</div>
         </div>
         <div class="pieRight">
-          <p>
-            <span class="c-FDEC16">35%</span>
-            500万以下
+          <p v-for="(item,i) in pieDataArr" :class="{'marginLeft':i%2==1,'marginTop16':i==2||i==3}">
+            <span v-show="i==0" class="c-FDEC16">{{item.val||'- -'}}%</span>
+            <span v-show="i==1" class="c-00F19D">{{item.val||'- -'}}%</span>
+            <span v-show="i==2" class="c-2DC5FF">{{item.val||'- -'}}%</span>
+            <span v-show="i==3" class="c-AC71FF">{{item.val||'- -'}}%</span>
+            {{item.title||'- -'}}
           </p>
-          <p class="marginLeft">
+          <!-- <p class="marginLeft">
             <span class="c-00F19D">25.5%</span>
             500-1000万
           </p>
@@ -25,33 +26,33 @@
           <p class="marginLeft marginTop16">
             <span class="c-AC71FF">15%</span>
             5000万以上
-          </p>
+          </p> -->
         </div>
       </div>
       <div class="cardWrap">
         <div class="cardBody">
-          <div class="card" v-for="item in 19">
+          <div class="card" v-for="item in bottomArr">
             <div class="cardTitle">
-              <img v-show="item%2===1" src="../../../../assets/parkImg/lightPoint.png" alt />
-              <b v-show="item%2===0">企业名称</b>
-              <span>XXXX科技有限公司</span>
+              <img v-show="item.istrue=='1'" src="../../../../assets/parkImg/lightPoint.png" alt />
+              <b v-show="item.istrue!='1'">企业名称</b>
+              <span>{{item.qymc}}</span>
             </div>
             <div class="cardType">
               <b>所属产业</b>
-              <span>高端汽车及新能源汽车</span>
+              <span>{{item.sscy||'- -'}}</span>
             </div>
             <div class="cardSum">
               <div>
                 <b>产值</b>
-                <span>0.53亿</span>
+                <span>{{item.cz||'- -'}}</span>
               </div>
               <div class="marginLeft60">
                 <b>营收</b>
-                <span>0.53亿</span>
+                <span>{{item.ys||'- -'}}</span>
               </div>
               <div class="marginLeft60">
                 <b>税收</b>
-                <span>0.53亿</span>
+                <span>{{item.ss||'- -'}}</span>
               </div>
             </div>
           </div>
@@ -62,11 +63,12 @@
 </template>
 
 <script>
+import { request } from "@/utils/api.js";
 export default {
   name: "basicRight",
   data() {
     return {
-      title: "入驻企业情况",
+      title: "",
       time: "",
       pieDataArr: [
         {
@@ -86,12 +88,35 @@ export default {
           value: 18,
         },
       ],
+      topArr: [],
+      bottomArr: [],
     };
   },
   mounted() {
-    this.initPie();
+    this.parkId = (this.$route.query && this.$route.query.parkId) || "BJJK006";
+    this.getSettlementEnterpriseSituation();
   },
+
   methods: {
+    async getSettlementEnterpriseSituation() {
+      let result = await this.$get(request.getSettlementEnterpriseSituation, {
+        id: this.parkId,
+      });
+
+      let res = result.data || {};
+      console.log(res);
+      if (res) {
+        this.title = res.title;
+        let topArr = res.top || [];
+        topArr.forEach((v) => {
+          v.value = v.val;
+        });
+        this.pieDataArr = topArr
+        this.bottomArr = res.bottom || [];
+
+        this.initPie()
+      }
+    },
     initPie() {
       let that = this;
       var myChart = this.$echarts.init(document.getElementById("pie"));
@@ -99,11 +124,11 @@ export default {
         color: ["#FDEC16", "#00FF8F", "#2DC5FF", "#AC71FF"],
         tooltip: {
           trigger: "item",
-          formatter: "{a} <br/>{b} : {c} ({d}%)",
+          formatter: "{b} : {c} ({d}%)",
         },
         series: [
           {
-            name: "姓名",
+            name: "",
             type: "pie",
             radius: "85%",
             center: ["50%", "50%"],

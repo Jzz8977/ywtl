@@ -1,19 +1,24 @@
 <template>
   <div class="middleWrap">
     <div class="topWrap">
-      <div class="topCard">
-        <img src="../../../../assets/parkImg/qiye.png" alt />
+      <div class="topCard" v-for="(item,i) in topArr">
+        <img v-if="i===0" src="../../../../assets/parkImg/qiye.png" alt />
+        <img v-if="i===1" src="../../../../assets/parkImg/shouru.png" alt />
+        <img v-if="i===2" src="../../../../assets/parkImg/kongzhi.png" alt />
+        <img v-if="i===3" src="../../../../assets/parkImg/guimo.png" alt />
+
         <div class="cardWord">
           <p class="yellowNum">
-            300
-            <span style="font-size:18px">家</span>
+            {{item.val||'- -'}}
+            <span style="font-size:18px">{{item.dw}}</span>
           </p>
           <p>
-            <span>入驻企业</span>
+            <span v-show="item.title!=='园区产业规模'">{{(item.title)||'- -'}}</span>
+            <span v-show="item.title==='园区产业规模'">产业规模</span>
           </p>
         </div>
       </div>
-      <div class="topCard">
+      <!-- <div class="topCard">
         <img src="../../../../assets/parkImg/shouru.png" alt />
         <div class="cardWord">
           <p class="yellowNum">
@@ -48,34 +53,39 @@
             <span>产业规模</span>
           </p>
         </div>
-      </div>
+      </div> -->
     </div>
     <div class="mainWrap">
       <div class="imgWrap">
         <div class="imgBR">
-          <img src="../../../../assets/parkImg/cirImg.jpg" alt />
+          <img :src="middleImg" alt />
         </div>
-         <div class="imgBRShaDow">
-        </div>
+        <div class="imgBRShaDow"></div>
       </div>
     </div>
     <div class="botWrap">
-      <div class="botCard">
-        <img src="../../../../assets/parkImg/yongshui.png" alt />
+      <div class="botCard" v-for="(item, i) in bottomArr">
+        <img v-show="i==0" src="../../../../assets/parkImg/yongshui.png" alt />
+        <img v-show="i==1" src="../../../../assets/parkImg/yongdian.png" alt />
+        <img v-show="i==2" src="../../../../assets/parkImg/yongqi.png" alt />
+
         <div class="botCardWord">
           <p>
-            <span>用水</span>
+            <span>{{item.title}}</span>
           </p>
           <p class="yellowBot marinTopBotCard">
-            300
-            <span style="font-size:18px">立方/天</span>
+            {{item.val|| '- -'}}
+            <span style="font-size:18px">{{item.dw}}</span>
           </p>
           <p>
-            <span>环比 <span style="font-size:16px">3%</span></span>
+            <span>
+              环比
+              <span style="font-size:16px">{{item.hb}}%</span>
+            </span>
           </p>
         </div>
       </div>
-      <div class="botCard">
+      <!-- <div class="botCard">
         <img src="../../../../assets/parkImg/yongdian.png" alt />
         <div class="botCardWord">
           <p>
@@ -86,7 +96,10 @@
             <span style="font-size:18px">kw/h/天</span>
           </p>
           <p>
-            <span>环比 <span style="font-size:16px">-5%</span></span>
+            <span>
+              环比
+              <span style="font-size:16px">-5%</span>
+            </span>
           </p>
         </div>
       </div>
@@ -101,17 +114,49 @@
             <span style="font-size:18px">立方/天</span>
           </p>
           <p>
-            <span>环比 <span style="font-size:16px">3%</span></span>
+            <span>
+              环比
+              <span style="font-size:16px">3%</span>
+            </span>
           </p>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
 
 <script>
+import { request } from "@/utils/api.js";
+import img from '../../../../assets/parkImg/cirImg.jpg'
 export default {
   name: "basicMiddle",
+  data() {
+    return {
+      img,
+      parkId: "BJJK006",
+      topArr: [],
+      middleArr: [],
+      bottomArr: [],
+      middleImg:null,
+    };
+  },
+  mounted() {
+    this.parkId = (this.$route.query && this.$route.query.parkId) || "BJJK006";
+    this.getMiddleData();
+  },
+  methods: {
+    async getMiddleData() {
+      let result = await this.$get(request.getMiddleData, {
+        id: this.parkId,
+      });
+      let res = result.data || {};
+      if (res ) {
+        this.topArr = res.top||[]
+        this.middleImg = res.img||img
+        this.bottomArr = res.bottom||[]
+      }
+    },
+  },
 };
 </script>
 
@@ -140,13 +185,15 @@ export default {
 }
 
 .cardWord {
-  width: 90px;
+  width: 110px;
   font-size: 22px;
   font-family: PingFangSC-Regular;
   font-weight: 500;
   color: #ffffff;
   line-height: 30px;
   margin-left: 10px;
+  white-space: nowrap;
+
 }
 .yellowNum {
   height: 45px;
@@ -155,12 +202,13 @@ export default {
   font-weight: bold;
   color: #fdec16;
   line-height: 45px;
+  white-space: nowrap;
 }
-.yellowNum span{
-  margin-left:-5px;
+.yellowNum span {
+  margin-left: -5px;
   font-family: PingFangSC-Regular;
 }
-.yellowBot span{
+.yellowBot span {
   margin-left: -5px;
   font-family: PingFangSC-Regular;
 }
@@ -191,7 +239,7 @@ export default {
   transform: translate(-50%, -50%);
   overflow: hidden;
 }
-.imgBRShaDow{
+.imgBRShaDow {
   width: 562px;
   height: 563px;
   border-radius: 50%;
@@ -200,8 +248,7 @@ export default {
   top: 50%;
   transform: translate(-50%, -50%);
   z-index: 1;
-  box-shadow:#dadada 0px 0px 100px inset;
-
+  box-shadow: #dadada 0px 0px 100px inset;
 }
 .imgBR img {
   width: 100%;
@@ -234,6 +281,8 @@ export default {
   line-height: 30px;
   margin-left: 10px;
   position: relative;
+  white-space: nowrap;
+
 }
 .botCardWord > p {
   width: 100%;
@@ -253,6 +302,8 @@ export default {
   font-weight: bold;
   color: #fdec16;
   line-height: 40px;
+  white-space: nowrap;
+
 }
 .marinTopBotCard {
   margin-top: 10px;
