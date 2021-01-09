@@ -11,7 +11,9 @@ export default {
   props: ["title", "time", "url"],
   methods: {
     toDetail() {
-      if (this.url) location.href = this.url
+      if (this.url) {
+        this.$store.dispatch('setUrl',this.url)
+      }
     },
   },
 };

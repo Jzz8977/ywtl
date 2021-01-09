@@ -21,7 +21,7 @@
         </div>
         <div class="headerAntherBg"></div>
       </div>
-      <div class="mainBody">
+      <div class="mainBody" v-if="isShow">
         <div class="left">
           <leftTop></leftTop>
           <leftBot></leftBot>
@@ -35,6 +35,12 @@
           <rightBot></rightBot>
         </div>
       </div>
+      <div class="mainBody" v-else>
+        <Iframe :url='$store.state.url' />
+      </div>
+
+
+      
     </div>
   </div>
 </template>
@@ -48,6 +54,7 @@ import rightBot from "./right/rightBot";
 import midBot from "./mid/midBot";
 import midTop from "./mid/midTop";
 import { autoFix } from "@/mixins";
+import Iframe from '../../components/iframe'
 export default {
   name: "HelloWorld",
   mixins: [autoFix],
@@ -58,6 +65,7 @@ export default {
     rightBot,
     midBot,
     midTop,
+    Iframe
   },
   data() {
     return {
@@ -90,6 +98,11 @@ export default {
       location.href = request.lineURL + item.path;
     },
   },
+  computed:{
+    isShow(){
+      return !!!this.$store.state.url
+    }
+  }
 };
 </script>
 

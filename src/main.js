@@ -3,6 +3,8 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import store from './vuex'
+
 // import { setRemInit } from '../static/rem'
 // setRemInit();
 import $ from 'jquery'
@@ -211,6 +213,7 @@ function loginErr() {
 new Vue({
     el: '#app',
     router,
+    store,
     components: { App },
     template: '<App/>'
 })
