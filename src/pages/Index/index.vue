@@ -40,7 +40,7 @@
       </div>
 
 
-      
+
     </div>
   </div>
 </template>
@@ -97,6 +97,9 @@ export default {
     toPath(item) {
       location.href = request.lineURL + item.path;
     },
+  },
+  beforeDestroy(){
+    this.$store.dispatch('setUrl','')
   },
   computed:{
     isShow(){
@@ -175,7 +178,7 @@ export default {
   /* overflow: auto; */
   width: 100%;
   /* height: calc(100% - 75px); */
-  height: 950px;
+  height: 1000px;
   padding: 10px;
   box-sizing: border-box;
   display: flex;

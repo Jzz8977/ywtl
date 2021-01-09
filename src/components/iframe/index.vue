@@ -1,12 +1,14 @@
 <template>
-  <div class="iframeWrap">
+  <div class="iframeWrap" id="iframeBox">
     <iframe
       v-show="isShow"
-      style="width:100%;height:100%"
+      style="width:100%;height:100%;position: relative;z-index: -1;"
       ref="mapIfream"
       class="ifream"
+      id="ifream"
       :src="url"
       frameborder="0"
+      scrolling="no"
     ></iframe>
     <div class="btn" @click="$store.dispatch('setUrl','')">返回</div>
   </div>
@@ -22,11 +24,25 @@ export default {
     };
   },
   mounted() {
-    this.$nextTick(() => {
-      setTimeout(() => {
-        this.isShow = true;
-      }, 300);
-    });
+    let iframe = document.querySelector("#ifream");
+
+    iframe.onload = () => {
+      // console.log("加载完成"); // 这样每次都会触发
+      this.isShow=true
+    };
+
+    // this.sendMsg();
+  },
+  methods: {
+    sendMsg() {
+      let iframeBox = document.querySelector("#iframeBox");
+      let iframe = document.createElement("iframe");
+      iframe.onload = () => {
+        console.log("加载完成"); // 这样每次都会触发
+      };
+      iframe.src = this.url;
+      iframeBox.appendChild(iframe);
+    },
   },
   computed: {},
   beforeDestroy() {},
@@ -44,5 +60,6 @@ export default {
   right: 10px;
   top: 10px;
   color: #fff;
+  z-index: 100;
 }
 </style>

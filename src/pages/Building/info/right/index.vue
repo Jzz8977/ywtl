@@ -8,9 +8,11 @@
           class="selSty2"
           v-model="date"
           type="daterange"
+          :value-format="index?'yyyy-MM':'yyyy'"
           range-separator="-"
           start-placeholder="开始日期"
           end-placeholder="结束日期"
+          @change="dateChange"
         ></el-date-picker>
         <span class="selTit l35">指标类型：</span>
         <el-select class="selSty" v-model="type" placeholder="请选择">
@@ -31,7 +33,7 @@
           ></el-option>
         </el-select>
 
-        <div class="btnSer l55"></div>
+        <div class="btnSer l55" @click='moveEnterprisesLy'></div>
       </div>
       <div class="mainTop">
         <div class="mainTit">
@@ -66,7 +68,7 @@
                 <td>{{item.qymc}}</td>
                 <td>{{item.qydz}}</td>
                 <td>{{item.sscy}}</td>
-                <td>{{item.ys}}亿</td>
+                <td>{{item.ys}}</td>
               </tr>
               <!-- <tr>
                 <td>1</td>
@@ -146,13 +148,14 @@ export default {
         "12月",
         "",
       ],
+      xAxisdata:[],//bar图
       series: [],
 
       buildingId: "JK01007",
       top10Title: "",
       top10Arr: [],
 
-      index: "1",
+      index: "0",
       zsOption: [
         {
           value: "0",
@@ -195,14 +198,35 @@ export default {
   },
   methods: {
     async moveEnterprisesLy() {
+      let beginDate = "";
+      let beginEnd = "";
+      let arr = this.date || [];
+
+      if (this.index === 0) {
+        arr.forEach((v, i) => {
+          if (i == 0) {
+            beginDate = v.slice(0, 5);
+          } else if (i == 1) {
+            beginEnd = v.slice(0, 5);
+          }
+        });
+      } else {
+        arr.forEach((v, i) => {
+          if (i == 0) {
+            beginDate = v;
+          } else if (i == 1) {
+            beginEnd = v;
+          }
+        });
+      }
       let result = await this.$get(request.moveEnterprisesLy, {
         id: this.buildingId,
-        beginDate: "",
-        beginEnd: "",
+        beginDate,
+        beginEnd,
         type: this.type, //指标类型 0 产值 1 营业收入 2 利润总额3 用工人数4 能耗
         index: this.index, //指数周期  0 年指数  1 月指数
       });
-      debugger
+      console.log(result);
       let res = result.data || {};
       if (res) {
         this.title = res.title;
@@ -214,13 +238,22 @@ export default {
         this.revenueTitle = revenue.title || "营收收入走势";
 
         if (this.index == 0) {
-          this.xAxisMonth = revenue.xAxisdata || [];
-          let dataArr = revenue.data;
+          this.xAxisdata = revenue.xAxisdata || [];
+          this.series = revenue.series;
+          // this.series = [100,200,200];
 
           this.initBarChart();
         } else if (this.index == 1) {
           this.xAxisMonth = revenue.month || [];
+          // this.xAxisMonth =  [1,2,3,4];
           let dataArr = revenue.data;
+          // dataArr=[{
+          //   name:'12',data:[12,120,30,10]
+          // },{
+          //   name:"00",data:[122,120,310,100]
+          // },{
+          //   name:"01",data:[22,150,110,100]
+          // }]
           let series = [];
           dataArr.forEach((v) => {
             let obj = {
@@ -272,9 +305,9 @@ export default {
             icon: "rect",
             textStyle: {
               // fontSize: 16,
+              fontFamily: "PingFangSC-Regular",
               fontSize: that.subFont(0.22),
-              color: "#3A82CA",
-              fontWeight: "500",
+              color: "#A3D5FF",
             },
             // data: this.legendArr,
           },
@@ -290,7 +323,7 @@ export default {
           {
             type: "category",
             data: that.xAxisMonth,
-            boundaryGap: false,
+            boundaryGap: true,
             splitLine: {
               show: false,
             },
@@ -354,32 +387,6 @@ export default {
               }, // 样式
             },
           },
-          {
-            name: "",
-            nameTextStyle: {
-              color: "#06FEF7",
-            },
-            axisTick: {
-              alignWithLabel: true,
-              show: false,
-            },
-            // data: this.yAxisData,
-            splitLine: {
-              show: true,
-              lineStyle: {
-                // 使用深浅的间隔色
-                color: "#3A82CA",
-
-                type: "solid",
-              },
-            },
-            axisLine: {
-              show: true,
-              lineStyle: {
-                color: "#3A82CA",
-              }, // 样式
-            },
-          },
         ],
         series: this.series,
       };
@@ -392,28 +399,123 @@ export default {
       };
     },
     initBarChart() {
+      let that =this
       var myChart = this.$echarts.init(document.getElementById("earnChart"));
 
       let option = {
+        tooltip: {
+          textStyle: {
+            fontSize: that.subFont(0.18),
+          },
+          padding: 10,
+          trigger: "axis",
+          axisPointer: {
+            type: "shadow",
+          },
+          formatter: function (params) {
+            let str ='';
+            params.forEach((item) => {
+              str +=item.marker+ item.axisValue+':' +item.value+'<br/>'
+            });
+            return str;
+          },
+        },
         xAxis: {
           type: "category",
-          data: [
-            "2020年企业经营收入",
-            "2019年企业经营收入",
-            "企业经营收入预测",
-          ],
+          data: this.xAxisdata,
+          boundaryGap: true,
+            splitLine: {
+              show: false,
+            },
+            axisTick: {
+              alignWithLabel: true,
+              show: true,
+              inside: "top",
+            },
+            axisLine: {
+              show: true,
+              lineStyle: {
+                color: "#3A82CA",
+                fontSize: that.subFont(0.22),
+              }, // 样式
+            },
+
+            axisLabel: {
+              interval: 0, //横轴信息全部显示
+              color: "#ffffff",
+              fontSize: that.subFont(0.22),
+              // formatter: function (value) {
+              //     return value.length > 5 ? value.substring(0, 5) + "..." : value;
+              // },
+            },
         },
         yAxis: {
           type: "value",
+          nameTextStyle: {
+              color: "#06FEF7",
+            },
+            axisTick: {
+              alignWithLabel: true,
+              show: false,
+            },
+            // data: this.yAxisData,
+            axisLabel: {
+              formatter: "{value}",
+              textStyle: {
+                //改变刻度字体样式
+                color: "#ffffff",
+              },
+              fontSize: that.subFont(0.22),
+              fontWeight: "500",
+            },
+            splitLine: {
+              show: true,
+              lineStyle: {
+                // 使用深浅的间隔色
+                color: "#3A82CA",
+
+                type: "dashed",
+              },
+            },
+            axisLine: {
+              show: true,
+              lineStyle: {
+                color: "#3A82CA",
+              }, // 样式
+            },
         },
         series: [
           {
-            data: [120, 200, 150],
+            data: this.series,
             type: "bar",
-            showBackground: true,
-            backgroundStyle: {
-              color: "rgba(220, 220, 220, 0.8)",
+            barWidth:30,
+            itemStyle: {
+              //通常情况下：
+              normal: {
+                opacity:0.49,
+                // barBorderRadius: 8,
+                //每个柱子的颜色即为colorList数组里的每一项，如果柱子数目多于colorList的长度，则柱子颜色循环使用该数组
+                color: function (params) {
+                  var colorList;
+
+                  colorList = ["#25D3E7", "#2278FF"];
+
+                  return new that.$echarts.graphic.LinearGradient(0, 0, 0, 1,[
+                    {
+                      offset: 0,
+                      color: colorList[0],
+
+                    },
+                    {
+                      offset: 1,
+                      color: colorList[1],
+
+                    },
+                  ]);
+                },
+              },
             },
+
           },
         ],
       };
@@ -424,6 +526,9 @@ export default {
           if (myChart) myChart.resize();
         }, 100);
       };
+    },
+    dateChange(v) {
+      console.log(this.date);
     },
   },
 };
@@ -506,10 +611,9 @@ export default {
   appearance: none;
       -moz-appearance: none;
       -webkit-appearance: none;
-  background-image: url(../../../../assets/parkImg/selUp.png),
-    url(../../../../assets/parkImg/selBg.png);
-  background-repeat: no-repeat, no-repeat;
-  background-position: 90% center, center;
+  background-image: url(../../../../assets/parkImg/selBg.png);
+  background-repeat: no-repeat;
+  background-position:  center;
   border: none;
   height: 38px;
   width: 129px;
@@ -620,16 +724,15 @@ tbody tr:nth-child(odd) {
   /* background-position: 90% center, center; */
   border: none;
   height: 38px;
-  width: 260px;
+  width: 290px;
 }
 .selSty2 >>> .el-range-input {
   color: #fff;
   font-family: PingFangSC-Medium,  PingFang SC;
   font-size: 18px;
-  background-image: url(../../../../assets/parkImg/selUp.png),
-    url(../../../../assets/parkImg/selBg.png) !important;
-  background-repeat: no-repeat, no-repeat !important;
-  background-position: 90% center, center !important;
+  background-image: url(../../../../assets/parkImg/selBg.png) !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
   border: none;
   height: 38px;
   width: 129px;
@@ -645,5 +748,12 @@ tbody tr:nth-child(odd) {
   display: none !important;
 }
 >>> .el-icon-date {
+}
+
+>>>.el-select .el-input .el-select__caret{
+  color:#00E9FF!important
+}
+.selSty2>>> .el-range-input::placeholder{
+  color: #fff;
 }
 </style>

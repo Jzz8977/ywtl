@@ -8,7 +8,8 @@
         class="selSty2"
           v-model="date"
           type="daterange"
-          range-separator="-"
+        :value-format="index?'yyyy-MM':'yyyy'"
+        range-separator="-"
           start-placeholder="开始日期"
           end-placeholder="结束日期"
         ></el-date-picker>
@@ -65,9 +66,9 @@
                 <td>{{item.qymc}}</td>
                 <td>{{item.qydz}}</td>
                 <td>{{item.sscy}}</td>
-                <td>{{item.ys}}亿</td>
+                <td>{{item.ys}}</td>
               </tr>
-              <!-- 
+              <!--
               <tr>
                 <td>2</td>
                 <td>XXXX投资开发股份有限公司</td>
@@ -139,9 +140,8 @@ export default {
         "12月",
         "",
       ],
-      data2019: [],
-      data2020: [],
-      dataSR: [],
+
+      xAxisdata:[],//bar图
       series: [],
 
       top10Title: "",
@@ -190,10 +190,31 @@ export default {
   },
   methods: {
     async getEmphasisData() {
+      let beginDate = "";
+      let beginEnd = "";
+      let arr = this.date || [];
+
+      if (this.index === 0) {
+        arr.forEach((v, i) => {
+          if (i == 0) {
+            beginDate = v.slice(0, 5);
+          } else if (i == 1) {
+            beginEnd = v.slice(0, 5);
+          }
+        });
+      } else {
+        arr.forEach((v, i) => {
+          if (i == 0) {
+            beginDate = v;
+          } else if (i == 1) {
+            beginEnd = v;
+          }
+        });
+      }
       let result = await this.$get(request.moveEnterprises, {
         id: this.parkId,
-        beginDate: "",
-        beginEnd: "",
+        beginDate,
+        beginEnd,
         type: this.type, //指标类型 0 产值 1 营业收入 2 利润总额3 用工人数4 能耗
         index: this.index, //指数周期  0 年指数  1 月指数
       });
@@ -208,9 +229,9 @@ export default {
         this.revenueTitle = revenue.title || "营收收入走势";
 
         if (this.index == 0) {
-          this.xAxisMonth = revenue.xAxisdata || [];
-          let dataArr = revenue.data;
-
+          this.xAxisdata = revenue.xAxisdata || [];
+          this.series = revenue.series;
+          // this.series = [100,200,200];
           this.initBarChart();
         } else if (this.index == 1) {
           this.xAxisMonth = revenue.month || [];
@@ -268,7 +289,6 @@ export default {
               // fontSize: 16,
               fontSize: that.subFont(0.22),
               color: "#3A82CA",
-              fontWeight: "500",
             },
             // data: this.legendArr,
           },
@@ -348,32 +368,6 @@ export default {
               }, // 样式
             },
           },
-          {
-            name: "",
-            nameTextStyle: {
-              color: "#06FEF7",
-            },
-            axisTick: {
-              alignWithLabel: true,
-              show: false,
-            },
-            // data: this.yAxisData,
-            splitLine: {
-              show: true,
-              lineStyle: {
-                // 使用深浅的间隔色
-                color: "#3A82CA",
-
-                type: "solid",
-              },
-            },
-            axisLine: {
-              show: true,
-              lineStyle: {
-                color: "#3A82CA",
-              }, // 样式
-            },
-          },
         ],
         series: this.series,
       };
@@ -386,28 +380,126 @@ export default {
       };
     },
     initBarChart() {
+      let that = this;
+
       var myChart = this.$echarts.init(document.getElementById("earnChart"));
 
       let option = {
+        tooltip: {
+          textStyle: {
+            fontSize: that.subFont(0.18),
+          },
+          padding: 10,
+          trigger: "axis",
+          axisPointer: {
+            type: "shadow",
+          },
+          formatter: function (params) {
+            let str ='';
+            params.forEach((item) => {
+              str +=item.marker+ item.axisValue+':' +item.value+'<br/>'
+            });
+            return str;
+          },
+        },
         xAxis: {
           type: "category",
-          data: [
-            "2020年企业经营收入",
-            "2019年企业经营收入",
-            "企业经营收入预测",
-          ],
+          data: this.xAxisdata,
+          boundaryGap: true,
+          splitLine: {
+            show: false,
+          },
+          axisTick: {
+            alignWithLabel: true,
+            show: true,
+            inside: "top",
+          },
+          axisLine: {
+            show: true,
+            lineStyle: {
+              color: "#3A82CA",
+              fontSize: that.subFont(0.22),
+            }, // 样式
+          },
+
+          axisLabel: {
+            interval: 0, //横轴信息全部显示
+            color: "#ffffff",
+            fontSize: that.subFont(0.22),
+            // formatter: function (value) {
+            //     return value.length > 5 ? value.substring(0, 5) + "..." : value;
+            // },
+          },
         },
         yAxis: {
           type: "value",
+          nameTextStyle: {
+            color: "#06FEF7",
+          },
+          axisTick: {
+            alignWithLabel: true,
+            show: false,
+          },
+          // data: this.yAxisData,
+          axisLabel: {
+            formatter: "{value}",
+            textStyle: {
+              //改变刻度字体样式
+              color: "#ffffff",
+            },
+            fontSize: that.subFont(0.22),
+            fontWeight: "500",
+          },
+          splitLine: {
+            show: true,
+            lineStyle: {
+              // 使用深浅的间隔色
+              color: "#3A82CA",
+
+              type: "dashed",
+            },
+          },
+          axisLine: {
+            show: true,
+            lineStyle: {
+              color: "#3A82CA",
+            }, // 样式
+          },
         },
         series: [
           {
-            data: [120, 200, 150],
+            data: this.series,
             type: "bar",
-            showBackground: true,
-            backgroundStyle: {
-              color: "rgba(220, 220, 220, 0.8)",
+            barWidth:30,
+            itemStyle: {
+              //通常情况下：
+              normal: {
+                opacity:0.49,
+
+                // barBorderRadius: 8,
+                //每个柱子的颜色即为colorList数组里的每一项，如果柱子数目多于colorList的长度，则柱子颜色循环使用该数组
+                color: function (params) {
+                  var colorList;
+
+                  colorList = ["#25D3E7", "#2278FF"];
+
+                  return new that.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                    {
+                      offset: 0,
+                      color: colorList[0],
+                      opacity:0.49,
+                    },
+                    {
+                      offset: 1,
+                      color: colorList[1],
+                      opacity:0.49,
+
+                    },
+                  ]);
+                },
+              },
             },
+
           },
         ],
       };
@@ -500,10 +592,10 @@ export default {
   appearance: none;
       -moz-appearance: none;
       -webkit-appearance: none;
-  background-image: url(../../../../assets/parkImg/selUp.png),
+  background-image:
     url(../../../../assets/parkImg/selBg.png);
-  background-repeat: no-repeat, no-repeat;
-  background-position: 90% center, center;
+  background-repeat: no-repeat;
+  background-position:  center;
   border: none;
   height: 38px;
   width: 129px;
@@ -615,10 +707,10 @@ tbody tr:nth-child(odd) {
    color: #fff;
   font-family: PingFangSC-Medium,  PingFang SC;
   font-size: 18px;
-  background-image: url(../../../../assets/parkImg/selUp.png),
+  background-image:
     url(../../../../assets/parkImg/selBg.png)!important;
-  background-repeat: no-repeat, no-repeat!important;
-  background-position: 90% center, center!important;
+  background-repeat: no-repeat!important;
+  background-position: center!important;
   border: none;
   height: 38px;
   width: 129px;
@@ -634,5 +726,12 @@ tbody tr:nth-child(odd) {
   display: none !important;
 }
 >>> .el-icon-date {
+}
+
+>>>.el-select .el-input .el-select__caret{
+  color:#00E9FF!important
+}
+.selSty2>>> .el-range-input::placeholder{
+  color: #fff;
 }
 </style>

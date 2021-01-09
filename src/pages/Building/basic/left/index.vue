@@ -307,7 +307,7 @@ export default {
 }
 .legendWrap > div:nth-child(1) {
   width: 62px;
-  height: 62px;
+  height: 55px;
 }
 .legendWrap > div:nth-child(1) img {
   width: 100%;

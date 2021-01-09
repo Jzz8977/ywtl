@@ -4,9 +4,9 @@
       <div class="header">
         <div class="parkName">
           <span>{{parkName}}</span>
-          <div class="returnBtn">
+          <div class="returnBtn pointer " @click="$router.go(-1)">
             <img src="../../assets/parkImg/returnBtn.png" alt />
-            <span>返回</span>
+            <span >返回</span>
           </div>
         </div>
         <div :class="{'pointer':true,'tabBtn':true,'basicLeft':true,'activeTabBtnBasic':activeBaic}" @click="tabBtn='basic'">基本信息</div>

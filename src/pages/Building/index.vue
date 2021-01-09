@@ -4,8 +4,8 @@
       <div class="header">
         <div class="parkName">
           <span>{{parkName}}</span>
-          <div class="returnBtn">
-            <img src="../../assets/parkImg/returnBtn.png" alt />
+        <div class="returnBtn pointer" @click="$router.go(-1)">
+          <img src="../../assets/parkImg/returnBtn.png" alt />
             <span>返回</span>
           </div>
         </div>
