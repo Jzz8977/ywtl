@@ -139,6 +139,8 @@ export default {
   },
   mounted() {
     this.parkId = (this.$route.query && this.$route.query.parkId) || "BJJK006";
+    this.parkId = localStorage.getItem('industrialId')||'BJJK006'
+    
     this.getEssentialInformation();
   },
   methods: {

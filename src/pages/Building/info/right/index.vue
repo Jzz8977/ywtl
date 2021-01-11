@@ -194,6 +194,7 @@ export default {
   mounted() {
     this.buildingId =
       (this.$route.query && this.$route.query.parkId) || "JK01007";
+    this.buildingId = localStorage.getItem('louyuId')||'JK01007'
     this.moveEnterprisesLy();
   },
   methods: {
