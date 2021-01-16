@@ -9,7 +9,7 @@
 
         <div class="cardWord">
           <p class="yellowNum">
-            {{item.val||'- -'}}
+            {{item.val||0}}
             <span style="font-size:18px">{{item.dw}}</span>
           </p>
           <p>
@@ -87,7 +87,7 @@
             <span>{{item.title}}</span>
           </p>
           <p class="yellowBot marinTopBotCard">
-            {{item.val|| '- -'}}
+            {{item.val|| 0}}
             <span style="font-size:18px">{{item.dw}}</span>
           </p>
           <p>

@@ -9,10 +9,10 @@
         </div>
         <div class="pieRight">
           <p v-for="(item,i) in pieDataArr" :key='i' :class="{'marginLeft':i%2==1,'marginTop16':i==2||i==3}">
-            <span v-show="i==0" class="c-FDEC16">{{item.val||'- -'}}%</span>
-            <span v-show="i==1" class="c-00F19D">{{item.val||'- -'}}%</span>
-            <span v-show="i==2" class="c-2DC5FF">{{item.val||'- -'}}%</span>
-            <span v-show="i==3" class="c-AC71FF">{{item.val||'- -'}}%</span>
+            <span v-show="i==0" class="c-FDEC16">{{item.val||'0.00'}}%</span>
+            <span v-show="i==1" class="c-00F19D">{{item.val||'0.00'}}%</span>
+            <span v-show="i==2" class="c-2DC5FF">{{item.val||'0.00'}}%</span>
+            <span v-show="i==3" class="c-AC71FF">{{item.val||'0.00'}}%</span>
             {{item.title||'- -'}}
           </p>
           <!-- <p class="marginLeft">
@@ -44,15 +44,15 @@
             <div class="cardSum">
               <div>
                 <b>产值</b>
-                <span>{{item.cz||'- -'}}</span>
+                <span>{{item.cz||0}}</span>
               </div>
               <div class="marginLeft60">
                 <b>营收</b>
-                <span>{{item.ys||'- -'}}</span>
+                <span>{{item.ys||0}}</span>
               </div>
               <div class="marginLeft60">
                 <b>税收</b>
-                <span>{{item.ss||'- -'}}</span>
+                <span>{{item.ss||0}}</span>
               </div>
             </div>
           </div>

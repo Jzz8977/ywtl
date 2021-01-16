@@ -45,7 +45,7 @@
           <div class="dataName white24">{{ item.title }}</div>
           <div class="dataNum">
             <span class="num yellow40 DINAlternate-Bold">{{
-              item.val || "0"
+              item.val || 0
             }}</span>
             <span class="unit">{{ item.dw }}</span>
           </div>
