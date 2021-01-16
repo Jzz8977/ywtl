@@ -1,13 +1,13 @@
 <template>
   <div class="basiceWrap">
     <div class="left">
-      <Left />
+      <Left :parkId='parkId'/>
     </div>
     <div class="middle">
-      <Middle />
+      <Middle :parkId='parkId'/>
     </div>
     <div class="right">
-      <Right />
+      <Right :parkId='parkId' />
     </div>
   </div>
 </template>
@@ -17,6 +17,7 @@ import Left from "./left";
 import Middle from "./middle";
 import Right from "./right";
 export default {
+  props:['parkId'],
   components: {
     Left,
     Middle,

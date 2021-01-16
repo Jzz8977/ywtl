@@ -2,7 +2,7 @@
   <div class="iframeWrap" id="iframeBox">
     <iframe
       v-show="isShow"
-      style="width:100%;height:100%;position: relative;z-index: -1;"
+      style="width:100%;height:100%;position: relative;z-index: 0;"
       ref="mapIfream"
       class="ifream"
       id="ifream"
@@ -10,7 +10,7 @@
       frameborder="0"
       scrolling="no"
     ></iframe>
-    <div class="btn" @click="$store.dispatch('setUrl','')">返回</div>
+    <div class="btn pointer" @click="$store.dispatch('setUrl','')">返回</div>
   </div>
 </template>
 

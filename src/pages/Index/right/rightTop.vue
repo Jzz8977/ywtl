@@ -223,14 +223,14 @@ export default {
       let a, b;
       a = this.jkYB1Data[0] + this.jkYB2Data[0];
       b = this.jkYB1Data[1] + this.jkYB2Data[1];
-      // debugger
+      // 
       if (a >= b) {
         this.yMax = a;
       } else {
         this.yMax = b;
       }
       let tmArr = [];
-      // debugger;
+      // ;
       this.dxYB1Data.forEach((v, i) => {
         let a = v + this.dxYB2Data[i];
         tmArr.push(a);

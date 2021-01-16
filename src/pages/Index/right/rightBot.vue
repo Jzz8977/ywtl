@@ -49,7 +49,7 @@ export default {
     async getEconomicsSituationV2() {
       let res = await this.$get(request.monthCategoryDataV2, {});
       // this.dataArr = res.data.data || [];
-      // debugger;
+      // ;
       this.time = res.data.date || "";
       this.title = res.data.title || "";
       let arr = res.data.data || [];

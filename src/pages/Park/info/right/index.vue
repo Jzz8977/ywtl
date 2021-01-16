@@ -61,7 +61,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(item,i) in top10Arr">
+              <tr v-for="(item,i) in top10Arr" :key='i'>
                 <td>{{i+1}}</td>
                 <td>{{item.qymc}}</td>
                 <td>{{item.qydz}}</td>
@@ -183,10 +183,10 @@ export default {
       ],
     };
   },
-
+  props:['parkId'],
   mounted() {
-    this.parkId = (this.$route.query && this.$route.query.parkId) || "BJJK006";
-    this.parkId = localStorage.getItem('industrialId')||'BJJK006'
+    console.log(this.parkId,'in r')
+    
     this.getEmphasisData();
   },
   methods: {

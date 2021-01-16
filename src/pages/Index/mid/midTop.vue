@@ -213,7 +213,7 @@ export default {
       let dataRight = outValIncreaseMonthData.data;
       this.subChartRight(dataRight);
       this.initYearChart();
-      // debugger
+      // 
       // this.yAxisData = objRight.dataArr;
     },
     // 核心区 同比变化 同比增幅

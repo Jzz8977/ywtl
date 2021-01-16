@@ -1,7 +1,7 @@
 <template>
   <div class="middleWrap">
     <div class="topWrap">
-      <div class="topCard" v-for="(item,i) in topArr">
+      <div class="topCard" v-for="(item,i) in topArr" :key='i'>
         <img v-if="i===0" src="../../../../assets/parkImg/qiye.png" alt />
         <img v-if="i===1" src="../../../../assets/parkImg/shouru.png" alt />
         <img v-if="i===2" src="../../../../assets/parkImg/kongzhi.png" alt />
@@ -64,7 +64,7 @@
       </div>
     </div>
     <div class="botWrap">
-      <div class="botCard" v-for="(item, i) in bottomArr">
+      <div class="botCard" v-for="(item, i) in bottomArr" :key="i">
         <img v-show="i==0" src="../../../../assets/parkImg/yongshui.png" alt />
         <img v-show="i==1" src="../../../../assets/parkImg/yongdian.png" alt />
         <img v-show="i==2" src="../../../../assets/parkImg/yongqi.png" alt />
@@ -133,16 +133,17 @@ export default {
   data() {
     return {
       img,
-      parkId: "BJJK006",
+      // parkId: "BJJK006",
       topArr: [],
       middleArr: [],
       bottomArr: [],
       middleImg:null,
     };
   },
+  props:['parkId'],
   mounted() {
-    this.parkId = (this.$route.query && this.$route.query.parkId) || "BJJK006";
-    this.parkId = localStorage.getItem('industrialId')||'BJJK006'
+    console.log(this.parkId,'ba m')
+    
     this.getMiddleData();
   },
   methods: {

@@ -14,8 +14,8 @@
       </div>
 
       <div class="mainBody">
-        <Basic v-if="activeBaic"/>
-        <Info v-if="activeInfo"/>
+        <Basic :parkId='parkId' v-if="activeBaic"/>
+        <Info  :parkId='parkId' v-if="activeInfo"/>
       </div>
     </div>
   </div>
@@ -36,20 +36,24 @@ export default {
   },
   data() {
     return {
-      parkName: "青春梦影视产业园（国光高科一期）",
       tabBtn:'basic',
-      parkId:'BJJK006'
+      parkId:'',
+      parkName:'',
     };
   },
   mounted(){
     // this.getEssentialInformation();
+  },
+  created(){
+    this.parkId = sessionStorage.getItem('industrialId')||'';
+    this.parkName = sessionStorage.getItem('industrialName')||'';
   },
   methods:{
     async getEssentialInformation(){
       let result = await this.$get(request.getEssentialInformation,{
         id:this.parkId
       })
-      debugger
+      
     }
   },
   computed:{
