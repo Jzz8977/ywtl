@@ -1,13 +1,13 @@
 <template>
   <div class="basiceWrap">
     <div class="left">
-      <Left />
+      <Left :buildingId='buildingId'/>
     </div>
     <div class="middle">
-      <Middle />
+      <Middle :buildingId='buildingId'/>
     </div>
     <div class="right">
-      <Right />
+      <Right :buildingId='buildingId'/>
     </div>
   </div>
 </template>
@@ -23,6 +23,7 @@ export default {
     Right,
   },
   name: "basic",
+  props:['buildingId']
 };
 </script>
 

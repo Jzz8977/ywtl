@@ -1,7 +1,7 @@
 <template>
   <div class="middleWrap">
     <div class="topWrap">
-      <div class="topCard" v-for="(item,i) in topArr">
+      <div class="topCard" v-for="(item,i) in topArr" :key="i">
         <img v-if="i===0" src="../../../../assets/parkImg/qiye.png" alt />
         <img v-if="i===1" src="../../../../assets/parkImg/shouru.png" alt />
         <img v-if="i===2" src="../../../../assets/parkImg/kongzhi.png" alt />
@@ -77,7 +77,7 @@
       </div>
     </div>
     <div class="botWrap">
-      <div class="botCard" v-for="(item, i) in bottomArr">
+      <div class="botCard" v-for="(item, i) in bottomArr" :key="i">
         <img v-show="i==0" src="../../../../assets/parkImg/yongshui.png" alt />
         <img v-show="i==1" src="../../../../assets/parkImg/yongdian.png" alt />
         <img v-show="i==2" src="../../../../assets/parkImg/yongqi.png" alt />
@@ -155,16 +155,17 @@ export default {
   data() {
     return {
       img,
-      buildingId: "JK01007",
+      // buildingId: "JK01007",
       topArr: [],
       middleArr: [],
       bottomArr: [],
       middleImg:null,
     };
   },
+  props:['buildingId'],
+
   mounted() {
-    this.buildingId = (this.$route.query && this.$route.query.buildingId) || "JK01007";
-    this.buildingId = localStorage.getItem('louyuId')||'JK01007'
+    console.log(this.buildingId,'bu ba mi')
     this.getMiddleDataLy();
   },
   methods: {

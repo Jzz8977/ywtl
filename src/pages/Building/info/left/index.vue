@@ -2,7 +2,7 @@
   <div class="leftWrap">
     <headerTit :title="title" :time="time" :url="url"></headerTit>
     <div class="main">
-      <div class="dataBox" v-for="(item,i) in leftArr">
+      <div class="dataBox" v-for="(item,i) in leftArr" :key='i'>
         <div class="dataImg">
           <img v-show="i===0" src="../../../../assets/parkImg/icon1.png" alt />
           <img v-show="i===1" src="../../../../assets/parkImg/icon2.png" alt />
@@ -128,14 +128,13 @@ export default {
       title: "",
       time: "",
       url: "",
-      buildingId: "JK01007",
+      // buildingId: "JK01007",
       leftArr: [],
     };
   },
+  props:['buildingId'],
   mounted() {
-    this.buildingId =
-      (this.$route.query && this.$route.query.buildingId) || "JK01007";
-    this.buildingId = localStorage.getItem('louyuId')||'JK01007'
+ console.log(this.buildingId,'bu in le')
     this.getEmphasisDataLy();
   },
   methods: {

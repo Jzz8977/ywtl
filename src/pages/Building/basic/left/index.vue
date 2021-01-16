@@ -6,7 +6,7 @@
         <div class="mainSon1">
           <div class="borderTop"></div>
           <div class="AllLegend">
-            <div class="legendWrap" v-for="item in topArr">
+            <div class="legendWrap" v-for="(item,i) in topArr" :key='i'>
               <div>
                 <img v-if="item.title==='开发商'" src="../../../../assets/parkImg/kaifa.png" alt />
                 <img v-if="item.title==='管理单位'" src="../../../../assets/parkImg/guanli.png" alt />
@@ -60,7 +60,7 @@
           <div class="borderTop"></div>
 
           <div class="AllLegendWrap">
-            <div :class="{'legendWrap50':true,'marginL10':i%2===1}" v-for="(item,i) in middleArr">
+            <div :class="{'legendWrap50':true,'marginL10':i%2===1}" v-for="(item,i) in middleArr" :key='i'>
               <div>
                 <img v-if="item.title==='占地面积'" src="../../../../assets/parkImg/zhandi.png" alt />
                 <img v-if="item.title==='楼宇性质'" src="../../../../assets/parkImg/xingzhi.png" alt />
@@ -135,7 +135,7 @@
         <div class="mainSon3">
           <div class="borderTop"></div>
           <div class="AllPWrap">
-            <div class="AllP" v-for="item in bottomArr">
+            <div class="AllP" v-for="(item,i) in bottomArr" :key="i">
               <div class="AllPLeft">{{item.title}}</div>
               <div class="AllPRight">{{item.val||'- -'}}</div>
             </div>
@@ -182,15 +182,16 @@ export default {
       title: "楼宇基本信息",
       time: "",
       url: "",
-      buildingId: "JK01007",
+      // buildingId: "JK01007",
       topArr: [],
       middleArr: [],
       bottomArr: [],
     };
   },
+  props:['buildingId'],
+
   mounted() {
-    this.buildingId = (this.$route.query && this.$route.query.buildingId) || "JK01007";
-    this.buildingId = localStorage.getItem('louyuId')||'JK01007'
+   console.log(this.buildingId,'bu ba le')
     this.getEssentialInformationLy();
   },
   methods: {

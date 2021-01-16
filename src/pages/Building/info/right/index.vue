@@ -63,7 +63,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(item,i) in top10Arr">
+              <tr v-for="(item,i) in top10Arr" :key='i'>
                 <td>{{i+1}}</td>
                 <td>{{item.qymc}}</td>
                 <td>{{item.qydz}}</td>
@@ -151,7 +151,7 @@ export default {
       xAxisdata:[],//bar图
       series: [],
 
-      buildingId: "JK01007",
+      // buildingId: "JK01007",
       top10Title: "",
       top10Arr: [],
 
@@ -191,10 +191,9 @@ export default {
       ],
     };
   },
+  props:['buildingId'],
   mounted() {
-    this.buildingId =
-      (this.$route.query && this.$route.query.parkId) || "JK01007";
-    this.buildingId = localStorage.getItem('louyuId')||'JK01007'
+    console.log(this.buildingId,'bu in ri')
     this.moveEnterprisesLy();
   },
   methods: {

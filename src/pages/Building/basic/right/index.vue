@@ -10,7 +10,7 @@
           <div class="pieWrod">注册资金</div>
         </div>
         <div class="pieRight">
-          <p v-for="(item,i) in pieDataArr" :class="{'marginLeft':i%2==1,'marginTop16':i==2||i==3}">
+          <p v-for="(item,i) in pieDataArr" :class="{'marginLeft':i%2==1,'marginTop16':i==2||i==3}" :key="i">
             <span v-show="i==0" class="c-FDEC16">{{item.val||'- -'}}%</span>
             <span v-show="i==1" class="c-00F19D">{{item.val||'- -'}}%</span>
             <span v-show="i==2" class="c-2DC5FF">{{item.val||'- -'}}%</span>
@@ -37,7 +37,7 @@
       </div>
       <div class="cardWrap">
         <div class="cardBody">
-          <div class="card" v-for="item in bottomArr">
+          <div class="card" v-for="(item,i) in bottomArr" :key="i">
             <div class="cardTitle">
               <img v-show="item.istrue=='1'" src="../../../../assets/parkImg/lightPoint.png" alt />
               <b v-show="item.istrue!='1'">企业名称</b>
@@ -73,6 +73,7 @@ import { request } from "@/utils/api.js";
 
 export default {
   name: "basicRight",
+  props:['buildingId'],
   data() {
     return {
       title: "入驻企业情况",
@@ -95,14 +96,13 @@ export default {
           value: 18,
         },
       ],
-      buildingId:'JK01007',
+      // buildingId:'JK01007',
       topArr: [],
       bottomArr: [],
     };
   },
  mounted() {
-    this.buildingId = (this.$route.query && this.$route.query.buildingId) || "JK01007";
-    this.buildingId = localStorage.getItem('louyuId')||'JK01007'
+  console.log(this.buildingId,'bu ba ri')
     this.getSettlementEnterpriseSituationLy();
   },
   methods: {

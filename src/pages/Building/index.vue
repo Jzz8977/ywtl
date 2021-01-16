@@ -3,7 +3,7 @@
     <div class="wrap" id="wrap">
       <div class="header">
         <div class="parkName">
-          <span>{{parkName}}</span>
+          <span>{{buildingName}}</span>
         <div class="returnBtn pointer" @click="$router.go(-1)">
           <img src="../../assets/parkImg/returnBtn.png" alt />
             <span>返回</span>
@@ -14,8 +14,8 @@
       </div>
 
       <div class="mainBody">
-        <Basic v-if="activeBaic"/>
-        <Info v-if="activeInfo"/>
+        <Basic v-if="activeBaic" :buildingId='buildingId'/>
+        <Info v-if="activeInfo"  :buildingId='buildingId'/>
       </div>
     </div>
   </div>
@@ -36,9 +36,14 @@ export default {
   },
   data() {
     return {
-      parkName: "青春梦影视产业园（国光高科一期）",
-      tabBtn:'basic'
+      buildingName: "",
+      tabBtn:'basic',
+      buildingId:'',//JK01007
     };
+  },
+  created(){
+    this.buildingId = sessionStorage.getItem('louyuId')||'';
+    this.buildingName = sessionStorage.getItem('louyuName')||'';
   },
   computed:{
     activeBaic(){

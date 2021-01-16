@@ -1,10 +1,10 @@
 <template>
   <div class="infoWrap">
     <div class="left">
-      <left />
+      <left :buildingId='buildingId'/>
     </div>
     <div class="right">
-      <right/>
+      <right :buildingId='buildingId'/>
     </div>
   </div>
 </template>
@@ -18,6 +18,7 @@ export default {
     Right
   },
   name: "info",
+  props:['buildingId']
 };
 </script>
 
