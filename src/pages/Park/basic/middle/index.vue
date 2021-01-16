@@ -1,20 +1,22 @@
 <template>
   <div class="middleWrap">
     <div class="topWrap">
-      <div class="topCard" v-for="(item,i) in topArr" :key='i'>
-        <img v-if="i===0" src="../../../../assets/parkImg/qiye.png" alt />
-        <img v-if="i===1" src="../../../../assets/parkImg/shouru.png" alt />
-        <img v-if="i===2" src="../../../../assets/parkImg/kongzhi.png" alt />
-        <img v-if="i===3" src="../../../../assets/parkImg/guimo.png" alt />
+      <div class="topCard" v-for="(item, i) in topArr" :key="i">
+        <img v-if="i === 0" src="../../../../assets/parkImg/qiye.png" alt />
+        <img v-if="i === 1" src="../../../../assets/parkImg/shouru.png" alt />
+        <img v-if="i === 2" src="../../../../assets/parkImg/kongzhi.png" alt />
+        <img v-if="i === 3" src="../../../../assets/parkImg/guimo.png" alt />
 
         <div class="cardWord">
           <p class="yellowNum">
-            {{item.val||'- -'}}
-            <span style="font-size:18px">{{item.dw}}</span>
+            {{ item.val || "- -" }}
+            <span style="font-size: 18px">{{ item.dw }}</span>
           </p>
           <p>
-            <span v-show="item.title!=='园区产业规模'">{{(item.title)||'- -'}}</span>
-            <span v-show="item.title==='园区产业规模'">产业规模</span>
+            <span v-show="item.title !== '园区产业规模'">{{
+              item.title || "- -"
+            }}</span>
+            <span v-show="item.title === '园区产业规模'">产业规模</span>
           </p>
         </div>
       </div>
@@ -65,22 +67,30 @@
     </div>
     <div class="botWrap">
       <div class="botCard" v-for="(item, i) in bottomArr" :key="i">
-        <img v-show="i==0" src="../../../../assets/parkImg/yongshui.png" alt />
-        <img v-show="i==1" src="../../../../assets/parkImg/yongdian.png" alt />
-        <img v-show="i==2" src="../../../../assets/parkImg/yongqi.png" alt />
+        <img
+          v-show="i == 0"
+          src="../../../../assets/parkImg/yongshui.png"
+          alt
+        />
+        <img
+          v-show="i == 1"
+          src="../../../../assets/parkImg/yongdian.png"
+          alt
+        />
+        <img v-show="i == 2" src="../../../../assets/parkImg/yongqi.png" alt />
 
         <div class="botCardWord">
           <p>
-            <span>{{item.title}}</span>
+            <span>{{ item.title }}</span>
           </p>
           <p class="yellowBot marinTopBotCard">
-            {{item.val|| '- -'}}
-            <span style="font-size:18px">{{item.dw}}</span>
+            {{ item.val || "- -" }}
+            <span style="font-size: 18px">{{ item.dw }}</span>
           </p>
           <p>
             <span>
               环比
-              <span style="font-size:16px">{{item.hb}}%</span>
+              <span style="font-size: 16px">{{ item.hb }}%</span>
             </span>
           </p>
         </div>
@@ -127,23 +137,22 @@
 
 <script>
 import { request } from "@/utils/api.js";
-import img from '../../../../assets/parkImg/cirImg.jpg'
+import img from "../../../../assets/parkImg/cirImg.jpg";
 export default {
   name: "basicMiddle",
   data() {
     return {
       img,
       // parkId: "BJJK006",
-      topArr: [],
+      topArr: [{}, {}, {}, {}],
       middleArr: [],
-      bottomArr: [],
-      middleImg:null,
+      bottomArr: [{}, {}, {}],
+      middleImg: null,
     };
   },
-  props:['parkId'],
+  props: ["parkId"],
   mounted() {
-    console.log(this.parkId,'ba m')
-    
+    console.log(this.parkId, "ba m");
     this.getMiddleData();
   },
   methods: {
@@ -152,10 +161,10 @@ export default {
         id: this.parkId,
       });
       let res = result.data || {};
-      if (res ) {
-        this.topArr = res.top||[]
-        this.middleImg = res.img||img
-        this.bottomArr = res.bottom||[]
+      if (res) {
+        this.topArr = res.top || [{}, {}, {}, {}];
+        this.middleImg = res.img || img;
+        this.bottomArr = res.bottom || [{}, {}, {}];
       }
     },
   },
@@ -195,7 +204,6 @@ export default {
   line-height: 30px;
   margin-left: 10px;
   white-space: nowrap;
-
 }
 .yellowNum {
   height: 45px;
@@ -284,7 +292,6 @@ export default {
   margin-left: 10px;
   position: relative;
   white-space: nowrap;
-
 }
 .botCardWord > p {
   width: 100%;
@@ -305,7 +312,6 @@ export default {
   color: #fdec16;
   line-height: 40px;
   white-space: nowrap;
-
 }
 .marinTopBotCard {
   margin-top: 10px;

@@ -156,9 +156,9 @@ export default {
     return {
       img,
       // buildingId: "JK01007",
-      topArr: [],
+      topArr: [{},{},{},{}],
       middleArr: [],
-      bottomArr: [],
+      bottomArr: [{},{},{}],
       middleImg:null,
     };
   },
@@ -173,11 +173,11 @@ export default {
       let result = await this.$get(request.getMiddleDataLy, {
         id: this.buildingId,
       });
-      let res = result.data || {};
+      let res = result.data||{};
       if (res ) {
-        this.topArr = res.top||[]
+        this.topArr = res.top|| [{},{},{},{}]
         this.middleImg = res.img||img
-        this.bottomArr = res.bottom||[]
+        this.bottomArr = res.bottom||[{},{},{}]
       }
     },
   },

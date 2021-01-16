@@ -1,23 +1,53 @@
 <template>
   <div class="leftWrap">
-    <headerTit :title="title" :time="time" :url="url"></headerTit>
+    <headerTit :title="title" :time="time"></headerTit>
     <div class="main">
-      <div class="dataBox" v-for="(item,i) in leftArr" :key='i'>
+      <div class="dataBox" v-for="(item, i) in leftArr" :key="i">
         <div class="dataImg">
-          <img v-show="i===0" src="../../../../assets/parkImg/icon1.png" alt />
-          <img v-show="i===1" src="../../../../assets/parkImg/icon2.png" alt />
-          <img v-show="i===2" src="../../../../assets/parkImg/icon3.png" alt />
-          <img v-show="i===3" src="../../../../assets/parkImg/icon4.png" alt />
-          <img v-show="i===4" src="../../../../assets/parkImg/icon5.png" alt />
-          <img v-show="i===5" src="../../../../assets/parkImg/icon6.png" alt />
-          <img v-show="i===6" src="../../../../assets/parkImg/icon7.png" alt />
+          <img
+            v-show="i === 0"
+            src="../../../../assets/parkImg/icon1.png"
+            alt
+          />
+          <img
+            v-show="i === 1"
+            src="../../../../assets/parkImg/icon2.png"
+            alt
+          />
+          <img
+            v-show="i === 2"
+            src="../../../../assets/parkImg/icon3.png"
+            alt
+          />
+          <img
+            v-show="i === 3"
+            src="../../../../assets/parkImg/icon4.png"
+            alt
+          />
+          <img
+            v-show="i === 4"
+            src="../../../../assets/parkImg/icon5.png"
+            alt
+          />
+          <img
+            v-show="i === 5"
+            src="../../../../assets/parkImg/icon6.png"
+            alt
+          />
+          <img
+            v-show="i === 6"
+            src="../../../../assets/parkImg/icon7.png"
+            alt
+          />
           <!-- <img v-show='i===7' src="../../../../assets/parkImg/icon8.png" alt /> -->
         </div>
         <div class="dataDeta">
-          <div class="dataName white24">{{item.title}}</div>
+          <div class="dataName white24">{{ item.title }}</div>
           <div class="dataNum">
-            <span class="num yellow40 DINAlternate-Bold">{{item.val||'0'}}</span>
-            <span class="unit">{{item.dw}}</span>
+            <span class="num yellow40 DINAlternate-Bold">{{
+              item.val || "0"
+            }}</span>
+            <span class="unit">{{ item.dw }}</span>
           </div>
           <!-- <div class="botLine"></div> -->
         </div>
@@ -132,9 +162,9 @@ export default {
       leftArr: [],
     };
   },
-  props:['buildingId'],
+  props: ["buildingId"],
   mounted() {
- console.log(this.buildingId,'bu in le')
+    console.log(this.buildingId, "bu in le");
     this.getEmphasisDataLy();
   },
   methods: {
@@ -143,9 +173,9 @@ export default {
         id: this.buildingId,
       });
       let res = result.data || {};
-      if (res && res.data) {
+      if (res) {
         let resArr = res.data || [];
-        this.title = res.title;
+        this.title = res.title || "楼宇重点数据";
         this.leftArr = this.subArr(resArr);
       }
     },

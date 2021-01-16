@@ -293,6 +293,7 @@ export default {
   /* height: 360px; */
   padding: 0 20px 0 20px;
   padding-top: 20px;
+  min-height: 250px;
   position: relative;
 }
 .AllLegend {

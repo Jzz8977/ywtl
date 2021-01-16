@@ -230,11 +230,11 @@ export default {
       let res = result.data || {};
       if (res) {
         this.title = res.title;
-        let top10 = res.top10;
+        let top10 = res.top10||{};
         this.top10Title = top10.title || "园区十佳企业";
         this.top10Arr = top10.data || [];
 
-        let revenue = (this.revenue = res.revenue);
+        let revenue = this.revenue =( res.revenue||{});
         this.revenueTitle = revenue.title || "营收收入走势";
 
         if (this.index == 0) {
