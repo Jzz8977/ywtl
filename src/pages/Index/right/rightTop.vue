@@ -238,7 +238,7 @@ export default {
       this.tmFZData = tmArr;
 
       let arr = [];
-      console.log(this.hxYB1Data, this.hxYB2Data, this.tmFZData);
+      // console.log(this.hxYB1Data, this.hxYB2Data, this.tmFZData);
 
       let x = this.tmYB1Data[0] + this.tmYB2Data[0] + this.tmFZData[0];
       let x2 = this.tmYB1Data[1] + this.tmYB2Data[1] + this.tmFZData[1];

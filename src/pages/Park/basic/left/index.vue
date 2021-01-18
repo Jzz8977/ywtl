@@ -154,7 +154,7 @@ export default {
         this.topArr = this.subTopArr(resArr);
         this.middleArr = this.subMidArr(resArr)
         this.bottomArr = this.subBotArr(resArr)
-        console.log(this.bottomArr);
+        // console.log(this.bottomArr);
       }
     },
     subTopArr(arr) {
@@ -324,6 +324,8 @@ export default {
   font-weight: 400;
   color: #ffffff;
   line-height: 30px;
+  white-space: nowrap;
+
 }
 .marginL10 {
   margin-left: 10px;

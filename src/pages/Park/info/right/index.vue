@@ -254,7 +254,7 @@ export default {
             series.push(obj);
           });
           this.series = series;
-          console.log(series);
+          // console.log(series);
           this.initEarnChart();
         }
       }

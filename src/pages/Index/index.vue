@@ -3,16 +3,17 @@
     <div class="wrap" id="wrap" ref="wrap">
       <div class="header">
         <div class="navWrap1">
-          <div class="headerLeft" v-for="(item) in menu1" @click="toPath(item)">{{item.meta.title}}</div>
+          <div class="headerLeft pointer" v-for="(item,i) in menu1" :key="i" @click="toPath(item)">{{item.meta.title}}</div>
           <!-- <div class="headerLeft">产业集群</div>
         <div class="headerLeft">园区楼宇</div>
           <div class="headerLeft">产业链分析</div>-->
         </div>
         <div class="navWrap2">
           <div
-            class="headerRight"
+            class="headerRight pointer"
             :style="{'font-size:16px':item2.meta.title.length>5}"
-            v-for="(item2) in menu2"
+            v-for="(item2,i) in menu2"
+            :key="i"
             @click="toPath(item2)"
           >{{item2.meta.title}}</div>
           <!-- <div class="headerRight">企业群落</div>
@@ -20,6 +21,8 @@
           <div class="headerRight">经济AI</div>-->
         </div>
         <div class="headerAntherBg"></div>
+        <div class="logoClick pointer" @click="logoClick">
+        </div>
       </div>
       <div class="mainBody" v-if="isShow">
         <div class="left">
@@ -97,6 +100,9 @@ export default {
     toPath(item) {
       location.href = request.lineURL + item.path;
     },
+    logoClick(){
+      this.$store.dispatch('setUrl','')
+    },
   },
   beforeDestroy(){
     this.$store.dispatch('setUrl','')
@@ -129,6 +135,14 @@ export default {
   justify-content: space-between;
   /* align-items: center; */
   position: relative;
+}
+.logoClick{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%,-50%,0);
+  width: 540px;
+  height:70px
 }
 .headerAntherBg {
   position: absolute;

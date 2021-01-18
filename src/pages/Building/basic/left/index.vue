@@ -205,7 +205,7 @@ export default {
         this.topArr = this.subTopArr(resArr);
         this.middleArr = this.subMidArr(resArr);
         this.bottomArr = this.subBotArr(resArr);
-        console.log(this.topArr);
+        // console.log(this.topArr);
       }
     },
     subTopArr(arr) {

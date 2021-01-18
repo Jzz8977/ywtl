@@ -44,15 +44,15 @@
             <div class="cardSum">
               <div>
                 <b>产值</b>
-                <span>{{item.cz||0}}</span>
+                <span>{{item.cz||0}}亿</span>
               </div>
               <div class="marginLeft60">
                 <b>营收</b>
-                <span>{{item.ys||0}}</span>
+                <span>{{item.ys||0}}亿</span>
               </div>
               <div class="marginLeft60">
                 <b>税收</b>
-                <span>{{item.ss||0}}</span>
+                <span>{{item.ss||0}}亿</span>
               </div>
             </div>
           </div>
@@ -108,7 +108,7 @@ export default {
       });
 
       let res = result.data || {};
-      console.log(res);
+      // console.log(res);
       if (res) {
         this.title = res.title;
         let topArr = res.top || [];

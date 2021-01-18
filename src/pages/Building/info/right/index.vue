@@ -226,7 +226,7 @@ export default {
         type: this.type, //指标类型 0 产值 1 营业收入 2 利润总额3 用工人数4 能耗
         index: this.index, //指数周期  0 年指数  1 月指数
       });
-      console.log(result);
+      // console.log(result);
       let res = result.data || {};
       if (res) {
         this.title = res.title;
@@ -271,7 +271,7 @@ export default {
             series.push(obj);
           });
           this.series = series;
-          console.log(series);
+          // console.log(series);
           this.initEarnChart();
         }
       }
@@ -528,7 +528,7 @@ export default {
       };
     },
     dateChange(v) {
-      console.log(this.date);
+      // console.log(this.date);
     },
   },
 };

@@ -224,6 +224,8 @@ export default {
   font-weight: bold;
   color: #fdec16;
   line-height: 45px;
+  white-space: nowrap;
+
 }
 .yellowNum span{
   margin-left:-5px;
@@ -322,6 +324,8 @@ export default {
   font-weight: bold;
   color: #fdec16;
   line-height: 40px;
+  white-space: nowrap;
+
 }
 .marinTopBotCard {
   margin-top: 10px;

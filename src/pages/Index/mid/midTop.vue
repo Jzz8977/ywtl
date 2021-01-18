@@ -142,7 +142,7 @@ export default {
   name: "midTop",
   data() {
     return {
-      title: "国家级经济开发区工业总产值排名",
+      title: "",
       time: "2020年1-8月",
       yAxisData: [],
       xAxisData: [],
