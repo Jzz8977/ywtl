@@ -138,7 +138,7 @@ export default {
         series: [
           {
             type: "pie",
-            radius: "85%",
+            radius: ['60%','90%'],
             center: ["50%", "50%"],
             data: that.pieDataArr,
             labelLine: {
@@ -187,7 +187,7 @@ export default {
 }
 .chart {
   width: 200px;
-  height: 174px;
+  height: 204px;
   position: relative;
   z-index: 0;
 }
@@ -201,7 +201,7 @@ export default {
   font-size: 21px;
   font-family: PingFangSC-Regular;
   font-weight: bolder;
-  color: #00508a;
+  color: #FFFFFF;
   line-height: 29px;
   z-index: 1;
 }
@@ -250,7 +250,7 @@ export default {
 .cardWrap {
   margin-top: 20px;
   width: 480px;
-  height: 650px;
+  height: 620px;
   overflow: auto;
 }
 .cardBody {
