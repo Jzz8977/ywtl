@@ -1,0 +1,58 @@
+.el-dialog{
+    display: flex;
+    flex-direction: column;
+    margin:0 !important;
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    /*height:600px;*/
+    max-height:calc(100% - 30px);
+    max-width:calc(100% - 30px);
+}
+.el-dialog .el-dialog__body{
+    flex:1;
+    overflow: auto;
+}
+/* .el-dialog__headerbtn {
+    top: 8px !important; 
+    background: url('../img/closeIcon.png') left no-repeat;
+    background-size: cover; 
+}
+.el-dialog__headerbtn i { 
+    content: '修改下面的font-size可以改变图片的大小';
+    font-size: 25px; visibility: hidden;
+} */
+/* dia */
+.searchDia{
+    background: url('../img/dialog.png') no-repeat!important;
+    background-size: 100% 100%!important;
+    overflow: hidden;
+
+}
+.searchDia .el-dialog__header {
+    padding:0 62px;
+    padding-top:40px;
+    text-align: center;
+}
+.searchDia .el-dialog__headerbtn{
+    top: 35px;
+    right: 42px;
+}
+.el-dialog__headerbtn .el-dialog__close{
+    color:#FFFFFF!important
+}
+.searchDia .el-dialog__header span{
+    font-size: 32px;
+    font-family: PingFangSC-Medium, PingFang SC;
+    font-weight: 500;
+    color: #FFFFFF;
+    line-height: 45px;
+
+}
+
+.searchDia .el-dialog__body {
+    padding: 10px 62px;
+    overflow: hidden;
+}
+/* dia */

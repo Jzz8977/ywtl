@@ -184,7 +184,7 @@ export default {
   box-sizing: border-box;
 }
 .topCard {
-  width: 162px;
+  /* width: 162px; */
   height: 73px;
   display: flex;
   justify-content: start;

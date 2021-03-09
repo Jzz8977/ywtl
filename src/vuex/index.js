@@ -8,6 +8,7 @@ const store = new Vuex.Store({
     state: {
         isIframe: true,
         url: '',
+        HXurl: "",
     },
     mutations: {
         setIsIframe(state, isIframe) {

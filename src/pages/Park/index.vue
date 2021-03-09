@@ -3,19 +3,39 @@
     <div class="wrap" id="wrap">
       <div class="header">
         <div class="parkName">
-          <span>{{parkName}}</span>
-          <div class="returnBtn pointer " @click="$router.go(-1)">
+          <span>{{ parkName }}</span>
+          <div class="returnBtn pointer" @click="back">
             <img src="../../assets/parkImg/returnBtn.png" alt />
-            <span >返回</span>
+            <span>返回</span>
           </div>
         </div>
-        <div :class="{'pointer':true,'tabBtn':true,'basicLeft':true,'activeTabBtnBasic':activeBaic}" @click="tabBtn='basic'">基本信息</div>
-        <div :class="{'pointer':true,'tabBtn':true,'basicRight':true,'activeTabBtnInfo':activeInfo}" @click="tabBtn='info'">经营信息</div>
+        <div
+          :class="{
+            pointer: true,
+            tabBtn: true,
+            basicLeft: true,
+            activeTabBtnBasic: activeBaic,
+          }"
+          @click="tabBtn = 'basic'"
+        >
+          基本信息
+        </div>
+        <div
+          :class="{
+            pointer: true,
+            tabBtn: true,
+            basicRight: true,
+            activeTabBtnInfo: activeInfo,
+          }"
+          @click="tabBtn = 'info'"
+        >
+          经营信息
+        </div>
       </div>
 
       <div class="mainBody">
-        <Basic :parkId='parkId' v-if="activeBaic"/>
-        <Info  :parkId='parkId' v-if="activeInfo"/>
+        <Basic :parkId="parkId" v-if="activeBaic" />
+        <Info :parkId="parkId" v-if="activeInfo" />
       </div>
     </div>
   </div>
@@ -24,46 +44,64 @@
 <script>
 import { request } from "@/utils/api.js";
 import { autoFix } from "@/mixins";
-import Basic from './basic'
-import Info from './info'
+import Basic from "./basic";
+import Info from "./info";
 
 export default {
   name: "Park",
   mixins: [autoFix],
-  components:{
+  components: {
     Info,
-    Basic
+    Basic,
   },
   data() {
     return {
-      tabBtn:'basic',
-      parkId:'',
-      parkName:'',
+      tabBtn: "basic",
+      parkId: "",
+      parkName: "",
     };
   },
-  mounted(){
+  mounted() {
     // this.getEssentialInformation();
   },
-  created(){
-    this.parkId = sessionStorage.getItem('industrialId')||'';
-    this.parkName = sessionStorage.getItem('industrialName')||'';
+  created() {
+    this.parkId = sessionStorage.getItem("industrialId") || "";
+    this.parkName = sessionStorage.getItem("industrialName") || "";
+    this.isOpenIframe = JSON.parse(sessionStorage.getItem("openiframe"));
   },
-  methods:{
-    async getEssentialInformation(){
-      let result = await this.$get(request.getEssentialInformation,{
-        id:this.parkId
-      })
-      
-    }
-  },
-  computed:{
-    activeBaic(){
-      return this.tabBtn==='basic'
+  methods: {
+    async getEssentialInformation() {
+      let result = await this.$get(request.getEssentialInformation, {
+        id: this.parkId,
+      });
     },
-     activeInfo(){
-      return this.tabBtn==='info'
-    }
-  }
+  },
+  computed: {
+    activeBaic() {
+      return this.tabBtn === "basic";
+    },
+    activeInfo() {
+      return this.tabBtn === "info";
+    },
+  },
+  methods: {
+    back() {
+      if (this.isOpenIframe) {
+        window.parent.postMessage(
+          {
+            cmd: "back",
+            params: {
+              success: true,
+            },
+          },
+          "*"
+        );
+        sessionStorage.removeItem("openiframe");
+      } else {
+        this.$router.go(-1);
+      }
+    },
+  },
 };
 </script>
 
@@ -154,20 +192,20 @@ export default {
   background: url(../../assets/parkImg/activeBtnBasic.png) left top no-repeat;
   background-size: 100% 100%;
 }
-.activeTabBtnInfo{
+.activeTabBtnInfo {
   font-family: PingFangSC-Regular;
   color: #ffffff;
   letter-spacing: 1px;
   background: url(../../assets/parkImg/activeBtnInfo.png) left top no-repeat;
   background-size: 100% 100%;
 }
-.basicLeft{
-  left:  435px;
+.basicLeft {
+  left: 435px;
 }
-.basicRight{
-  right:  435px;
+.basicRight {
+  right: 435px;
 }
-.mainBody{
+.mainBody {
   margin-top: 10px;
   width: 100%;
   height: 938px;
