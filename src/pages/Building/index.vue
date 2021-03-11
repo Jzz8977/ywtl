@@ -88,6 +88,8 @@ export default {
           "*"
         );
         sessionStorage.removeItem("openiframe");
+        sessionStorage.removeItem("louyuName");
+        sessionStorage.removeItem("louyuId");
       } else {
         this.$router.go(-1);
       }

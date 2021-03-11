@@ -44,4 +44,10 @@ export const request = {
     getEmphasisDataLy: '/parkDistribution/getEmphasisDataLy',
     moveEnterprisesLy: '/parkDistribution/moveEnterprisesLy',
 
+
+
+
+    // 查询
+    getDetailedInformation:'/gs/getDetailedInformation'
+
 }

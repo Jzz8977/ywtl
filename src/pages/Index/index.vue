@@ -77,15 +77,15 @@
           <div class="typeChange">
             <div class="type">
               <div
-                :class="{ activeType: typeHover === 1, pointer: true }"
-                @click="typeHoverChange(1)"
+                :class="{ activeType: typeHover === 0, pointer: true }"
+                @click="typeHoverChange(0)"
               >
                 企业
               </div>
               <span style="width: 76px"></span>
               <div
-                :class="{ activeType: typeHover === 2, pointer: true }"
-                @click="typeHoverChange(2)"
+                :class="{ activeType: typeHover === 1, pointer: true }"
+                @click="typeHoverChange(1)"
               >
                 园区楼宇
               </div>
@@ -96,12 +96,12 @@
                   class="typeInput"
                   v-model="input"
                   :placeholder="
-                    typeHover === 1 ? '请输入企业名称' : '请输入园区或楼宇名称'
+                    typeHover === 0 ? '请输入企业名称' : '请输入园区或楼宇名称'
                   "
                 >
                 </el-input>
               </div>
-              <el-button class="searchBtnWrap">
+              <el-button class="searchBtnWrap" @click="search">
                 <img
                   src="../../assets/img/searchIcon.png"
                   width="18px"
@@ -111,58 +111,53 @@
               </el-button>
             </div>
           </div>
-          <div v-if="typeHover === 1" class="">
+          <div>
             <table class="tabCon">
-              <thead class="tabTit">
+              <thead class="tabTit" v-if="typeHover === 0">
                 <tr>
                   <th>序号</th>
                   <th>企业名称</th>
                   <th>操作</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr v-for="(item, i) in qyData" :key="item.id">
-                  <td>{{ i + 1 }}</td>
-                  <td>{{ item.name }}</td>
-                  <td class="pointer" @click="openQy">查看详情</td>
-                </tr>
-              </tbody>
-            </table>
-            <div class="block">
-              <el-pagination
-                :page-size="10"
-                :page-count="7"
-                :current-page="currentPage"
-                layout="prev, pager, next"
-                :total="total"
-              >
-              </el-pagination>
-            </div>
-          </div>
-          <div v-else>
-            <table class="tabCon">
-              <thead class="tabTit">
+              <thead class="tabTit" v-if="typeHover === 1">
                 <tr>
                   <th>序号</th>
                   <th>园区楼宇名称</th>
                   <th>操作</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr v-for="(item, i) in lyData" :key="item.id">
+              <tbody v-if="listData.length > 0" class="noData">
+                <tr v-for="(item, i) in listData" :key="item.id">
                   <td>{{ i + 1 }}</td>
                   <td>{{ item.name }}</td>
-                  <td class="pointer" @click="openLy">查看详情</td>
+                  <td class="pointer" @click="toDetail(item)">查看详情</td>
+                </tr>
+                <tr v-for="(item, i) in 10 - listData.length" :key="i"></tr>
+              </tbody>
+              <tbody v-else class="noData">
+                <tr class="noData">
+                  <div class="noDataContent">
+                    <img
+                      src="../../assets/img/noData.png"
+                      width="153px"
+                      height="100px"
+                      alt=""
+                    />
+                    <span>暂无数据</span>
+                  </div>
                 </tr>
               </tbody>
             </table>
             <div class="block">
               <el-pagination
-                :page-size="10"
-                :page-count="7"
+                :page-size="pageSize"
+                @size-change="handleSizeChange"
+                @current-change="handleCurrentChange"
                 :current-page="currentPage"
                 layout="prev, pager, next"
                 :total="total"
+                background
               >
               </el-pagination>
             </div>
@@ -203,33 +198,12 @@ export default {
       menu2: [],
       dialogTableVisible: false,
       input: "",
-      typeHover: 1,
+      typeHover: 0,
+      pageSize: 10,
       currentPage: 1,
-      total: 100,
-      qyData: [
-        { name: "XXXX投资开发股份有限公司", id: 1 },
-        { name: "XXXX投资开发股份有限公司", id: 2 },
-        { name: "XXXX投资开发股份有限公司", id: 3 },
-        { name: "XXXX投资开发股份有限公司", id: 4 },
-        { name: "XXXX投资开发股份有限公司", id: 5 },
-        { name: "XXXX投资开发股份有限公司", id: 6 },
-        { name: "XXXX投资开发股份有限公司", id: 7 },
-        { name: "XXXX投资开发股份有限公司", id: 8 },
-        { name: "XXXX投资开发股份有限公司", id: 9 },
-        { name: "XXXX投资开发股份有限公司", id: 10 },
-      ],
-      lyData: [
-        { name: "XXXX投资开发", id: 1 },
-        { name: "XXXX投资开发", id: 2 },
-        { name: "XXXX投资开发股份有限公司", id: 3 },
-        { name: "XXXX投资开发股份有限公司", id: 4 },
-        { name: "XXXX投资开发股份有限公司", id: 5 },
-        { name: "XXXX投资开发股份有限公司", id: 6 },
-        { name: "XXXX投资开发股份有限公司", id: 7 },
-        { name: "XXXX投资开发股份有限公司", id: 8 },
-        { name: "XXXX投资开发股份有限公司", id: 9 },
-        { name: "XXXX投资开发股份有限公司", id: 10 },
-      ],
+      total: 0,
+      listData: [],
+      lyData: [],
     };
   },
   async created() {
@@ -255,13 +229,39 @@ export default {
     window.addEventListener("message", this.handleMessage);
   },
   methods: {
+    handleSizeChange(val) {
+      this.currentSize = val;
+      this.search();
+    },
+    handleCurrentChange(val) {
+      this.currentPage = val;
+      this.search();
+    },
+    async search() {
+      let params = {
+        type: this.typeHover, //0 企业 1 园区楼宇
+        name: this.input, //企业,园区，楼宇, 名称（模糊查询）
+        pageNo: this.currentPage, //页码
+        pageSize: this.pageSize, //每页数据量
+      };
+      let result = await this.$get(request.getDetailedInformation, params);
+
+      if (result.data.code === 200) {
+        let data = result.data.result;
+
+        this.total = data.total;
+        this.listData = data.records || [];
+      } else {
+        this.listData = [];
+      }
+    },
     handleMessage(event) {
       const data = event.data;
       console.log(data);
-      if (data.cmd === "back") {
+      // if (data.cmd === "back") {
         this.$store.state.HXurl = "";
         this.dialogTableVisible = true;
-      }
+      // }
     },
     toPath(item) {
       location.href = request.lineURL + item.path;
@@ -270,20 +270,49 @@ export default {
       this.$store.dispatch("setUrl", "");
     },
     typeHoverChange(V) {
+      if (V === this.typeHover) {
+        return;
+      }
       this.typeHover = V;
+      this.input = "";
+      this.total = 1;
+      this.currentPage = 1;
+      this.listData = [];
     },
-    openQy() {
+    // openQy(item) {
+    //   this.dialogTableVisible = false;
+    //   window.location.href = "http://210.12.166.198:8081/sztbuild/qyhx"; // window.location.hash = '/company';
+    //   window.sessionStorage.setItem("companyName", item.name);
+    //   window.sessionStorage.setItem("companyId", item.id);
+    //   window.sessionStorage.setItem("backUrl", window.location.href);
+    // },
+    toDetail(item) {
+      console.log(item);
       this.dialogTableVisible = false;
-      sessionStorage.setItem("industrialId", "BJJK006");
-      sessionStorage.setItem("industrialName", "BJJK006Test");
+      if (item.type == 0) {
+        this.toCompany(item);
+      } else if (item.type == 1) {
+        this.toIndustrial(item);
+      } else {
+        this.toLouyu(item);
+      }
+    },
+    toCompany(item) {
+      window.sessionStorage.setItem("companyName", item.name);
+      window.sessionStorage.setItem("companyId", item.num);
+      window.sessionStorage.setItem("backUrl", window.location.href);
+      this.$store.state.HXurl = "http://210.12.166.198:8081/sztbuild/qyhx"; // window.location.hash = '/company';
+    },
+    toIndustrial(item) {
+      sessionStorage.setItem("industrialId", item.num);
+      sessionStorage.setItem("industrialName", item.name);
       sessionStorage.setItem("openiframe", "true");
       this.$store.state.HXurl = location.origin + location.pathname + "#/park";
       console.log(location, this.$store.state.HXurl);
     },
-    openLy() {
-      this.dialogTableVisible = false;
-      sessionStorage.setItem("louyuId", "JK01007");
-      sessionStorage.setItem("louyuName", "JK01007Test");
+    toLouyu(item) {
+      sessionStorage.setItem("louyuId", item.num);
+      sessionStorage.setItem("louyuName", item.name);
       sessionStorage.setItem("openiframe", "true");
       this.$store.state.HXurl =
         location.origin + location.pathname + "#/building";
@@ -485,6 +514,7 @@ export default {
 }
 .tabCon tr {
   width: 100%;
+  border-collapse: collapse;
   height: 50px;
   border-top: 2px solid #3a82ca;
   border-bottom: 2px solid #3a82ca;
@@ -493,8 +523,7 @@ export default {
 
 .tabCon .tabTit tr {
   border-top: none;
-  border-bottom: 4px solid #3a82ca!important;
-
+  border-bottom: 4px solid #3a82ca !important;
 }
 .tabTit th {
   font-size: 20px;
@@ -551,6 +580,30 @@ tbody tr:hover {
 }
 .block >>> .el-pagination.is-background .el-pager li:not(.disabled).active {
   background: url(../../assets/img/pageHover.png) !important;
+  background-size: 100% 100% !important;
+}
+.noData {
+  height: 500px !important;
+  position: relative;
+  border: 0 !important;
+  /* display: flex;
+  justify-content: center;
+  flex-direction: column;
+  -ms-flex-direction: column;
+  align-items: center; */
+}
+
+.noDataContent {
+  position: absolute;
+  transform: translate3d(-50%, -50%, 0);
+  top: 56%;
+  left: 50%;
+}
+.noData span {
+  display: block;
+  text-align: center;
+  font-size: 28px;
+  color: #8a96a3;
 }
 /* dia */
 </style>

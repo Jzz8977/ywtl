@@ -97,6 +97,8 @@ export default {
           "*"
         );
         sessionStorage.removeItem("openiframe");
+        sessionStorage.removeItem("industrialId");
+        sessionStorage.removeItem("industrialName");
       } else {
         this.$router.go(-1);
       }
