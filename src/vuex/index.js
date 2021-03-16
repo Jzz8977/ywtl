@@ -9,6 +9,9 @@ const store = new Vuex.Store({
         isIframe: true,
         url: '',
         HXurl: "",
+        APP_TOKEN:'',
+        appUserInfo:{},
+        userRoles:{}
     },
     mutations: {
         setIsIframe(state, isIframe) {

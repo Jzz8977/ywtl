@@ -18,8 +18,7 @@ export default {
       url: request.rightBotTitleDirector,
       //   产值 / 增速
       xAxisMonth: [
-        "1月",
-        "2月",
+        "1-2月",
         "3月",
         "4月",
         "5月",
@@ -118,34 +117,36 @@ export default {
             return str;
           },
         },
-        legend:[{
-                  x: "center",
-                  y: "bottom",
-                  // bottom: "8%",
-                  // align:'center',
-                  width: 550,
-                  itemWidth: 15,
-                  itemHeight: 15,
-                  textStyle: {
-                    // fontSize: 16,
-                    fontSize: that.subFont(0.16),
-                  },
-                  data: this.legendArr,
-                },
-                {
-                  x: "center",
-                  // y: "bottom",
-                  bottom: "8%",
-                  // align:'center',
-                  width: 550,
-                  itemWidth: 15,
-                  itemHeight: 15,
-                  textStyle: {
-                    // fontSize: 16,
-                    fontSize: that.subFont(0.16),
-                  },
-                  data: this.legendArr2,
-                },],
+        legend: [
+          {
+            x: "center",
+            y: "bottom",
+            // bottom: "8%",
+            // align:'center',
+            width: 550,
+            itemWidth: 15,
+            itemHeight: 15,
+            textStyle: {
+              // fontSize: 16,
+              fontSize: that.subFont(0.16),
+            },
+            data: this.legendArr,
+          },
+          {
+            x: "center",
+            // y: "bottom",
+            bottom: "8%",
+            // align:'center',
+            width: 550,
+            itemWidth: 15,
+            itemHeight: 15,
+            textStyle: {
+              // fontSize: 16,
+              fontSize: that.subFont(0.16),
+            },
+            data: this.legendArr2,
+          },
+        ],
         grid: {
           left: "6%",
           right: "5%",

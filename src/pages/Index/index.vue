@@ -1,6 +1,6 @@
 <template>
   <div class="bgWrap">
-    <div class="wrap" id="wrap" ref="wrap">
+    <div class="wrap" id="wrap" ref="wrap" v-if="!$store.state.HXurl">
       <div class="header">
         <div class="navWrap1">
           <div
@@ -52,11 +52,118 @@
       <div class="mainBody" v-else-if="isShow === 1">
         <Iframe :url="$store.state.url" v-if="$store.state.url" />
       </div>
-      <div class="mainBody" v-else>
-        <IframeHX :url="$store.state.HXurl" v-if="$store.state.HXurl" />
+      <div class="mask" @click.prevent="fatherClick" v-if="dialogTableVisible">
+        <div @click.stop="sonClick" class="dialogWrap">
+          <div class="header-title">
+            <span></span>
+                  <span class="title-age">智能搜索</span>
+            <img
+              class="pointer"
+              @click="dialogTableVisible = false"
+              src="../../assets/img/closeIcon.png"
+              alt=""
+            />
+          </div>
+            <div class="diaBody">
+              <div class="typeChange">
+                <div class="type">
+                  <div
+                    :class="{ activeType: typeHover === 0, pointer: true }"
+                    @click="typeHoverChange(0)"
+                  >
+                    企业
+                  </div>
+                  <span style="width: 76px"></span>
+                  <div
+                    :class="{ activeType: typeHover === 1, pointer: true }"
+                    @click="typeHoverChange(1)"
+                  >
+                    园区楼宇
+                  </div>
+                </div>
+                <div class="typeSearchInput">
+                  <div>
+                    <el-input
+                      class="typeInput"
+                      v-model="input"
+                      :placeholder="
+                        typeHover === 0
+                          ? '请输入企业名称'
+                          : '请输入园区或楼宇名称'
+                      "
+                    >
+                    </el-input>
+                  </div>
+                  <el-button class="searchBtnWrap" @click="search">
+                    <img
+                      src="../../assets/img/searchIcon.png"
+                      width="18px"
+                      height="18px"
+                      alt=""
+                    />
+                  </el-button>
+                </div>
+              </div>
+              <div style="padding:0 15px">
+                <table class="tabCon">
+                  <thead class="tabTit" v-if="typeHover === 0">
+                    <tr>
+                      <th>序号</th>
+                      <th>企业名称</th>
+                      <th>操作</th>
+                    </tr>
+                  </thead>
+                  <thead class="tabTit" v-if="typeHover === 1">
+                    <tr>
+                      <th>序号</th>
+                      <th>园区楼宇名称</th>
+                      <th>操作</th>
+                    </tr>
+                  </thead>
+                  <tbody v-if="listData.length > 0" class="noData">
+                    <tr v-for="(item, i) in listData" :key="item.id">
+                      <td>{{ i + 1 }}</td>
+                      <td>{{ item.name }}</td>
+                      <td class="pointer" @click="toDetail(item)">查看详情</td>
+                    </tr>
+                    <tr v-for="(item, i) in 10 - listData.length" :key="i"></tr>
+                  </tbody>
+                  <tbody v-else class="noData">
+                    <tr class="noData">
+                      <div class="noDataContent">
+                        <img
+                          src="../../assets/img/noData.png"
+                          width="153px"
+                          height="100px"
+                          alt=""
+                        />
+                        <span>暂无数据</span>
+                      </div>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="block">
+                  <el-pagination
+                    :page-size="pageSize"
+                    @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange"
+                    :current-page="currentPage"
+                    layout="prev, pager, next"
+                    :total="total"
+                    background
+                  >
+                  </el-pagination>
+                </div>
+              </div>
+            </div>
+        </div>
       </div>
     </div>
-    <el-dialog
+    <div class="wrap" id="wrap" ref="wrap" v-if="$store.state.HXurl">
+      <IframeHX :url="$store.state.HXurl" v-if="$store.state.HXurl" />
+    </div>
+
+    <!-- <el-dialog
       width="1398px"
       :visible.sync="dialogTableVisible"
       custom-class="searchDia"
@@ -164,7 +271,7 @@
           </div>
         </div>
       </div>
-    </el-dialog>
+    </el-dialog> -->
   </div>
 </template>
 
@@ -229,6 +336,11 @@ export default {
     window.addEventListener("message", this.handleMessage);
   },
   methods: {
+    fatherClick($event){
+      this.dialogTableVisible = false
+    },
+    sonClick($event){
+    },
     handleSizeChange(val) {
       this.currentSize = val;
       this.search();
@@ -258,10 +370,10 @@ export default {
     handleMessage(event) {
       const data = event.data;
       console.log(data);
-      // if (data.cmd === "back") {
+      if (data.cmd === "back") {
         this.$store.state.HXurl = "";
         this.dialogTableVisible = true;
-      // }
+      }
     },
     toPath(item) {
       location.href = request.lineURL + item.path;
@@ -301,6 +413,7 @@ export default {
       window.sessionStorage.setItem("companyName", item.name);
       window.sessionStorage.setItem("companyId", item.num);
       window.sessionStorage.setItem("backUrl", window.location.href);
+      sessionStorage.setItem("openiframe", "true");
       this.$store.state.HXurl = "http://210.12.166.198:8081/sztbuild/qyhx"; // window.location.hash = '/company';
     },
     toIndustrial(item) {
@@ -345,6 +458,7 @@ export default {
   background: url(../../assets/img/bg.png) no-repeat;
   background-size: 100% 100%;
 }
+
 .header {
   width: 100%;
   height: 75px;
@@ -443,15 +557,12 @@ export default {
 }
 
 /* dia */
-.diaBody {
-  height: 700px;
-}
-
 .typeChange {
   height: 38px;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   width: 100%;
-  padding: 0 40px;
+  margin-top: 10px;
+  padding: 0 60px;
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;
@@ -498,15 +609,6 @@ export default {
   border-radius: 0 !important;
   border: 1px solid #00e9ff;
 }
-.header-title {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.header-title img {
-  height: 24px;
-  width: 24px;
-}
 
 .tabCon {
   width: 100%;
@@ -515,10 +617,11 @@ export default {
 .tabCon tr {
   width: 100%;
   border-collapse: collapse;
-  height: 50px;
+  height: 43px;
   border-top: 2px solid #3a82ca;
   border-bottom: 2px solid #3a82ca;
   border-radius: 2px;
+  box-sizing: border-box;
 }
 
 .tabCon .tabTit tr {
@@ -606,4 +709,48 @@ tbody tr:hover {
   color: #8a96a3;
 }
 /* dia */
+
+.mask {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  /* background: rgba(0, 0, 0, 0.4); */
+  z-index: 100;
+  top: 0;
+}
+.dialogWrap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  width: 1398px;
+  height: 740px;
+  background: url("../../assets/img/dialog.png") no-repeat !important;
+  background-size: 100% 100% !important;
+  box-sizing: border-box;
+  padding: 40px 80px;
+  z-index: 1;
+}
+.header-title {
+  height: 45px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.header-title img {
+  height: 24px;
+  width: 24px;
+}
+
+.title-age {
+  font-size: 32px;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+  color: #ffffff;
+  line-height: 45px;
+}
+.diaBody{
+  height: 600px;
+}
+
 </style>

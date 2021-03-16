@@ -29,21 +29,21 @@ import axios from 'axios'
 // import Cookies from 'js-cookie'
 //  获取角色信息，根据用户权限动态加载路由
 router.beforeEach((to, from, next) => {
-        // if (store.getters.token) {
-        //     store.dispatch('setToken', store.getters.token)
-        //     if (to.path === '/login') {
-        //         next({ path: '/' })
-        //     } else {
-        //         next()
-
-        //     }
-        // } else {
-        //     if (to.path === '/login') {
-        //         next()
-        //     }
-        //     next({ path: '/login' })
-        // }
-        next()
+        if (localStorage.getItem('APP_TOKEN')) {
+            // store.dispatch('setToken', store.state.APP_TOKEN)
+            // if (to.path === '/login') {
+                // next({ path: '/' })
+            // } else {
+                next()
+            // }
+        } else {
+            if (to.path === '/login') {
+                next()
+            }
+            // next({ path: '/login' })
+            window.location.href = 'http://210.12.166.198:8081/sztbuild/common/app/login'
+        }
+        // next()
     })
     // ajax请求组件
     // eslint-disable-next-line one-var

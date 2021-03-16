@@ -1,18 +1,30 @@
 <template>
   <div class="rightTop">
-    <headerTit :title="title" :time="time" :url='url'></headerTit>
+    <headerTit :title="title" :time="time" :url="url"></headerTit>
     <div class="main">
       <div class="mainTop">
         <div class="borederBot">
           <div
-            :class="{'border-left':i!=2, 'padding30':true,'w154px':i==1,'w160':i==2}"
-            v-for="(item,i) in fixedDataSum"
+            :class="{
+              'border-left': i != 2,
+              padding30: true,
+              w154px: i == 1,
+              w160: i == 2,
+            }"
+            v-for="(item, i) in fixedDataSum"
           >
             <p>
-              <span :class="{'yellow34':i==0, 'DINAlternate-Bold':true,'white34':i!=0}">{{item.val}}</span>
-              <span>{{item.danWei}}</span>
+              <span
+                :class="{
+                  yellow34: i == 0,
+                  'DINAlternate-Bold': true,
+                  white34: i != 0,
+                }"
+                >{{ item.val }}</span
+              >
+              <span>{{ item.danWei }}</span>
             </p>
-            <p>{{item.title}}</p>
+            <p>{{ item.title }}</p>
           </div>
           <!-- <div class="border-left padding20 w154px">
             <p>
@@ -31,21 +43,27 @@
         </div>
         <div class="borederBot noBorder">
           <div
-            :class="{'border-leftReserve':i!=2, 'padding30':true,'w154px':i==1,'w160':i==2,'noIndent':i==0}"
-            v-for="(item,i) in fixedData"
+            :class="{
+              'border-leftReserve': i != 2,
+              padding30: true,
+              w154px: i == 1,
+              w160: i == 2,
+              noIndent: i == 0,
+            }"
+            v-for="(item, i) in fixedData"
           >
             <p>
-              <span>{{item.title}}</span>
+              <span>{{ item.title }}</span>
             </p>
-            <div v-for="(itemm,a) in item.data" class="pWidthNoIndent">
+            <div v-for="(itemm, a) in item.data" class="pWidthNoIndent">
               <p
-                :class="{'margin':a==0, 'alignLeft':true,}"
-                :style="{'white-space:nowrap;':true}"
+                :class="{ margin: a == 0, alignLeft: true }"
+                :style="{ 'white-space:nowrap;': true }"
               >
-                <i class="size14">{{itemm.title}}:</i>
+                <i class="size14">{{ itemm.title }}:</i>
                 <!-- <i class="size16">{{itemm.val}}</i> -->
-                <i class="size16 DINAlternate-Bold">{{itemm.val}}</i>
-                <i class="size14 left5">{{itemm.danWei}}</i>
+                <i class="size16 DINAlternate-Bold">{{ itemm.val }}</i>
+                <i class="size14 left5">{{ itemm.danWei }}</i>
               </p>
             </div>
             <!-- <p class="margin alignLeft">
@@ -95,18 +113,18 @@
         <div class="chartWrapOut">
           <div class="chartTitleWrap">
             <div class="line"></div>
-            <div class="chartTitle">{{titleChart}}</div>
+            <div class="chartTitle">{{ titleChart }}</div>
             <div class="lineReserve"></div>
           </div>
           <div class="chartWrapIn">
             <div class="name">
-              <div style="width:10px"></div>
-              <div style="margin-left:0px">经开区</div>
+              <div style="width: 10px"></div>
+              <div style="margin-left: 0px">经开区</div>
               <div>核心区</div>
               <div>台马部分</div>
               <div>大兴部分</div>
             </div>
-            <div id="SumChart" class="midTopChart w150px" >
+            <div id="SumChart" class="midTopChart w150px">
               <!-- 经开区本年固投建安与增速分析 -->
             </div>
             <div id="hxChart" class="midTopChart">
@@ -123,15 +141,15 @@
             <div></div>
             <div></div>
             <div>
-              <span style="background:#FFE700"></span>
+              <span style="background: #ffe700"></span>
               固投
             </div>
             <div>
-              <span style="background:#318BFF"></span>
+              <span style="background: #318bff"></span>
               建安
             </div>
             <div>
-              <span style="background:#93FDFF"></span>
+              <span style="background: #93fdff"></span>
               同比变化
             </div>
             <div></div>
@@ -151,7 +169,7 @@ export default {
     return {
       title: "经开区固投情况",
       time: "2020年1-8月",
-      url:request.rightTopTitleDirector,
+      url: request.rightTopTitleDirector,
       yMax: null,
       xData: [],
       jkYB1Data: [],
@@ -170,11 +188,10 @@ export default {
       fixedDataSum: [],
       fixedData: [],
       titleChart: "",
-      year:null,
+      year: null,
     };
   },
   mounted() {
-    
     this.getFixedSituationV2();
     // this.initAll();
   },
@@ -185,45 +202,45 @@ export default {
       this.time = res.data.date || "";
       this.title = res.data.title || "";
       this.xData = dataArr.xAxisArr;
-      this.year = this.xData[1]
+      this.year = this.xData[1];
       this.fixedData = dataArr.fixedData; //核心 大兴 台马 固投和建安数据
       this.fixedDataSum = dataArr.fixedDataSum; //经开区固投
       let fixedAnalysis = dataArr.fixedAnalysis; //ƒ图表
-      this.titleChart = fixedAnalysis&&fixedAnalysis.title;
-      this.subArr(fixedAnalysis&&fixedAnalysis.data);
+      this.titleChart = fixedAnalysis && fixedAnalysis.title;
+      this.subArr(fixedAnalysis && fixedAnalysis.data);
     },
     subArr(arr) {
-      if(arr)
-      arr.forEach((v) => {
-        // v.name=
-        if (v.name == "经开区") {
-          this.jkYB1Data = this.objToArr(v.jianAn);
-          this.jkYB2Data = this.objToArr(v.guTou);
-        } else if (v.name == "核心区") {
-          this.hxYB1Data = this.objToArr(v.jianAn);
-          this.hxYB2Data = this.objToArr(v.guTou);
-        } else if (v.name == "台马部分") {
-          this.tmYB1Data = this.objToArr(v.jianAn);
-          this.tmYB2Data = this.objToArr(v.guTou);
-        } else if (v.name == "大兴部分") {
-          this.dxYB1Data = this.objToArr(v.jianAn);
-          this.dxYB2Data = this.objToArr(v.guTou);
-        }
-      });
+      if (arr)
+        arr.forEach((v) => {
+          // v.name=
+          if (v.name == "经开区") {
+            this.jkYB1Data = this.objToArr(v.jianAn);
+            this.jkYB2Data = this.objToArr(v.guTou);
+          } else if (v.name == "核心区") {
+            this.hxYB1Data = this.objToArr(v.jianAn);
+            this.hxYB2Data = this.objToArr(v.guTou);
+          } else if (v.name == "台马部分") {
+            this.tmYB1Data = this.objToArr(v.jianAn);
+            this.tmYB2Data = this.objToArr(v.guTou);
+          } else if (v.name == "大兴部分") {
+            this.dxYB1Data = this.objToArr(v.jianAn);
+            this.dxYB2Data = this.objToArr(v.guTou);
+          }
+        });
 
       this.initAll();
     },
     objToArr(obj) {
       let arr = [];
-      arr[0] = obj[this.year-1+''] - 0;
-      arr[1] = obj[this.year+''] - 0;
+      arr[0] = obj[this.year - 1 + ""] - 0;
+      arr[1] = obj[this.year + ""] - 0;
       return arr;
     },
     initAll() {
       let a, b;
       a = this.jkYB1Data[0] + this.jkYB2Data[0];
       b = this.jkYB1Data[1] + this.jkYB2Data[1];
-      // 
+      //
       if (a >= b) {
         this.yMax = a;
       } else {
@@ -271,7 +288,7 @@ export default {
           },
         },
         grid: {
-          left: "5%",
+          left: "-44%",
           right: "0%",
           bottom: "14%",
           top: "15%",
@@ -1074,7 +1091,7 @@ i {
   width: 100%;
   height: 590px;
   background: url(../../../assets/img/leftTop.png) no-repeat;
-    background-size: 100% 100%;
+  background-size: 100% 100%;
 
   overflow: hidden;
 }
@@ -1138,7 +1155,7 @@ i {
   font-style: normal;
 }
 /* !============ */
-.borederBot > div > div{
+.borederBot > div > div {
   white-space: nowrap;
 }
 .borederBot > div > div > p,
@@ -1176,7 +1193,7 @@ i {
   border-right: 2px solid #fff;
   border-image: linear-gradient(to bottom, #1a76bb, rgba(26, 199, 189, 0)) 1 10;
 }
-.w160{
+.w160 {
   width: 150px;
 }
 .alignLeft {
@@ -1199,7 +1216,7 @@ i {
   position: relative;
 }
 .chartWrapOut {
-  width:100%;
+  width: 100%;
   height: 100%;
   background: url(../../../assets/img/rightBotBg.png) no-repeat;
   background-size: 100% 100%;
@@ -1232,7 +1249,7 @@ i {
   width: 100px;
   height: 100%;
 }
-.w150px{
+.w150px {
   width: 150px;
 }
 .name {
@@ -1280,19 +1297,18 @@ i {
 .margin {
   margin-top: 10px;
 }
-.left5{
-  margin-left:-5px;
+.left5 {
+  margin-left: -5px;
 }
-.pWidthNoIndent{
-  width: 100%!important;
+.pWidthNoIndent {
+  width: 100% !important;
 }
-.pWidthNoIndent>p{
-  text-indent:20px;
+.pWidthNoIndent > p {
+  text-indent: 20px;
 }
-.pWidthNoIndent:nth-child(1)>p{
+.pWidthNoIndent:nth-child(1) > p {
 }
-.noIndent >div>p{
-  text-indent:5px;
-  
+.noIndent > div > p {
+  text-indent: 5px;
 }
 </style>
