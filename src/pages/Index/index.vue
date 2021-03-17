@@ -64,98 +64,106 @@
               alt=""
             />
           </div>
-            <div class="diaBody">
-              <div class="typeChange">
-                <div class="type">
-                  <div
-                    :class="{ activeType: typeHover === 0, pointer: true }"
-                    @click="typeHoverChange(0)"
-                  >
-                    企业
-                  </div>
-                  <span style="width: 76px"></span>
-                  <div
-                    :class="{ activeType: typeHover === 1, pointer: true }"
-                    @click="typeHoverChange(1)"
-                  >
-                    园区楼宇
-                  </div>
+          <div class="diaBody">
+            <div class="typeChange">
+              <div class="type">
+                <div
+                  :class="{ activeType: typeHover === 0, pointer: true }"
+                  @click="typeHoverChange(0)"
+                >
+                  企业
                 </div>
-                <div class="typeSearchInput">
-                  <div>
-                    <el-input
-                      class="typeInput"
-                      v-model="input"
-                      :placeholder="
-                        typeHover === 0
-                          ? '请输入企业名称'
-                          : '请输入园区或楼宇名称'
-                      "
-                    >
-                    </el-input>
-                  </div>
-                  <el-button class="searchBtnWrap" @click="search">
-                    <img
-                      src="../../assets/img/searchIcon.png"
-                      width="18px"
-                      height="18px"
-                      alt=""
-                    />
-                  </el-button>
+                <span style="width: 76px"></span>
+                <div
+                  :class="{ activeType: typeHover === 1, pointer: true }"
+                  @click="typeHoverChange(1)"
+                >
+                  园区楼宇
                 </div>
               </div>
-              <div style="padding:0 15px">
-                <table class="tabCon">
-                  <thead class="tabTit" v-if="typeHover === 0">
-                    <tr>
-                      <th>序号</th>
-                      <th>企业名称</th>
-                      <th>操作</th>
-                    </tr>
-                  </thead>
-                  <thead class="tabTit" v-if="typeHover === 1">
-                    <tr>
-                      <th>序号</th>
-                      <th>园区楼宇名称</th>
-                      <th>操作</th>
-                    </tr>
-                  </thead>
-                  <tbody v-if="listData.length > 0" class="noData">
-                    <tr v-for="(item, i) in listData" :key="item.id">
-                      <td>{{ i + 1 }}</td>
-                      <td>{{ item.name }}</td>
-                      <td class="pointer" @click="toDetail(item)">查看详情</td>
-                    </tr>
-                    <tr v-for="(item, i) in 10 - listData.length" :key="i"></tr>
-                  </tbody>
-                  <tbody v-else class="noData">
-                    <tr class="noData">
-                      <div class="noDataContent">
-                        <img
-                          src="../../assets/img/noData.png"
-                          width="153px"
-                          height="100px"
-                          alt=""
-                        />
-                        <span>暂无数据</span>
-                      </div>
-                    </tr>
-                  </tbody>
-                </table>
-                <div class="block">
-                  <el-pagination
-                    :page-size="pageSize"
-                    @size-change="handleSizeChange"
-                    @current-change="handleCurrentChange"
-                    :current-page="currentPage"
-                    layout="prev, pager, next"
-                    :total="total"
-                    background
+              <div class="typeSearchInput">
+                <div>
+                  <el-input
+                    class="typeInput"
+                    v-model="input"
+                    :placeholder="
+                      typeHover === 0
+                        ? '请输入企业名称'
+                        : '请输入园区或楼宇名称'
+                    "
                   >
-                  </el-pagination>
+                  </el-input>
                 </div>
+                <el-button class="searchBtnWrap" @click="search">
+                  <img
+                    src="../../assets/img/searchIcon.png"
+                    width="18px"
+                    height="18px"
+                    alt=""
+                  />
+                </el-button>
               </div>
             </div>
+            <div style="padding: 0 15px">
+              <table class="tabCon">
+                <thead class="tabTit" v-if="typeHover === 0">
+                  <tr>
+                    <th>序号</th>
+                    <th>企业名称</th>
+                    <th>操作</th>
+                  </tr>
+                </thead>
+                <thead class="tabTit" v-if="typeHover === 1">
+                  <tr>
+                    <th>序号</th>
+                    <th>园区楼宇名称</th>
+                    <th>操作</th>
+                  </tr>
+                </thead>
+                <tbody v-if="listData.length > 0" class="">
+                  <tr v-for="(item, i) in listData" :key="item.id">
+                    <td>{{ (currentPage - 1) * 10 + i + 1 }}</td>
+                    <td>{{ item.name }}</td>
+                    <td class="pointer" @click="toDetail(item)">查看详情</td>
+                  </tr>
+                  <tr
+                    v-for="(item, i) in 10 - listData.length"
+                    :key="i"
+                    style="height: 45px"
+                  ></tr>
+                </tbody>
+                <tbody v-else class="noData">
+                  <tr class="noData">
+                    <div class="noDataContent">
+                      <img
+                        src="../../assets/img/noData.png"
+                        width="153px"
+                        height="100px"
+                        alt=""
+                      />
+                      <span>暂无数据</span>
+                    </div>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="block">
+                <el-pagination
+                  :page-size="pageSize"
+                  @size-change="handleSizeChange"
+                  @current-change="handleCurrentChange"
+                  :current-page="currentPage"
+                  layout="total,slot, prev, pager, next, jumper"
+                  :total="total"
+                  background
+                >
+                  <span
+                    style="color: #00ffff; font-size: 18px; font-weight: normal"
+                    >共{{ Math.ceil(total / pageSize) }}页</span
+                  >
+                </el-pagination>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -336,11 +344,10 @@ export default {
     window.addEventListener("message", this.handleMessage);
   },
   methods: {
-    fatherClick($event){
-      this.dialogTableVisible = false
+    fatherClick($event) {
+      this.dialogTableVisible = false;
     },
-    sonClick($event){
-    },
+    sonClick($event) {},
     handleSizeChange(val) {
       this.currentSize = val;
       this.search();
@@ -673,20 +680,32 @@ tbody tr:hover {
   background-color: transparent !important;
   color: white !important;
   font-weight: normal !important;
-  font-size: 20px;
+  font-size: 18px;
 }
 .block >>> button {
-  color: #00e9ff !important;
+  /* color: #00e9ff !important; */
 }
 .block >>> button i {
-  font-size: 20px !important;
+  font-size: 18px !important;
 }
 .block >>> .el-pagination.is-background .el-pager li:not(.disabled).active {
-  background: url(../../assets/img/pageHover.png) !important;
-  background-size: 100% 100% !important;
+  color: #1890ff !important;
+  font-size: 18px !important;
+  line-height: 26px !important;
+  font-weight: normal !important;
+  /* font-weight: bolder !important; */
+  /* background: url(../../assets/img/pageHover.png) !important; */
+  /* background-size: 100% 100% !important; */
+}
+
+.block >>> .el-pagination__total,
+.block >>> .el-pagination__jump {
+  color: #fff !important;
+  font-size: 18px !important;
+  font-weight: normal !important;
 }
 .noData {
-  height: 500px !important;
+  height: 453px !important;
   position: relative;
   border: 0 !important;
   /* display: flex;
@@ -749,8 +768,7 @@ tbody tr:hover {
   color: #ffffff;
   line-height: 45px;
 }
-.diaBody{
+.diaBody {
   height: 600px;
 }
-
 </style>
